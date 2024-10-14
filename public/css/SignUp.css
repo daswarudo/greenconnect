@@ -29,12 +29,14 @@
                align-items: center;
            }
            .left-panel img {
+                
                width: 100px;
-               margin-bottom: 20px;
+               margin-bottom: 32px;
            }
            .left-panel h1 {
+                font-weight: bold;
                font-size: 24px;
-               margin-bottom: 10px;
+               margin-bottom: 18px;
            }
            .left-panel p {
                font-size: 14px;
@@ -42,7 +44,7 @@
            }
            .left-panel button {
             border-radius: 20px;
-	        border: 1px solid rgb(243, 243, 243);
+	        border: 1px solid rgb(0, 0, 0);
 	         background: rgb(249,249,249);
             background: linear-gradient(90deg, rgba(249,249,249,1) 1%, rgba(36,173,123,1) 100%);
 	        color: #202020;
@@ -59,6 +61,7 @@
                width: 60%;
            }
            .right-panel h2 {
+                font-weight: bold;
                font-size: 18px;
                margin-bottom: 30px;
            }
@@ -122,4 +125,5 @@
                border-radius: 5px;
                cursor: pointer;
                width: 50%;
+               height:100%;
            }
