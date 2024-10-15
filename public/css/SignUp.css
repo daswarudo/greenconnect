@@ -30,7 +30,8 @@
            }
            .left-panel img {
                 
-               width: 100px;
+               width: 200px;
+               height: auto;
                margin-bottom: 32px;
            }
            .left-panel h1 {
@@ -127,3 +128,4 @@
                width: 50%;
                height:100%;
            }
+           

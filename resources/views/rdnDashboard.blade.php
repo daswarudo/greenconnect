@@ -44,7 +44,7 @@
 <body>
 
 <div class="sidebar">
-	<img alt="Green Chef Logo" height="100" src="https://storage.googleapis.com/a1aa/image/5ZVSiXJk97ooLNVVlietIe85bAyorQ641AarmzfLZ1jPFJHnA.jpg" width="100" />
+	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
    <a href="#">
     <i class="fas fa-users">
     </i>
