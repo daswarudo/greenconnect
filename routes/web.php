@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 
 Route::get('/', function () {
-    return view('welcome');//change to login to view login, welcome=dashboard
+    return view('rdnDashboard');//change to login to view login, welcome=dashboard
 });
 
 Route::get('/welcome', function () {//dashboard
