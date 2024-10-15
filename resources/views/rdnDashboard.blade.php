@@ -42,7 +42,8 @@
     
 </head>
 <body>
-
+    @include('sidebar')
+<!--
 <div class="sidebar">
 	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
    <a href="#">
@@ -65,7 +66,7 @@
     </i>
     Log Out
    </a>
-  </div>
+  </div>-->
   <div class="content">
    <div class="header">
     <h1>

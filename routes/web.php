@@ -19,6 +19,10 @@ Route::get('/signUp', function () {
     return view('signUp');
 })->name('signUp');
 
+/*Route::get('/sidebar', function () {
+    return view('sidebar');
+})->name('sidebar');*/
+
 Route::get('/rdnDashboard', function () {
     return view('rdnDashboard');
 })->name('rdnDashboard');
