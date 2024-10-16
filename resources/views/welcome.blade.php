@@ -59,46 +59,78 @@
     
 </div>
 <!-- 4 boxes-->
-<div class="div-2 cta">
-    <div class="flex-container">
-        <div class="flex-item cta">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit 
-                 esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,</p>
-                 <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
+<div class = "div-2">
+    <div class = "flex-container">
+        <div class = "flex-item">
+            <div>  <!-- temporary because krazy css-->
+                <div style = "text-align:center;">
+                    <p style = "font-size:35px;"><b>Weight-Loss Plan</b></p>
+                    <p>Low-calorie meals curated for weight loss</p>
+                    <p style = "font-size:30px;"><b>₱3000.00/2 weeks</b></p>
+                </div>
+
+                <p> &#10003; Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+                <p> &#10003; Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> &#10003; Meal plan guide for everyday breakfast</p>
+                <p> &#10003; Meal plan guide for weekends</p>
+                <p> &#10003; Free Delivery within Dumaguete City</p>
+            </div>
+            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
 
         </div>
-        <div class="flex-item cta">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit 
-                 esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,</p>
-                 <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
+        <div class = "flex-item">
+            <div>  <!-- temporary because krazy css-->
+                <div style = "text-align:center;">
+                    <p style = "font-size:35px;"><b>Weight-Gain Plan</b></p>
+                    <p>High-calorie meals designed for healthy weight gain</p>
+                    <p style = "font-size:30px;"><b>₱3300.00/2 weeks</b></p>
+                </div>
+
+                <p> &#10003; Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+                <p> &#10003; Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> &#10003; Meal plan guide for everyday breakfast</p>
+                <p> &#10003; Meal plan guide for weekends</p>
+                <p> &#10003; Free Delivery within Dumaguete City</p>
+            </div>
+            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
 
         </div>
     </div>
 </div>
-<div class="div-2 cta">
+<div class="div-2">
     <div class="flex-container">
-        <div class="flex-item">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit 
-                 esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,</p>
-                 <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
+        <div class = "flex-item">
+            <div>  <!-- temporary because krazy css-->
+                <div style = "text-align:center;">
+                    <p style = "font-size:35px;"><b>Therapeutic Diet</b></p>
+                    <p>Customized for individuals with specific health needs</p>
+                    <p style = "font-size:30px;"><b>₱3500.00/2 weeks</b></p>
+                </div>
+
+                <p> &#10003; Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+                <p> &#10003; Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> &#10003; Meal plan guide for everyday breakfast</p>
+                <p> &#10003; Meal plan guide for weekends</p>
+                <p> &#10003; Free Delivery within Dumaguete City</p>
+            </div>
+            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
 
         </div>
-        <div class="flex-item">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit 
-                 esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,</p>
-                 <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
+        <div class = "flex-item">
+            <div>  <!-- temporary because krazy css-->
+                <div style = "text-align:center;">
+                    <p style = "font-size:35px;"><b>Gluten-Free Diet</b></p>
+                    <p>Specially curated gluten-free meals for individuals with celiac disease or gluten sensitivity</p>
+                    <p style = "font-size:30px;"><b>₱3500.00/2 weeks</b></p>
+                </div>
+
+                <p> &#10003; Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+                <p> &#10003; Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> &#10003; Meal plan guide for everyday breakfast</p>
+                <p> &#10003; Meal plan guide for weekends</p>
+                <p> &#10003; Free Delivery within Dumaguete City</p>
+            </div>
+            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
 
         </div>
     </div>
@@ -107,7 +139,7 @@
 <!--testimonial-->
 <div style = "height: 7vh;"></div>
 <div class="container">
-    <h1 class ="title4"><b>Centered Heading</b></h1>
+    <h1 class ="title4"><b>Testimonials</b></h1>
 </div>
 
 <div class="div-2">

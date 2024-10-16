@@ -36,17 +36,17 @@
     .flex-container {
         display: flex;
         justify-content: center;
-        gap: 10vh;
+        gap: 1vh;
         flex-wrap: wrap; /* Allow items to wrap to the next line */
     }
     
     .flex-item {
         margin: 4vh;
-        text-align: center;
+        text-align: left;
 
-        width: 90vh;
+        width: 80vh;
         background-color: #f9f5e7;
-        justify-content: center;
+        justify-content: left;
         align-items: flex-end;
         display: flex;
         flex-direction: column;
@@ -70,8 +70,11 @@
         border-radius: 20px;
     }
 
-    
-    
+    .items{ /*test*/
+        
+        
+    }
+ 
     /* Media query for small screens */
     @media (max-width: 768px) {
         .flex-container {

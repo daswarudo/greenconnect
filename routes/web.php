@@ -4,12 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 
 Route::get('/', function () {
-    return view('rdnDashboard');//change to login to view login, welcome=dashboard
+    return view('welcome');//change to login to view login, welcome=dashboard
 });
 
 Route::get('/welcome', function () {//dashboard
     return view('welcome');
-})->name('login');
+})->name('welcome');
 
 Route::get('/login', function () {
     return view('login');
