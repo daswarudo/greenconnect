@@ -69,7 +69,7 @@
                     <p style = "font-size:30px;"><b>₱3000.00/2 weeks</b></p>
                 </div>
 
-                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
                 <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
                 <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
@@ -143,32 +143,49 @@
 </div>
 
 <div class="div-2">
-    <div class="flex-container">
+    <div class="flex-container2">
         <div class="flex-item2">
-            
-            <p>I've tried countless diets, but this subscription has been a game-changer! The meals are not only delicious but perfectly portioned and balanced. I’ve lost 8 pounds in 6 weeks, and I feel more energized than ever. The best part? No more meal prep stress!
-                Kenny
-                Weight Loss Meal Plan Subscriber</p>
+            <div class = "picture">
+                <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
+            </div>
+            <p>I've tried countless diets, but this subscription has been a game-changer! 
+                The meals are not only delicious but perfectly portioned and balanced. 
+                I’ve lost 8 pounds in 6 weeks, and I feel more energized than ever. 
+                The best part? No more meal prep stress!</p>
+            <p style = "font-size:20px; margin-bottom:0px;">Kenny</p>
+            <p">Weight Loss Meal Plan Subscriber</p>
         </div>
         <div class="flex-item2">
-            <p>I've tried countless diets, but this subscription has been a game-changer! The meals are not only delicious but perfectly portioned and balanced. I’ve lost 8 pounds in 6 weeks, and I feel more energized than ever. The best part? No more meal prep stress!
-                Kenny
-                Weight Loss Meal Plan Subscriber</p>
+            <div class = "picture">
+                <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
+            </div>
+            <p>I've tried countless diets, but this subscription has been a game-changer! 
+                The meals are not only delicious but perfectly portioned and balanced. 
+                I’ve lost 8 pounds in 6 weeks, and I feel more energized than ever. 
+                The best part? No more meal prep stress!</p>
+            <p style = "font-size:20px; margin-bottom:0px;">Kenny</p>
+            <p">Weight Loss Meal Plan Subscriber</p>
         </div>
         <div class="flex-item2">
-            <p>I've tried countless diets, but this subscription has been a game-changer! The meals are not only delicious but perfectly portioned and balanced. I’ve lost 8 pounds in 6 weeks, and I feel more energized than ever. The best part? No more meal prep stress!
-                Kenny
-                Weight Loss Meal Plan Subscriber</p>
+            <div class = "picture">
+                <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
+            </div>
+            <p>I've tried countless diets, but this subscription has been a game-changer! 
+                The meals are not only delicious but perfectly portioned and balanced. 
+                I’ve lost 8 pounds in 6 weeks, and I feel more energized than ever. 
+                The best part? No more meal prep stress!</p>
+            <p style = "font-size:20px; margin-bottom:0px;">Kenny</p>
+            <p">Weight Loss Meal Plan Subscriber</p>
         </div>
     </div>
 </div>
 
 <div class="footer">
     <div class="footer-left">
-        <div><p class = "f-text">Establishment Name</p></div>
-        <div><p class = "f-text">Street Address</p></div>
-        <div><p class = "f-text">Email: example@example.com</p></div>
-        <div><p class = "f-text">Phone: +123 456 7890</p></div>
+        <div><p class = "f-text">The Green Chef Dumaguete</p></div>
+        <div><p class = "f-text">Sta. Rosa St., Dumaguete, Negros Oriental, Dumaguete City, Philippines</p></div>
+        <div><p class = "f-text">thegreenchefdumaguete@gmail.com</p></div>
+        <div><p class = "f-text">0991 677 9151</p></div>
     
     </div>
     <div class="footer-right">
