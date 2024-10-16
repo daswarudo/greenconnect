@@ -69,11 +69,11 @@
                     <p style = "font-size:30px;"><b>₱3000.00/2 weeks</b></p>
                 </div>
 
-                <p> &#10003; Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
-                <p> &#10003; Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
-                <p> &#10003; Meal plan guide for everyday breakfast</p>
-                <p> &#10003; Meal plan guide for weekends</p>
-                <p> &#10003; Free Delivery within Dumaguete City</p>
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
+                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
+                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
             </div>
             <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
 
@@ -86,11 +86,11 @@
                     <p style = "font-size:30px;"><b>₱3300.00/2 weeks</b></p>
                 </div>
 
-                <p> &#10003; Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
-                <p> &#10003; Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
-                <p> &#10003; Meal plan guide for everyday breakfast</p>
-                <p> &#10003; Meal plan guide for weekends</p>
-                <p> &#10003; Free Delivery within Dumaguete City</p>
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
+                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
+                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
             </div>
             <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
 
@@ -107,11 +107,11 @@
                     <p style = "font-size:30px;"><b>₱3500.00/2 weeks</b></p>
                 </div>
 
-                <p> &#10003; Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
-                <p> &#10003; Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
-                <p> &#10003; Meal plan guide for everyday breakfast</p>
-                <p> &#10003; Meal plan guide for weekends</p>
-                <p> &#10003; Free Delivery within Dumaguete City</p>
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
+                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
+                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
             </div>
             <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
 
@@ -124,11 +124,11 @@
                     <p style = "font-size:30px;"><b>₱3500.00/2 weeks</b></p>
                 </div>
 
-                <p> &#10003; Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
-                <p> &#10003; Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
-                <p> &#10003; Meal plan guide for everyday breakfast</p>
-                <p> &#10003; Meal plan guide for weekends</p>
-                <p> &#10003; Free Delivery within Dumaguete City</p>
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
+                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
+                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
             </div>
             <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
 
