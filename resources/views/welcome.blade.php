@@ -142,7 +142,7 @@
     <h1 class ="title4"><b>Testimonials</b></h1>
 </div>
 
-<div class="div-2">
+<div class="div-2"> <!--di ma align if lahi ang text for each testi, may use 'see more' function or change text-->
     <div class="flex-container2">
         <div class="flex-item2">
             <div class = "picture">
