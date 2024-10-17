@@ -103,7 +103,7 @@
             <div>  <!-- temporary because krazy css-->
                 <div style = "text-align:center;">
                     <p style = "font-size:35px;"><b>Therapeutic Diet</b></p>
-                    <p>Customized for individuals with specific health needs</p>
+                    <p>Customized for individuals with specific health needs</p><!-- fix align later-->
                     <p style = "font-size:30px;"><b>₱3500.00/2 weeks</b></p>
                 </div>
 

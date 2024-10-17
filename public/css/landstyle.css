@@ -57,7 +57,7 @@
         align-items: flex-end;
         display: flex;
         flex-direction: column;
-        padding: 3vh 3vh 3vh 3vh;
+        padding: 3vh 6vh 3vh 6vh;
         box-shadow: 10px 5px 1px rgba(0, 0, 0, 0.6);
         border-radius: 20px;
     }
