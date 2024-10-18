@@ -148,10 +148,18 @@
             <div class = "picture">
                 <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
             </div>
-            <p>I've tried countless diets, but this subscription has been a game-changer! 
+            <p>
+                I've tried countless diets, but this subscription has been a game-changer! 
                 The meals are not only delicious but perfectly portioned and balanced. 
-                I’ve lost 8 pounds in 6 weeks, and I feel more energized than ever. 
-                The best part? No more meal prep stress!</p>
+                I’ve lost 8 pounds in 6 weeks, and I feel more 
+                <span id="dots1">...</span> 
+                <span id="more1" style="display:none;">
+                energized than ever. 
+                The best part? No more meal prep stress!
+                </span>
+                <a href="javascript:void(0)" onclick="myFunction('dots1', 'more1', 'myLink1')" id="myLink1">Read more</a>
+            </p>
+
             <p style = "font-size:20px; margin-bottom:0px;">Kenny</p>
             <p">Weight Loss Meal Plan Subscriber</p>
         </div>
@@ -159,23 +167,34 @@
             <div class = "picture">
                 <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
             </div>
-            <p>I've tried countless diets, but this subscription has been a game-changer! 
-                The meals are not only delicious but perfectly portioned and balanced. 
-                I’ve lost 8 pounds in 6 weeks, and I feel more energized than ever. 
-                The best part? No more meal prep stress!</p>
-            <p style = "font-size:20px; margin-bottom:0px;">Kenny</p>
-            <p">Weight Loss Meal Plan Subscriber</p>
+            <p>
+                As a vegan looking to gain weight, I struggled to find the right balance of nutrients. 
+                This subscription has exceeded my expectations! The meals are hearty, creative, and packed 
+                <span id="dots2">...</span> 
+                <span id="more2" style="display:none;">
+                with plant-based protein. I’ve noticed a steady increase in muscle mass, and I love the variety of dishes! 
+                </span>
+                <a href="javascript:void(0)" onclick="myFunction('dots2', 'more2', 'myLink2')" id="myLink2">Read more</a>
+            </p>
+            <p style = "font-size:20px; margin-bottom:0px;">James L.</p>
+            <p">Weight Gain Meal Plan Subscriber</p>
         </div>
         <div class="flex-item2">
             <div class = "picture">
                 <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
             </div>
-            <p>I've tried countless diets, but this subscription has been a game-changer! 
-                The meals are not only delicious but perfectly portioned and balanced. 
-                I’ve lost 8 pounds in 6 weeks, and I feel more energized than ever. 
-                The best part? No more meal prep stress!</p>
-            <p style = "font-size:20px; margin-bottom:0px;">Kenny</p>
-            <p">Weight Loss Meal Plan Subscriber</p>
+            <p>
+                I have specific dietary needs due to health conditions, and finding a convenient meal 
+                service has always been a challenge — until now. The therapeutic meal plan has made managing diet
+                so easy  and enjoyable. The meals 
+                <span id="dots3">...<br></span> 
+                <span id="more3" style="display:none;">
+                I have more free time, and I’ve actually started enjoying cooking again! 
+                </span>
+                <a href="javascript:void(0)" onclick="myFunction('dots3', 'more3', 'myLink3')" id="myLink3">Read more</a>
+            </p>
+            <p style = "font-size:20px; margin-bottom:0px;">Priya S.</p>
+            <p">Therapeutic Diet Plan Subscriber</p>
         </div>
     </div>
 </div>
@@ -193,6 +212,25 @@
         <img src="{{ asset('images/grab.jpg') }}" alt="Image 2">
     </div>
 </div>
+
+<script>
+    function myFunction(dotsId, moreId, linkId) {
+        var dots = document.getElementById(dotsId);
+        var moreText = document.getElementById(moreId);
+        var linkText = document.getElementById(linkId);
+
+        if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            linkText.innerHTML = "Read more";
+            moreText.style.display = "none";
+        } else {
+            dots.style.display = "none";
+            linkText.innerHTML = "Read less";
+            moreText.style.display = "inline";
+        }
+    }
+</script>
+
 <!-- Bootstrap JS and dependencies (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

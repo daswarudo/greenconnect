@@ -74,6 +74,7 @@
         padding: 3vh 3vh 3vh 3vh;
         box-shadow: 10px 5px 1px rgba(0, 0, 0, 0.6);
         border-radius: 20px;
+        
     }
 
     img.testi {
@@ -87,14 +88,6 @@
         width: 150px;
         height: auto;
         transform: translateX(50%);
-    }
- 
-    /* Media query for small screens */
-    @media (max-width: 768px) {
-        .flex-container {
-            flex-direction: column; /* Stack items vertically */
-            gap: 2vh; /* Adjust gap between items */
-        }
     }
 
     .feature-box {
@@ -186,7 +179,10 @@
         font-size:2vh;
         margin:0px 0px 0px 0px;
     }
-    
+    /* Media query for small screens */
+    @media (max-width: 768px) {
+        
+    }
 
     @media only screen and (width: 1280px) and (height: 800px) {
         h4.title2 {
@@ -199,8 +195,13 @@
             flex-direction: column; /* Stack image below the text on mobile */
             padding: 2rem; /* Reduce padding for smaller screens */
         }
-    
+        .flex-item{
+            width: 43vh;
+        }
+
         .image-container {
+            flex-direction: column; /* Stack items vertically */
+            gap: 2vh; /* Adjust gap between items */
             width: 100%; /* Full width for the image container on mobile */
             margin-top: 1rem; /* Add space between text and image */
             justify-content: center; /* Center the image on mobile */
