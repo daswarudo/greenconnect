@@ -34,7 +34,7 @@
                     <a class="nav-link active" aria-current="page" href="#">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">SUBSCRIPTION</a>
+                    <a class="nav-link" href="{{ route('subscribers') }}">SUBSCRIPTION</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">LOGIN</a>

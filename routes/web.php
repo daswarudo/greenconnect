@@ -19,9 +19,9 @@ Route::get('/signUp', function () {
     return view('signUp');
 })->name('signUp');
 
-/*Route::get('/sidebar', function () {
-    return view('sidebar');
-})->name('sidebar');*/
+Route::get('/subscribers', function () {
+    return view('subscribers');
+})->name('subscribers');
 
 Route::get('/rdnDashboard', function () {
     return view('rdnDashboard');

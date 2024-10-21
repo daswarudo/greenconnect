@@ -43,30 +43,7 @@
 </head>
 <body>
     @include('sidebar')
-<!--
-<div class="sidebar">
-	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
-   <a href="#">
-    <i class="fas fa-users">
-    </i>
-    Subscribers
-   </a>
-   <a href="#">
-    <i class="fas fa-calendar-alt">
-    </i>
-    Appointments
-   </a>
-   <a href="#">
-    <i class="fas fa-utensils">
-    </i>
-    Meal Plans
-   </a>
-   <a href="#">
-    <i class="fas fa-sign-out-alt">
-    </i>
-    Log Out
-   </a>
-  </div>-->
+
   <div class="content">
    <div class="header">
     <h1>
