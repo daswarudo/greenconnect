@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+    
+}
+.sidebar {
+
+width: 200px;
+background-color: #f8f8f8;
+padding: 20px;
+border-right: 1px solid #ccc;
+height: 100vh;
+background: rgb(249,249,249);
+background: -moz-linear-gradient(90deg, rgba(249,249,249,1) 0%, rgb(143, 212, 187) 56%);
+background: -webkit-linear-gradient(90deg, rgba(249,249,249,1) 0%, rgb(113, 226, 185) 56%);
+background: linear-gradient(90deg,rgb(90, 192, 155) 56%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f9f9f9",endColorstr="#0fbb7c",GradientType=1);
+
+}
+.sidebar img {
+width: 100px;
+display: block;
+margin: 0 auto 20px;
+}
+.sidebar a {
+display: block;
+color: #000;
+text-decoration: none;
+margin: 100px 10px;
+font-size: 16px;
+background-color: #bee7c5;
+border-radius: 5px;
+padding:10px;
+}
+.sidebar a:hover
+{
+color:white;
+background-color: #7d9b82;
+border: 1px solid  dd;
+padding:10px;
+border-radius: 5px;
+}
+
+.sidebar a i {
+margin-right: 15px;
+}
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+.main-content h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.meal-planner {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 10px;
+}
+.meal-planner div {
+    background-color: #fff;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.meal-planner .meal-time {
+    font-weight: bold;
+    text-align: center;
+    padding-right: 10px;
+}
+.meal-planner .meal-day {
+    font-weight: bold;
+}
+.meal-planner .meal-button {
+   background-color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right:0px;
+}
+.meal-planner .meal-button:hover {
+    
+    background-color: #8fe296;
+    padding: 10px 20px;
+}
+.buttons {
+    margin-top: 20px;
+}
+.buttons button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.buttons button.active {
+    background-color: #4caf50;
+    color: #fff;
+}
+.buttons{
+text-align: center;
+}

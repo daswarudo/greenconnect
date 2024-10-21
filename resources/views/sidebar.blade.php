@@ -21,7 +21,12 @@
 
 <div class="sidebar">
 	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
-   <a href="#">
+    <a href="{{ route('rdnDashboard') }}">
+        <i class="fas fa-home">
+        </i>
+    Home
+    </a>
+    <a href="{{ route('subscribers') }}">
     <i class="fas fa-users">
     </i>
     Subscribers
@@ -31,7 +36,7 @@
     </i>
     Appointments
    </a>
-   <a href="#">
+   <a href="{{ route('mealplans') }}">
     <i class="fas fa-utensils">
     </i>
     Meal Plans

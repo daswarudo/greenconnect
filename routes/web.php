@@ -34,6 +34,9 @@ Route::put('/events/{id}', [EventController::class, 'update']);
 Route::delete('/events/{id}', [EventController::class, 'destroy']);
 
 
+Route::get('/mealplans', function () {
+    return view('mealplans');
+})->name('mealplans');
 
 
 

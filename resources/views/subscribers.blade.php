@@ -32,7 +32,7 @@
     
    </div>
    <div class="tabs">
-    <button class="active">
+    <button >
      Weight Loss
     </button>
     <button>
