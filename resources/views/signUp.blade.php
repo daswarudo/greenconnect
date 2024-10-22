@@ -19,7 +19,7 @@
             <h1>WELCOME TO GREEN CONNECT</h1>
             <p>GREEN CHEF'S PORTAL TO NUTRITION</p>
             <p>Already have an account?</p>
-            <button>SIGN IN</button>
+            <a id="login" href="{{ route('login') }}">SIGN IN</a>
         </div>
         <form class="right-panel">
             <div class="form-container">
@@ -68,7 +68,7 @@
                     </div>
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
-                        <input id="contact_num" name="contact_num" type="number" minlength="11" maxlength="11" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" />
+                        <input id="contact_num" name="contact_num" type="text" minlength="11" maxlength="11" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" />
                     </div>
                     <div class="form-group">
                         <label for="doctor-recommendation">Doctor's Diet Recommendation</label>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="form-group">
                          <label for="diet_reco">Food Preference</label>
-                          <select id="diet_reco" name="diet_reco" class="form-control">
+                          <select id="diet_reco" name="diet_reco" class="form-control" >
                            <option value="">Select Food Preference</option>
                            <option value="Pork">Pork</option>
                            <option value="Fish">Fish</option>
@@ -86,24 +86,37 @@
                            <option value="Vegetable">Vegetable</option>
                           </select>
                     </div>
+                    <div class="form-group">
+                         <label for="activity_level">Select Activity Level</label>
+                          <select id="activity_leve" name="activity_level" class="form-control"  required>
+                           <option value="">Activity Level</option>
+                           <option value="Sedentary">Sedentary</option>
+                           <option value="Low Active">Low Active</option>
+                           <option value="Active">Active</option>
+                           <option value="Very Active">Very Active</option>
+                          </select>
+                    </div>
                     <h2>Account and Payment</h2>
                     <div class="form-group">
                         <label for="username">Username <span> * </span></label>
-                        <input id="username" name="username" type="text"/>
+                        <input id="username" name="username" type="text"/ placholder="Desired Username" required />
                     </div>
                     <div class="form-group">
                         <label for="password">Password <span> * </span></label>
-                        <input id="password" name="password" type="password"/>
+                        <input id="password" name="password" type="password" placholder="Desired Username" required />
                     </div>
                     <div class="form-group">
                         <label for="payment-option">Payment Option <span> * </span> </label>
-                        <select id="payment-option" name="payment-option" required >
+                        <select id="mode_of_payment" name="mode_of_payment" required >
                             <option value="">Select Payment Option</option>
+                            <option value="GCash">GCash</option>
+                            <option value="Maya">Maya</option>
+                            <option value="BPI">BPI</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="ref-number">Ref Number <span> * </span> </label>
-                        <input id="ref-number" name="ref-number" type="text" placeholder="Required" required />
+                        <input id="reference_number" name="reference_number" type="text" placeholder="" required />
                     </div>
  <!--SUBMIT FORM --><button class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
                 </div>
