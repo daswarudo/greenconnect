@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
 
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 <!-- naa sa public/css folder ang css, ignore css sa resources sdfasfda-->
@@ -16,24 +16,14 @@
 
 <script src="login.js"></script>
 <div class="container" id="container">
-	<div class="form-container sign-up-container">
-		<form action="#">
-			<h1>Create Account</h1>
-			
-			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<button>Sign Up</button>
-		</form>
-	</div>
+	
 	<div class="form-container sign-in-container">
-		<form action="#">
+		<form action="#">				<!-- LOGIN FORM -->
 			<h1>Sign In</h1>
 			
-			<h3>Username</h3>
+			<h3><i class="fa fa-user"></i> Username</h3>
 			<input type="text" placeholder="Username" />
-            <h3>Password </h3>
+            <h3><i class='fas fa-lock'></i> Password </h3>
 			<input type="password" placeholder="Password" />
 			<a href="#">Forgot your password?</a>
 			<button>Sign In</button>

@@ -31,10 +31,10 @@
             <ul class="navbar-nav ms-auto">
                 <!-- Links -->
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">HOME</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('welcome') }}">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#flex-container">SUBSCRIPTION</a>
+                    <a class="nav-link" id="subscription-link" style="cursor: pointer;">SUBSCRIPTION</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">LOGIN</a>
@@ -229,6 +229,16 @@
             moreText.style.display = "inline";
         }
     }
+
+
+    //redirect to Subscription Cards
+    document.getElementById('subscription-link').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default anchor behavior
+
+        document.getElementById('flex-container').scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
 </script>
 
 <!-- Bootstrap JS and dependencies (optional) -->
