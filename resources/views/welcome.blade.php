@@ -34,7 +34,7 @@
                     <a class="nav-link active" aria-current="page" href="#">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('subscribers') }}">SUBSCRIPTION</a>
+                    <a class="nav-link" href="#flex-container">SUBSCRIPTION</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">LOGIN</a>
@@ -59,8 +59,8 @@
     
 </div>
 <!-- 4 boxes-->
-<div class = "div-2">
-    <div class = "flex-container">
+<div class = "div-2" id="flex-container">
+    <div class = "flex-container" >
         <div class = "flex-item">
             <div>  <!-- temporary because krazy css-->
                 <div style = "text-align:center;">

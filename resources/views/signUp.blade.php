@@ -75,6 +75,10 @@
                         <input id="diet_reco" name="diet_reco" type="text" placeholder="Ex. Less red meat"/>
                     </div>
                     <div class="form-group">
+                        <label for="health_condition">Health Condition</label>
+                        <input id="health_condition" name="health_condition" type="text" placeholder="Ex. High Cholesterol"/>
+                    </div>
+                    <div class="form-group">
                          <label for="diet_reco">Food Preference</label>
                           <select id="diet_reco" name="diet_reco" class="form-control" >
                            <option value="">Select Food Preference</option>
