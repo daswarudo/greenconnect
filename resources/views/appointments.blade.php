@@ -12,6 +12,30 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: '/events',
+                selectable: true,
+                select: function(info) {
+                    var title = prompt('Event Title:');
+                    if (title) {
+                        axios.post('/events', {
+                            title: title,
+                            start: info.startStr,
+                            end: info.endStr
+                        }).then(response => {
+                            calendar.addEvent(response.data);
+                        });
+                    }
+                }
+            });
+            calendar.render();
+        });
+    </script>
+
     <!-- temporary-->
 	<script> 
         
@@ -32,6 +56,10 @@
     </h1>
    </div>
    
+   <div style="width: 70%; height: auto; padding: 5vh; margin: 0 auto; text-align: center;">
+    <div id="calendar"></div>
+</div>
+
 
 <!-- Bootstrap JS and dependencies (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
