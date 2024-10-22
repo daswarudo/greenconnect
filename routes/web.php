@@ -27,6 +27,10 @@ Route::get('/rdnDashboard', function () {
     return view('rdnDashboard');
 })->name('rdnDashboard');
 
+Route::get('/appointments', function () {
+    return view('appointments');
+})->name('appointments');
+
 Route::get('/events', [EventController::class, 'index']);
 Route::post('/events', [EventController::class, 'store']);
 Route::get('/events/{id}', [EventController::class, 'show']);
