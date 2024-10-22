@@ -31,7 +31,7 @@
     </i>
     Subscribers
    </a>
-   <a href="#">
+   <a href="{{route('appointments')}}">
     <i class="fas fa-calendar-alt">
     </i>
     Appointments

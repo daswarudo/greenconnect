@@ -12,6 +12,30 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: '/events',
+                selectable: true,
+                select: function(info) {
+                    var title = prompt('Event Title:');
+                    if (title) {
+                        axios.post('/events', {
+                            title: title,
+                            start: info.startStr,
+                            end: info.endStr
+                        }).then(response => {
+                            calendar.addEvent(response.data);
+                        });
+                    }
+                }
+            });
+            calendar.render();
+        });
+    </script>
+
     <!-- temporary-->
 	<script> 
         
@@ -29,78 +53,13 @@
    <div class="header">
     <h1>
      WELCOME, RDN
-        
+    </h1>
    </div>
-   <div class="tabs">
-    <button>
-     Weight Loss
-    </button>
-    <button>
-     Weight Gain
-    </button>
-    <button>
-     Therapeutic
-    </button>
-    <button>
-     Gluten Free
-    </button>
-   </div>
-   <h2>
-    List of Subscribers
-   </h2>
-   <table>
-    <tr>
-     <th>
-      First Name
-     </th>
-     <th>
-      Last Name
-     </th>
-     <th>
-      Subscription
-     </th>
-     <th>
-      <!--add-->
-     </th>
-     <th>
-      <!--edit-->
-     </th>
-     <th>
-      <!--delete-->
-     </th>
-     
-    </tr>
-    <tr> <!--FOR DATA ROWS-->
-     <td>
-      <!--FIRSTNAME-->
-     </td>
-     <td>
-      <!--Last nAME-->
-     </td>
-     <td>
-      <!--Subs-->
-     </td>
-     <td>
-      <!--add-->
-      <button class = "crudButtons">
-     Add Customer Info
-    </button>
-     </td>
-     <td>
-     <button class = "crudButtons">
-     Edit Customer Info
-    </button>
-     </td>
-     <td>
-     <button class = "crudButtons">
-     Delete Customer Info
-    </button>
-    </td>
-    </tr>
-    
-     
-   </table>
-  </div>
+   
+   <div style="width: 70%; height: auto; padding: 5vh; margin: 0 auto; text-align: center;">
+    <div id="calendar"></div>
+</div>
+
 
 <!-- Bootstrap JS and dependencies (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
