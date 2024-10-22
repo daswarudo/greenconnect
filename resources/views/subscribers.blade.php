@@ -32,7 +32,7 @@
         
    </div>
    <div class="tabs">
-    <button >
+    <button>
      Weight Loss
     </button>
     <button>
@@ -57,29 +57,18 @@
       Last Name
      </th>
      <th>
-      Sex
+      Subscription
      </th>
      <th>
-      Age
+      <!--add-->
      </th>
      <th>
-      Height(cm)
+      <!--edit-->
      </th>
      <th>
-      Weight(kg)
+      <!--delete-->
      </th>
-     <th>
-      Address
-     </th>
-     <th>
-      Contact Number
-     </th>
-     <th>
-      Allergy
-     </th>
-    <th>
-     Food Preference
-     </th>
+     
     </tr>
     <tr> <!--FOR DATA ROWS-->
      <td>
@@ -89,28 +78,23 @@
       <!--Last nAME-->
      </td>
      <td>
-      <!--SEX-->
+      <!--Subs-->
      </td>
      <td>
-      <!--AGE-->
+      <!--add-->
+      <button class = "crudButtons">
+     Add Customer Info
+    </button>
      </td>
      <td>
-      <!--Height-->
+     <button class = "crudButtons">
+     Edit Customer Info
+    </button>
      </td>
      <td>
-      <!--Weight-->
-     </td>
-     <td>
-      <!--Address-->
-     </td>
-     <td>
-      <!--Contact Number-->
-     </td>
-     <td>
-      <!--ALLERGY-->
-     </td>
-     <td>
-        <!--Food Preference-->
+     <button class = "crudButtons">
+     Delete Customer Info
+    </button>
     </td>
     </tr>
     
