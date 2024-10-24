@@ -49,8 +49,7 @@
     <h1>
      WELCOME, RDN
     </h1>
-    <i class="fas fa-user-circle">
-    </i>
+    
    </div>
    <div class="dashboard">
     <h2>

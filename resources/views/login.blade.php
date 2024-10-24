@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Login</title>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 <!-- naa sa public/css folder ang css, ignore css sa resources sdfasfda-->
     
@@ -18,15 +20,17 @@
 <div class="container" id="container">
 	
 	<div class="form-container sign-in-container">
-		<form action="#">				<!-- LOGIN FORM -->
+		
+		<form action="#">
+		<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />				<!-- LOGIN FORM -->
 			<h1>Sign In</h1>
 			
 			<h3><i class="fa fa-user"></i> Username</h3>
 			<input type="text" placeholder="Username" />
             <h3><i class='fas fa-lock'></i> Password </h3>
 			<input type="password" placeholder="Password" />
-			<a href="#">Forgot your password?</a>
-			<button>Sign In</button>
+			
+			<button> Sign In</i></button>
 		</form>
 	</div>
 	<div class="overlay-container mobile-row">

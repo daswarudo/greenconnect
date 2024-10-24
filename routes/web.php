@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 
+
+//RND
+
 Route::get('/', function () {
     return view('welcome');//change to login to view login, welcome=dashboard
 });
@@ -42,5 +45,24 @@ Route::get('/mealplans', function () {
     return view('mealplans');
 })->name('mealplans');
 
+Route::get('/viewsubscriber', function () {
+    return view('viewsubscriber');
+})->name('viewsubscriber');
 
 
+
+// CUSTOMERS
+
+Route::get('/customerDashboard', function () {
+    return view('customerDashboard');
+})->name('customerDashboard');
+
+// LACKING ROUTE SA CUSTOMER APPOINTMENT UNKNOWN PAMAN 
+
+Route::get('/customerFeedback', function () {
+    return view('customerFeedback');
+})->name('customerFeedback');
+
+Route::get('/customerSubscription', function () {
+    return view('customerSubscription');
+})->name('customerSubscription');

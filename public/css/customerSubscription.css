@@ -1,0 +1,82 @@
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+.content h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.subscription-info {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
+.subscription-info table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.subscription-info th, .subscription-info td {
+    padding: 10px;
+    text-align: left;
+}
+.subscription-info th {
+    background-color: #f9f9f9;
+}
+
+span{
+    color: #0fbb7c;
+    font-size: 25px;
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        padding: 10px;
+        box-shadow: none;
+    }
+    .sidebar button {
+        padding: 10px;
+        font-size: 14px;
+    }
+    .content {
+        padding: 10px;
+    }
+    .content h1 {
+        font-size: 20px;
+    }
+    .subscription-info {
+        padding: 10px;
+    }
+    .subscription-info th, .subscription-info td {
+        padding: 5px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        padding: 5px;
+    }
+    .sidebar button {
+        padding: 8px;
+        font-size: 12px;
+    }
+    .content {
+        padding: 5px;
+    }
+    .content h1 {
+        font-size: 18px;
+    }
+    .subscription-info {
+        padding: 5px;
+    }
+    .subscription-info th, .subscription-info td {
+        padding: 3px;
+        font-size: 12px;
+    }
+}
