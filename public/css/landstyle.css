@@ -65,12 +65,13 @@
     .flex-item2 {
         margin: 4vh;
         width: 40vh;
+        height: 70vh;
         background-color: #f9f5e7;
         justify-content: center;
         align-items: left;
         text-align: left; /* align */
         display: flex;
-        flex-direction: column;
+        flex-direction: column;/**/
         padding: 3vh 3vh 3vh 3vh;
         box-shadow: 10px 5px 1px rgba(0, 0, 0, 0.6);
         border-radius: 20px;
@@ -87,7 +88,8 @@
         display: block;
         width: 150px;
         height: auto;
-        transform: translateX(50%);
+        padding-left: 10vh;
+        /*transform: translateX(50%);*/
     }
 
     .feature-box {
