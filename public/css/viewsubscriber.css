@@ -77,6 +77,7 @@ body {
     background-color: #e0e0e0;
     padding: 20px;
     display: flex;
+    line-height: 4vh;
     justify-content: space-between;
     align-items: center;
 }
@@ -101,8 +102,8 @@ body {
     text-align: center;
 }
 .details .photo img {
-    width: 100px;
-    height: 100px;
+    width: 275px;
+    height: auto;
     background-color: white;
     border: 1px solid #ddd;
 }
@@ -110,10 +111,12 @@ body {
     margin-top: 10px;
 }
 .details .close {
-    font-size: 24px;
+    
+
+    font-size: 33px;
     cursor: pointer;
     border: 1px solid #4caf50;
-    padding: 5px;
+    padding: 12px;
     border-radius: 50%;
     color: #4caf50;
 }
@@ -124,6 +127,28 @@ body {
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 4px;
+    font-size: 16px;
+}
+.close{
+    overflow: hidden;
+    position: relative;
+    top: -27vh;
+    background-color: white;
+}
+.save{
+    padding-top:2vh;
+    width:100%;
+}
+.saveButton{
+    margin-left: auto; /* Moves Div 4 to the rightmost position */
+    display: flex;
+    justify-content: flex-end; /* Ensures content is aligned to the right within Div 4 */
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    background-color: #0fbb7c;
+    color: white;
+    cursor: pointer;
     font-size: 16px;
 }
 
@@ -145,6 +170,7 @@ body {
         width: 160px;
     }
     .details {
+        flex-wrap: wrap;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
@@ -158,4 +184,5 @@ body {
     .details .close {
         margin-top: 0;
     }
+    
 }

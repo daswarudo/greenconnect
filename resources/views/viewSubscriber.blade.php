@@ -49,55 +49,60 @@
    <div class="details">
             <div class="info">
              <p>
-              Joe
+              <b>Firstname:</b> Joe
              </p>
              <p>
-              Amistoso
+             <b>Last Name:</b> Amistoso
              </p>
              <p>
-              35
+             <b>Age:</b> 35
              </p>
              <p>
-              M
+             <b>Gender:</b> M
              </p>
              <p>
-              Larena Drive, 123, Taclob, Dumaguete City
+             <b>Address:</b> Larena Drive, 123, Taclobo, Dumaguete City
              </p>
              <p>
-              Contact Number: 09391102031
+             <b>Contact Number:</b> 09391102031
              </p>
              <p>
-              Weight (kg): 85
+             <b>Weight (kg):</b> 85
              </p>
              <p>
-              Height (cm): 170
+             <b>Height (cm):</b> 170
              </p>
              <p>
-              Diet Recommended: Weight Loss
+             <b>Diet Recommended:</b> Weight Loss
              </p>
              <p>
-              Health Condition: High Cholesterol
+             <b>Health Condition:</b> High Cholesterol
              </p>
              <p>
-              BMI:
+             <b>BMI:</b>
              </p>
              <p>
-              Daily Calorie:
+             <b>Daily Calorie:</b>
              </p>
              <p>
-              Activity Level: Moderate
+             <b>Activity Level:</b> Moderate
              </p>
             </div>
             <div class="photo">
-                <img alt="Customer ID" height="100" src="" width="100"/>
+                <img alt="Customer ID" height="100" src="{{ asset('images/freepik3.jpg') }}" width="100" style="border-radius:50%;"/>
                 <p>
                  Customer ID
                 </p>
             </div>
                <div class="close">
-                X
+               &#10006
                </div>
-   
+            <!-- save button-->
+             <div class="save">
+                <button class = "saveButton">
+                    SAVE
+                </button>
+            </div>
   </div>
 
 <!-- Bootstrap JS and dependencies (optional) -->
