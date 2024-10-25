@@ -51,5 +51,26 @@
 <!-- Bootstrap JS and dependencies (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const sidebarLinks = document.querySelectorAll('.sidebar a');
+    const currentUrl = window.location.href;
+
+    
+    sidebarLinks.forEach(link => {
+        
+        if (link.href === currentUrl) {
+            
+            link.classList.add('active');
+        }
+        
+       
+        link.addEventListener('click', function() {
+            sidebarLinks.forEach(item => item.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+});
+</script>
 </body>
 </html>

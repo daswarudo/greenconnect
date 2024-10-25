@@ -49,7 +49,7 @@
    <div class="details">
             <div class="info">
              <p>
-              <b>Firstname:</b> Joe
+              <b>First Name:</b> Joe
              </p>
              <p>
              <b>Last Name:</b> Amistoso
@@ -58,7 +58,7 @@
              <b>Age:</b> 35
              </p>
              <p>
-             <b>Gender:</b> M
+             <b>Sex:</b> M
              </p>
              <p>
              <b>Address:</b> Larena Drive, 123, Taclobo, Dumaguete City

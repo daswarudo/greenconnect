@@ -42,7 +42,11 @@ border: 1px solid  dd;
 padding:10px;
 border-radius: 5px;
 }
-
+.sidebar a.active {
+    background-color: #599c7b; /* Change background color */
+    color: white; /* Text color when active */
+    box-shadow: 2px 3px #5a5a5a; /* Optional: Adjust the shadow when active */
+}
 .sidebar a i {
 margin-right: 15px;
 }
