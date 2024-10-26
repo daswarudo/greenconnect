@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
-
+use App\Http\Controllers\CustomerController;
 
 //RND
 
@@ -66,3 +66,6 @@ Route::get('/customerFeedback', function () {
 Route::get('/customerSubscription', function () {
     return view('customerSubscription');
 })->name('customerSubscription');
+
+//SignUp
+Route::post('/register-customer', [CustomerController::class, 'store'])->name('customer.store');

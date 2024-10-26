@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->dateTime('start');
-            $table->dateTime('end');
+        Schema::create('subscription_type', function (Blueprint $table) {
+            $table->id('subscription_type_id'); // Primary Key
+            $table->string('plan_name');
+            $table->text('description');
+            $table->decimal('price', 8, 2);
+            $table->boolean('isAvailable_consult'); // e.g. true or false
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        //
     }
 };
