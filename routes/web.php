@@ -16,8 +16,17 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'auth'])->name('login.auth');
 
 Route::get('/signUp', [SignUpController::class, 'index'])->name('signUp');
+
+Route::get('/sign1', function(){
+    return view('sign1');
+});
+Route::get('/sign2', function(){
+    return view('sign2');
+});
+
 
 Route::get('/subscribers', [SubscribersController::class, 'index'])->name('subscribers');
 

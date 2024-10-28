@@ -47,7 +47,7 @@
   <div class="content">
    <div class="header">
     <h1>
-     WELCOME, RDN
+     WELCOME
     </h1>
     
    </div>

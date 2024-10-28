@@ -21,14 +21,15 @@
 	
 	<div class="form-container sign-in-container">
 		
-		<form action="#">
+		<form action="{{route("login.auth")}}" method="POST">
+			@csrf
 		<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />				<!-- LOGIN FORM -->
 			<h1>Sign In</h1>
 			
 			<h3><i class="fa fa-user"></i> Username</h3>
-			<input type="text" placeholder="Username" />
+			<input type="text" placeholder="Username" name="username"/>
             <h3><i class='fas fa-lock'></i> Password </h3>
-			<input type="password" placeholder="Password" />
+			<input type="password" placeholder="Password" name="password" />
 			
 			<button> Sign In</i></button>
 		</form>
