@@ -75,7 +75,7 @@
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
                 <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
             </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
+            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
 
         </div>
         <div class = "flex-item">
@@ -92,7 +92,7 @@
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
                 <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
             </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
+            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
 
         </div>
     </div>
@@ -113,7 +113,7 @@
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
                 <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
             </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
+            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
 
         </div>
         <div class = "flex-item">
@@ -130,7 +130,7 @@
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
                 <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
             </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
+            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
 
         </div>
     </div>
