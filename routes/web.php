@@ -1,38 +1,29 @@
 <?php
 
+use App\Http\Controllers\AppointmentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
-
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RdnDashboardController;
+use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\SubscribersController;
+use App\Http\Controllers\viewsubscriberController;
+use App\Http\Controllers\WelcomeController;
 
 //RND
 
-Route::get('/', function () {
-    return view('welcome');//change to login to view login, welcome=dashboard
-});
+Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 
-Route::get('/welcome', function () {//dashboard
-    return view('welcome');
-})->name('welcome');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/signUp', [SignUpController::class, 'index'])->name('signUp');
 
-Route::get('/signUp', function () {
-    return view('signUp');
-})->name('signUp');
+Route::get('/subscribers', [SubscribersController::class, 'index'])->name('subscribers');
 
-Route::get('/subscribers', function () {
-    return view('subscribers');
-})->name('subscribers');
+Route::get('/rdnDashboard', [RdnDashboardController::class, 'index'])->name('rdnDashboard');
 
-Route::get('/rdnDashboard', function () {
-    return view('rdnDashboard');
-})->name('rdnDashboard');
-
-Route::get('/appointments', function () {
-    return view('appointments');
-})->name('appointments');
+Route::get('/appointments', [AppointmentsController::class, 'index'])->name('appointments');
 
 Route::get('/events', [EventController::class, 'index']);
 Route::post('/events', [EventController::class, 'store']);
@@ -41,13 +32,9 @@ Route::put('/events/{id}', [EventController::class, 'update']);
 Route::delete('/events/{id}', [EventController::class, 'destroy']);
 
 
-Route::get('/mealplans', function () {
-    return view('mealplans');
-})->name('mealplans');
+Route::get('/mealplans', [AppointmentsController::class,'index'])->name('mealplans');
 
-Route::get('/viewsubscriber', function () {
-    return view('viewsubscriber');
-})->name('viewsubscriber');
+Route::get('/viewsubscriber', [viewsubscriberController::class, 'index'])->name('viewsubscriber');
 
 
 
