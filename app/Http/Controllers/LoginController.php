@@ -22,7 +22,6 @@ class LoginController extends Controller
         $user = DB::table('rdn')->where('username', $credentials['username'])->first();
 
         if ($user && password_verify($credentials['password'], $user->password)) {
-            // Authentication passed, perform necessary actions
             return redirect()->intended(route("rdnDashboard"));
         }
 

@@ -82,7 +82,7 @@
             <div>  <!-- temporary because krazy css-->
                 <div style = "text-align:center;">
                     <p style = "font-size:35px;"><b>Weight-Gain Plan</b></p>
-                    <p>High-calorie meals designed for healthy weight gain</p>
+                    <p>High-calorie meals designed for weight gain</p>
                     <p style = "font-size:30px;"><b>₱3300.00/2 weeks</b></p>
                 </div>
 
