@@ -13,6 +13,7 @@
     
 </head>
 <body>
+    
     <div class="container">
         <div class="left-panel">
             <img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100"/>
@@ -21,18 +22,26 @@
             <p>Already have an account?</p>
             <a id="login" href="{{ route('login') }}">SIGN IN</a>
         </div>
-        <form class="right-panel">
+        <form class="right-panel" action="{{ route('register.customer') }}" method="POST"> <!--will find a cleaner way hahah -->
+        <form class="right-panel" action="{{ route('view.subscriptions') }}" method="GET">
+                     @csrf
+                    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{ Session::get('fail') }}</div>
+                    @endif
             <div class="form-container">
                 <div class="form-section diet-program">
                     <h2>Diet Program</h2>
                     <label for="diet-program">Diet Program</label>
-                    <select id="subscription_type_id" name="subscription_type_id" required >
+
+                    <select id="subscription_type_id" name="subscription_type_id" required>
                         <option value="">Select Diet Program</option>
-                        <option value="1">Weight Loss</option>
-                        <option value="2">Weight Gain</option>
-                        <option value="3">Gluten-Free</option>
-                        <option value="4">Therapeutic</option>
+                        @foreach ($subscriptionTypes as $subscriptionType)
+                            <option value="{{ $subscriptionType->subscription_type_id }}">
+                                {{ $subscriptionType->plan_name }}
+                            </option>
+                        @endforeach
                     </select>
+
                     <div class="form-group">
                         <label for="first-name">First Name <span> * </span></label>
                         <input id="first_name" name="first_name" type="text" required />
@@ -188,6 +197,7 @@
                     </div>
                 </div>
             </div>
+        </form>
         </form>
     </div>
 </body>

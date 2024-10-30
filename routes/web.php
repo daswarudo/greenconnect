@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\LoginRegisterController;
 
 
 //RND
@@ -49,8 +50,6 @@ Route::get('/viewsubscriber', function () {
     return view('viewsubscriber');
 })->name('viewsubscriber');
 
-
-
 // CUSTOMERS
 
 Route::get('/customerDashboard', function () {
@@ -66,3 +65,7 @@ Route::get('/customerFeedback', function () {
 Route::get('/customerSubscription', function () {
     return view('customerSubscription');
 })->name('customerSubscription');
+
+//backend
+Route::get('/signUp',[LoginRegisterController::class,'viewSubs'])->name('view.subscriptions');
+Route::post('/signUp',[LoginRegisterController::class,'register'])->name('register.customer');
