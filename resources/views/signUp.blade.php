@@ -33,7 +33,7 @@
                     <h2>Diet Program</h2>
                     <label for="diet-program">Diet Program</label>
 
-                    <select id="subscription_type_id" name="subscription_type_id" required>
+                    <select id="subscription_type_id" name="subscription_type_id" required><!-- query subs type-->
                         <option value="">Select Diet Program</option>
                         @foreach ($subscriptionTypes as $subscriptionType)
                             <option value="{{ $subscriptionType->subscription_type_id }}">
@@ -65,12 +65,18 @@
                     </div>
                     <div class="form-group">
                         <label for="height">Height (cm) <span> * </span></label>
-                        <input id="height" name="height" type="number" required />
+                        <input id="height" name="height" type="number"  step="0.01" value="{{ old('height') }}" oninput="calculateBMI()" required />
                     </div>
                     <div class="form-group">
                         <label for="weight">Weight (kg) <span> * </span></label>
-                        <input id="weight" name="weight" type="number" required />
+                        <input id="weight" name="weight" type="number"  step="0.01" value="{{ old('weight') }}" oninput="calculateBMI()" required />
                     </div>
+
+                    <div class="form-group">
+                        <label for="bmi">BMI <span> * </span></label>
+                        <input type="text" name="bmi" id="bmi" class="form-control" readonly>
+                    </div>
+
                     <div class="form-group">
                         <label for="delivery-address">Delivery Address</label>
                         <input id="address" name="address" type="text" required />
@@ -112,11 +118,11 @@
                     <h2>Account and Payment</h2>
                     <div class="form-group">
                         <label for="username">Username <span> * </span></label>
-                        <input id="username" name="username" type="text"/ placholder="Desired Username" required />
+                        <input id="username" name="username" type="text"/ placholder="username" required />
                     </div>
                     <div class="form-group">
                         <label for="password">Password <span> * </span></label>
-                        <input id="password" name="password" type="password" placholder="Desired Username" required />
+                        <input id="password" name="password" type="password" placholder="password" required />
                     </div>
                     <div class="form-group">
                         <label for="payment-option">Payment Option <span> * </span> </label>
@@ -131,7 +137,10 @@
                         <label for="ref-number">Ref Number <span> * </span> </label>
                         <input id="reference_number" name="reference_number" type="text" placeholder="" required />
                     </div>
- <!--SUBMIT FORM --><button class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
+ <!--SUBMIT FORM --><button type ="submit" class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
+
+
+
                 </div>
                 <div class="form-section allergies">
                     <h2>Allergies</h2>
@@ -212,6 +221,24 @@
         // Show the selected step
         document.getElementById('step' + stepNumber).classList.remove('hidden');
     }
+    //bmi calculator
+    function calculateBMI() {
+            // Get weight and height values
+            let weight = parseFloat(document.getElementById('weight').value);
+            let height = parseFloat(document.getElementById('height').value);
+
+            // Check if both weight and height are valid numbers
+            if (!isNaN(weight) && !isNaN(height) && height > 0) {
+                // Convert height to meters if in cm
+                if (height > 3) {
+                    height = height / 100; // Assuming input in cm, convert to m
+                }
+                // Calculate BMI
+                let bmi = weight / (height * height);
+                // Set the calculated BMI to the BMI input field with two decimal places
+                document.getElementById('bmi').value = bmi.toFixed(2);
+            }
+        }
   </script>
 
 <!-- Bootstrap JS and dependencies (optional) -->

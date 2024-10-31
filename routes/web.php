@@ -19,10 +19,6 @@ Route::get('/login', function () {
     return view('login');
 })->name('login');
 
-Route::get('/signUp', function () {
-    return view('signUp');
-})->name('signUp');
-
 Route::get('/subscribers', function () {
     return view('subscribers');
 })->name('subscribers');
@@ -67,6 +63,6 @@ Route::get('/customerSubscription', function () {
 })->name('customerSubscription');
 
 //backend
-Route::get('/signUp', [LoginRegisterController::class, 'showSignUpPage'])->name('signUp');
+//Route::get('/signUp', [LoginRegisterController::class, 'showSignUpPage'])->name('signUp');
 Route::get('/signUp',[LoginRegisterController::class,'viewSubs'])->name('view.subscriptions');
 Route::post('/signUp',[LoginRegisterController::class,'register'])->name('register.customer');

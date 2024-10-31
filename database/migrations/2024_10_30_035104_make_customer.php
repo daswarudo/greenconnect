@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customer', function (Blueprint $table) {
-            $table->integer('customer_id')->primary(); // Primary Key
+            $table->integer('customer_id')->autoIncrement()->primary();
+
             $table->string('first_name', 255)->nullable();
             $table->string('last_name', 255)->nullable();
             $table->string('address', 255)->nullable();

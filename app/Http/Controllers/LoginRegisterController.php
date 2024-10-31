@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Customer; 
+use Illuminate\Support\Facades\Hash;
+
 use App\Models\SubscriptionType;
 
 class LoginRegisterController extends Controller
 {
+    public function showSignUpPage()
+    {
+        return view('signUp'); // Make sure signUp.blade.php is located in the resources/views folder
+    }
+
     public function register(Request $request)
     {
         // Validation rules
@@ -24,7 +33,7 @@ class LoginRegisterController extends Controller
             'daily_calorie' => 'nullable|integer',
             'activity_level' => 'nullable|string|max:255',
             'username' => 'required|string|max:255|unique:customer,username',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|min:7|max:15',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'subscription_id' => 'nullable|exists:subscription_type,subscription_type_id'
         ]);
@@ -61,7 +70,8 @@ class LoginRegisterController extends Controller
         $customer->save();
 
         // Return success response
-        return response()->json(['message' => 'Registration successful', 'customer' => $customer], 201);
+        //return response()->json(['message' => 'Registration successful', 'customer' => $customer], 201);
+        return redirect('/');
     }
 
     public function viewSubs()
