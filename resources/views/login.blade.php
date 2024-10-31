@@ -44,7 +44,7 @@
 				<h1>WELCOME TO GREEN CONNECT </h1>
 				<p>GREEN CHEF'S PORTAL TO NUTRITION </p>
                 <p>Don't have an account? </p>
-				<a class="ghost" id="signUp" href="{{ route('signUp') }}">Sign Up</a><!-- add later-->
+				<a class="ghost" id="signUp" href="/signUp">Sign Up</a><!-- add later-->
 			</div>
 		</div>
 	</div>

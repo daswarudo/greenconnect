@@ -67,5 +67,6 @@ Route::get('/customerSubscription', function () {
 })->name('customerSubscription');
 
 //backend
+Route::get('/signUp', [LoginRegisterController::class, 'showSignUpPage'])->name('signUp');
 Route::get('/signUp',[LoginRegisterController::class,'viewSubs'])->name('view.subscriptions');
 Route::post('/signUp',[LoginRegisterController::class,'register'])->name('register.customer');
