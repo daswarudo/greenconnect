@@ -15,7 +15,11 @@
     
 </head>
 <body>
-
+@if(session('message'))
+			<div class="alert alert-success">
+				{{ session('message') }}
+			</div>
+		@endif
 <script src="login.js"></script>
 <div class="container" id="container">
 	
@@ -23,11 +27,7 @@
 
 
 		<form method="POST" action="{{ route('login.user') }}">
-		@if(session('message'))
-			<div class="alert alert-success">
-				{{ session('message') }}
-			</div>
-		@endif
+		
 		@csrf
 		@if(Session::has('fail'))
             <div class = "alert alert-danger">{{Session::get('fail')}}</div>

@@ -13,11 +13,7 @@
 </head>
 
 <body>
-@if(session('message'))
-			<div class="alert alert-success">
-				{{ session('message') }}
-			</div>
-		@endif
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container-fluid">
@@ -49,8 +45,13 @@
         </div>
     </div>
 </nav>
-
+@if(session('message'))
+			<div class="alert alert-success">
+				{{ session('message') }}
+			</div>
+		@endif
 <div class="div-1">
+    
     <div class="content">
         <h1 class = "title1"><b>Green Connect</b></h1>
         <h1 class = "title1"><b>Nourish Your Body,</b></h1>
