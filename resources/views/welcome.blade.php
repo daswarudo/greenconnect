@@ -13,7 +13,11 @@
 </head>
 
 <body>
-
+@if(session('message'))
+			<div class="alert alert-success">
+				{{ session('message') }}
+			</div>
+		@endif
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container-fluid">
@@ -37,7 +41,8 @@
                     <a class="nav-link" id="subscription-link" style="cursor: pointer;">SUBSCRIPTION</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">LOGIN</a>
+                    <a class="nav-link ghost" id="login" href="/login">LOGIN</a>
+                    <!--<a class="nav-link" href="{{ route('login') }}">LOGIN</a>-->
                 </li>
                 
             </ul>

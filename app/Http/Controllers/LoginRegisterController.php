@@ -68,15 +68,40 @@ class LoginRegisterController extends Controller
 
         // Save the customer record
         $customer->save();
-
+        session()->flash('message', 'Registration successful! You can now log in.');
         // Return success response
         //return response()->json(['message' => 'Registration successful', 'customer' => $customer], 201);
-        return redirect('/');
+        return redirect()->route('login'); 
     }
 
     public function viewSubs()
     {
         $subscriptionTypes = SubscriptionType::all(); // Fetch all subscription types
         return view('SignUp', compact('subscriptionTypes'));
+    }
+
+    public function loginUser(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        $user = Customer::where('username','=',$request->username)->first();
+
+        if($user)
+        {
+                if(Hash::check($request->password,$user->password))
+                {
+                    session()->flash('message', 'Log In successful!');
+                    $request->session()->put('loginId',$user->customer_id);
+                    return redirect()->route('welcome');
+                }
+                else
+                    return back()->with('fail','Invalid email or password!');
+        }
+            
+        else
+            return back()->with('fail','Account does not exist!');
     }
 }

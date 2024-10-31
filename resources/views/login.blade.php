@@ -20,17 +20,27 @@
 <div class="container" id="container">
 	
 	<div class="form-container sign-in-container">
-		
-		<form action="#">
+
+
+		<form method="POST" action="{{ route('login.user') }}">
+		@if(session('message'))
+			<div class="alert alert-success">
+				{{ session('message') }}
+			</div>
+		@endif
+		@csrf
+		@if(Session::has('fail'))
+            <div class = "alert alert-danger">{{Session::get('fail')}}</div>
+        @endif
+
 		<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />				<!-- LOGIN FORM -->
 			<h1>Sign In</h1>
 			
 			<h3><i class="fa fa-user"></i> Username</h3>
-			<input type="text" placeholder="Username" />
+			<input type="username" class="form-control" id="username" placeholder="username" name="username" required>
             <h3><i class='fas fa-lock'></i> Password </h3>
-			<input type="password" placeholder="Password" />
-			
-			<button> Sign In</i></button>
+			<input type="password" class="form-control" id="password" placeholder="password" name="password" required>
+			<button type="submit">Login</button>
 		</form>
 	</div>
 	<div class="overlay-container mobile-row">

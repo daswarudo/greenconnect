@@ -66,3 +66,7 @@ Route::get('/customerSubscription', function () {
 //Route::get('/signUp', [LoginRegisterController::class, 'showSignUpPage'])->name('signUp');
 Route::get('/signUp',[LoginRegisterController::class,'viewSubs'])->name('view.subscriptions');
 Route::post('/signUp',[LoginRegisterController::class,'register'])->name('register.customer');
+
+Route::post('/login', [LoginRegisterController::class, 'loginUser'])->name('login.user');
+
+//login customer
