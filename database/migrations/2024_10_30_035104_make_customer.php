@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('profile_picture')->nullable(); // For storing profile picture path
             
             // Foreign key to subscription_type table
-            $table->unsignedBigInteger('subscription_id')->nullable();
-            $table->foreign('subscription_id')->references('subscription_type_id')->on('subscription_type')->onDelete('cascade');
+            $table->unsignedBigInteger('subscription_type_id')->nullable();
+            $table->foreign('subscription_type_id')->references('subscription_type_id')->on('subscription_type')->onDelete('cascade');
 
             $table->timestamps(); // Adds created_at and updated_at columns
         });

@@ -23,7 +23,7 @@
             <a id="login" href="{{ route('login') }}">SIGN IN</a>
         </div>
         <form class="right-panel" action="{{ route('register.customer') }}" method="POST"> <!--will find a cleaner way hahah -->
-        <form class="right-panel" action="{{ route('view.subscriptions') }}" method="GET">
+        <!--<form class="right-panel" action="{{ route('view.subscriptions') }}" method="GET">-->
                      @csrf
                     @if(Session::has('fail'))
                         <div class="alert alert-danger">{{ Session::get('fail') }}</div>
@@ -206,7 +206,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        <!--</form>-->
         </form>
     </div>
 </body>
