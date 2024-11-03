@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Customer; 
 use App\Models\SubscriptionType;
+use App\Models\Subscriptions;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -76,67 +77,70 @@ class LoginRegisterController extends Controller
         return redirect()->route('login'); 
     }*/
     public function register(Request $request)
-    {
-        // Validation rules
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'age' => 'nullable|integer',
-            'sex' => 'nullable|string|max:50',
-            'weight' => 'nullable|numeric|between:0,999.99',
-            'height' => 'nullable|numeric|between:0,999.99',
-            'diet_recom' => 'nullable|string|max:255',
-            'health_condition' => 'nullable|string|max:255',
-            'bmi' => 'nullable|numeric|between:0,999.99',
-            'daily_calorie' => 'nullable|integer',
-            'activity_level' => 'nullable|string|max:255',
-            'username' => 'required|string|max:255|unique:customer,username',
-            'password' => 'required|min:7|max:15',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'subscription_type_id' => [
-                'nullable',
-                Rule::exists('subscription_type', 'subscription_type_id')
-            ],
-        ]);
+{
+    // Validation rules
+    $validator = Validator::make($request->all(), [
+        'first_name' => 'nullable|string|max:255',
+        'last_name' => 'nullable|string|max:255',
+        'address' => 'nullable|string|max:255',
+        'age' => 'nullable|integer',
+        'sex' => 'nullable|string|max:50',
+        'weight' => 'nullable|numeric|between:0,999.99',
+        'height' => 'nullable|numeric|between:0,999.99',
+        'diet_recom' => 'nullable|string|max:255',
+        'health_condition' => 'nullable|string|max:255',
+        'bmi' => 'nullable|numeric|between:0,999.99',
+        'daily_calorie' => 'nullable|integer',
+        'activity_level' => 'nullable|string|max:255',
+        'username' => 'required|string|max:255|unique:customer,username',
+        'password' => 'required|min:7|max:15',
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'subscription_type_id' => 'required|exists:subscription_type,subscription_type_id', // Expecting subscription type ID
+    ]);
 
-        // Return validation errors if any
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+    // Return validation errors if any
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
 
-        // Create customer record
-        $customer = new Customer();
-        $customer->first_name = $request->input('first_name');
-        $customer->last_name = $request->input('last_name');
-        $customer->address = $request->input('address');
-        $customer->age = $request->input('age');
-        $customer->sex = $request->input('sex');
-        $customer->weight = $request->input('weight');
-        $customer->height = $request->input('height');
-        $customer->diet_recom = $request->input('diet_recom');
-        $customer->health_condition = $request->input('health_condition');
-        $customer->bmi = $request->input('bmi');
-        $customer->daily_calorie = $request->input('daily_calorie');
-        $customer->activity_level = $request->input('activity_level');
-        $customer->username = $request->input('username');
-        $customer->password = Hash::make($request->input('password'));
+    // Create subscription record
+    $subscription = new Subscriptions();
+    $subscription->start_date = now(); // Set start date to now
+    $subscription->subscription_type_id = $request->input('subscription_type_id');
+    $subscription->save(); // Save the subscription record
 
-        // Assign subscription_type_id
-        $customer->subscription_type_id = $request->input('subscription_type_id');
+    // Create customer record
+    $customer = new Customer();
+    $customer->first_name = $request->input('first_name');
+    $customer->last_name = $request->input('last_name');
+    $customer->address = $request->input('address');
+    $customer->age = $request->input('age');
+    $customer->sex = $request->input('sex');
+    $customer->weight = $request->input('weight');
+    $customer->height = $request->input('height');
+    $customer->diet_recom = $request->input('diet_recom');
+    $customer->health_condition = $request->input('health_condition');
+    $customer->bmi = $request->input('bmi');
+    $customer->daily_calorie = $request->input('daily_calorie');
+    $customer->activity_level = $request->input('activity_level');
+    $customer->username = $request->input('username');
+    $customer->password = Hash::make($request->input('password'));
 
-        // Handle profile picture upload if present
-        if ($request->hasFile('profile_picture')) {
-            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-            $customer->profile_picture = $path;
-        }
+    // Assign the subscription_id from the newly created subscription
+    $customer->subscription_id = $subscription->subscription_id;
 
-        // Save the customer record
-        $customer->save();
-        session()->flash('message', 'Registration successful! You can now log in.');
+    // Handle profile picture upload if present
+    if ($request->hasFile('profile_picture')) {
+        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        $customer->profile_picture = $path;
+    }
 
-        // Redirect to login page after registration
-        return redirect()->route('login'); 
+    // Save the customer record
+    $customer->save();
+    session()->flash('message', 'Registration successful! You can now log in.');
+
+    // Redirect to login page after registration
+    return redirect()->route('login');
     }
 
 
