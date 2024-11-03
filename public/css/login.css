@@ -114,11 +114,6 @@
             min-height: 480px;
         }
 
-        .form-control{
-            width:92%;
-            margin: 2vh;
-        }
-
         .form-container {
             position: absolute;
             top: 0;

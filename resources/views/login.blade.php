@@ -15,20 +15,23 @@
     
 </head>
 <body>
-<form method="POST" action="{{ route('login.user') }}">
-		@csrf
-		@if(Session::has('fail'))
-            <div class = "alert alert-danger">{{Session::get('fail')}}</div>
-        @endif
-		@if(session('message'))
-					<div class="alert alert-success">
-						{{ session('message') }}
-					</div>
-				@endif
+@if(session('message'))
+			<div class="alert alert-success">
+				{{ session('message') }}
+			</div>
+		@endif
 <script src="login.js"></script>
 <div class="container" id="container">
 	
 	<div class="form-container sign-in-container">
+
+
+		<form method="POST" action="{{ route('login.user') }}">
+		
+		@csrf
+		@if(Session::has('fail'))
+            <div class = "alert alert-danger">{{Session::get('fail')}}</div>
+        @endif
 
 		<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />				<!-- LOGIN FORM -->
 			<h1>Sign In</h1>
@@ -38,7 +41,7 @@
             <h3><i class='fas fa-lock'></i> Password </h3>
 			<input type="password" class="form-control" id="password" placeholder="password" name="password" required>
 			<button type="submit">Login</button>
-		
+		</form>
 	</div>
 	<div class="overlay-container mobile-row">
 		<div class="overlay">
@@ -56,10 +59,9 @@
 		</div>
 	</div>
 </div>
-</form>
+
 <!-- Bootstrap JS and dependencies (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>
