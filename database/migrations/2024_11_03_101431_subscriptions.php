@@ -18,7 +18,10 @@ return new class extends Migration
 
             //$table->foreignId('subscription_type_id')->constrained('subscription_types'); // Foreign Key
             $table->unsignedBigInteger('subscription_type_id')->nullable();
-            $table->foreign('subscription_type_id')->references('subscription_type_id')->on('subscription_type')->onDelete('cascade');
+            $table->foreign('subscription_type_id')
+            ->references('subscription_type_id')
+            ->on('subscription_type')
+            ->onDelete('cascade');
 
             $table->timestamps(); // created_at and updated_at
         });
