@@ -77,7 +77,6 @@ class LoginRegisterController extends Controller
     }*/
     public function register(Request $request)
     {
-        /*
         // Validation rules
         $validator = Validator::make($request->all(), [
             'first_name' => 'nullable|string|max:255',
@@ -137,7 +136,7 @@ class LoginRegisterController extends Controller
         session()->flash('message', 'Registration successful! You can now log in.');
 
         // Redirect to login page after registration
-        return redirect()->route('login'); */
+        return redirect()->route('login'); 
     }
 
 
