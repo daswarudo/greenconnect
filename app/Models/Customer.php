@@ -9,7 +9,13 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $table = 'customer';
+    protected $table = 'customer'; // Ensure this matches your database table name
+
+    // Specify the primary key if it's not the default 'id'
+    protected $primaryKey = 'customer_id';
+
+    // If the primary key is not an incrementing integer (e.g., UUID), uncomment the next line
+    // public $incrementing = false;
 
     protected $fillable = [
         'first_name', 'last_name', 'address', 'age', 'sex', 'weight', 'height', 

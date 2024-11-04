@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customer', function (Blueprint $table) {
-            $table->id('customer_id');
+            $table->increments('customer_id'); // Using increments to create a primary key
+            
+            // Define other columns
             $table->string('first_name', 255)->nullable();
             $table->string('last_name', 255)->nullable();
             $table->string('address', 255)->nullable();
@@ -30,7 +32,7 @@ return new class extends Migration
             $table->string('profile_picture')->nullable();
         
             // Foreign key to subscriptions table
-            $table->unsignedBigInteger('subscription_id')->nullable();
+            $table->unsignedInteger('subscription_id')->nullable(); // Use unsignedInteger if it matches your subscriptions table type
             $table->foreign('subscription_id')
                   ->references('subscription_id')
                   ->on('subscriptions')
@@ -38,7 +40,6 @@ return new class extends Migration
         
             $table->timestamps();
         });
-        
     }
 
     /**

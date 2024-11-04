@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\Customer; 
 use App\Models\SubscriptionType;
 use App\Models\Subscriptions;
+use App\Models\Payments;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -38,13 +40,20 @@ class LoginRegisterController extends Controller
             'username' => 'required|string|max:255|unique:customer,username',
             'password' => 'required|min:7|max:15',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'subscription_id' => 'nullable|exists:subscription_type,subscription_type_id'
+            'subscription_type_id' => 'required|exists:subscription_type,subscription_type_id', // Expecting subscription type ID
         ]);
 
         // Return validation errors if any
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+
+        // Create subscription record
+        $subscription = new Subscriptions();
+        $subscription->start_date = now(); // Set start date to now
+        $subscription->subscription_type_id = $request->input('subscription_type_id');
+        $subscription->save(); // Save the subscription record
+
         // Create customer record
         $customer = new Customer();
         $customer->first_name = $request->input('first_name');
@@ -61,7 +70,9 @@ class LoginRegisterController extends Controller
         $customer->activity_level = $request->input('activity_level');
         $customer->username = $request->input('username');
         $customer->password = Hash::make($request->input('password'));
-        $customer->subscription_id = $request->input('subscription_id');
+
+        // Assign the subscription_id from the newly created subscription
+        $customer->subscription_id = $subscription->subscription_id;
 
         // Handle profile picture upload if present
         if ($request->hasFile('profile_picture')) {
@@ -72,9 +83,9 @@ class LoginRegisterController extends Controller
         // Save the customer record
         $customer->save();
         session()->flash('message', 'Registration successful! You can now log in.');
-        // Return success response
-        //return response()->json(['message' => 'Registration successful', 'customer' => $customer], 201);
-        return redirect()->route('login'); 
+
+        // Redirect to login page after registration
+        return redirect()->route('login');
     }*/
     public function register(Request $request)
 {
@@ -95,7 +106,10 @@ class LoginRegisterController extends Controller
         'username' => 'required|string|max:255|unique:customer,username',
         'password' => 'required|min:7|max:15',
         'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'subscription_type_id' => 'required|exists:subscription_type,subscription_type_id', // Expecting subscription type ID
+        'subscription_type_id' => 'required|exists:subscription_type,subscription_type_id',
+        'mode_of_payment' => 'required|string|max:255',
+        'reference_number' => 'required|string|max:20|unique:payments,reference_number',
+        'customer_id' => 'nullable|exists:customer,customer_id', // Added validation for customer_id
     ]);
 
     // Return validation errors if any
@@ -103,45 +117,49 @@ class LoginRegisterController extends Controller
         return response()->json(['errors' => $validator->errors()], 422);
     }
 
-    // Create subscription record
-    $subscription = new Subscriptions();
-    $subscription->start_date = now(); // Set start date to now
-    $subscription->subscription_type_id = $request->input('subscription_type_id');
-    $subscription->save(); // Save the subscription record
+    // Use a transaction to ensure atomicity
+    DB::transaction(function () use ($request) {
+        // Create subscription record
+        $subscription = Subscriptions::create([
+            'start_date' => now(),
+            'subscription_type_id' => $request->input('subscription_type_id'),
+        ]);
 
-    // Create customer record
-    $customer = new Customer();
-    $customer->first_name = $request->input('first_name');
-    $customer->last_name = $request->input('last_name');
-    $customer->address = $request->input('address');
-    $customer->age = $request->input('age');
-    $customer->sex = $request->input('sex');
-    $customer->weight = $request->input('weight');
-    $customer->height = $request->input('height');
-    $customer->diet_recom = $request->input('diet_recom');
-    $customer->health_condition = $request->input('health_condition');
-    $customer->bmi = $request->input('bmi');
-    $customer->daily_calorie = $request->input('daily_calorie');
-    $customer->activity_level = $request->input('activity_level');
-    $customer->username = $request->input('username');
-    $customer->password = Hash::make($request->input('password'));
+        // Create customer record
+        $customer = Customer::create([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'address' => $request->input('address'),
+            'age' => $request->input('age'),
+            'sex' => $request->input('sex'),
+            'weight' => $request->input('weight'),
+            'height' => $request->input('height'),
+            'diet_recom' => $request->input('diet_recom'),
+            'health_condition' => $request->input('health_condition'),
+            'bmi' => $request->input('bmi'),
+            'daily_calorie' => $request->input('daily_calorie'),
+            'activity_level' => $request->input('activity_level'),
+            'username' => $request->input('username'),
+            'password' => Hash::make($request->input('password')),
+            'subscription_id' => $subscription->subscription_id,
+            'profile_picture' => $request->hasFile('profile_picture') ? 
+                $request->file('profile_picture')->store('profile_pictures', 'public') : null,
+        ]);
 
-    // Assign the subscription_id from the newly created subscription
-    $customer->subscription_id = $subscription->subscription_id;
+        // Create payment record
+        Payments::create([
+            'customer_id' => $customer->customer_id, // error here!!!!!!
+            'subscription_type_id' => $subscription->subscription_type_id,
+            'mode_of_payment' => $request->input('mode_of_payment'),
+            'reference_number' => $request->input('reference_number'),
+        ]);
+    });
 
-    // Handle profile picture upload if present
-    if ($request->hasFile('profile_picture')) {
-        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-        $customer->profile_picture = $path;
-    }
-
-    // Save the customer record
-    $customer->save();
     session()->flash('message', 'Registration successful! You can now log in.');
 
     // Redirect to login page after registration
     return redirect()->route('login');
-    }
+}
 
 
     public function viewSubs()

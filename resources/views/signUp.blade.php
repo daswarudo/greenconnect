@@ -107,7 +107,7 @@
                     </div>
                     <div class="form-group">
                          <label for="activity_level">Select Activity Level</label>
-                          <select id="activity_leve" name="activity_level" class="form-control"  required>
+                          <select id="activity_level" name="activity_level" class="form-control"  required>
                            <option value="">Activity Level</option>
                            <option value="Sedentary">Sedentary</option>
                            <option value="Low Active">Low Active</option>
