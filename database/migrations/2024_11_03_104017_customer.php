@@ -32,11 +32,6 @@ return new class extends Migration
             $table->string('profile_picture')->nullable();
         
             // Foreign key to subscriptions table
-            $table->unsignedInteger('subscription_id')->nullable(); // Use unsignedInteger if it matches your subscriptions table type
-            $table->foreign('subscription_id')
-                  ->references('subscription_id')
-                  ->on('subscriptions')
-                  ->onDelete('cascade');
         
             $table->timestamps();
         });

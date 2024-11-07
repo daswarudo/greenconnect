@@ -20,7 +20,7 @@ class Customer extends Model
     protected $fillable = [
         'first_name', 'last_name', 'address', 'age', 'sex', 'weight', 'height', 
         'diet_recom', 'health_condition', 'bmi', 'daily_calorie', 'activity_level', 
-        'username', 'password', 'profile_picture', 'subscription_id'
+        'username', 'password', 'profile_picture'
     ];
 
     protected $hidden = [
