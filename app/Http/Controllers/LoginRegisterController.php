@@ -94,7 +94,7 @@ class LoginRegisterController extends Controller
         $subscriptionTypes = SubscriptionType::all(); // Fetch all subscription types
         return view('SignUp', compact('subscriptionTypes'));
     }
-
+    /*
     public function loginUser(Request $request)
     {
         // Validate the input
@@ -137,5 +137,52 @@ class LoginRegisterController extends Controller
             // If no user is found in either model, send an error
             return back()->with('fail', 'Account does not exist!');
         }
+    }*/
+    public function loginUser(Request $request)
+{
+    // Validate the input
+    $request->validate([
+        'username' => 'required',
+        'password' => 'required'
+    ]);
+
+    // Check if the user is a Customer
+    $user = Customer::where('username', '=', $request->username)->first();
+
+    // If not found as Customer, check if the user is an Rdn
+    if (!$user) {
+        $user = Rdn::where('username', '=', $request->username)->first();
     }
+
+    // If the user exists (either Customer or Rdn)
+    if ($user) {
+        // Verify the password
+        if (Hash::check($request->password, $user->password)) {
+            // Flash a success message and track the user session
+            session()->flash('message', 'Log In successful!');
+
+            // Store the user session with their ID based on the model (Customer or Rdn)
+            if ($user instanceof Customer) {
+                $request->session()->put('loginId', $user->customer_id); // For Customer
+                $request->session()->put('userType', 'customer');
+                
+                // Redirect to the customer-specific welcome page
+                return redirect()->route('welcome');
+            } elseif ($user instanceof Rdn) {
+                $request->session()->put('loginId', $user->id); // For Rdn
+                $request->session()->put('userType', 'rdn');
+                
+                // Redirect to the Rdn-specific welcome page
+                return redirect()->route('rdnDashboard');
+            }
+        } else {
+            // If the password is incorrect, send an error
+            return back()->with('fail', 'Invalid username or password!');
+        }
+    } else {
+        // If no user is found in either model, send an error
+        return back()->with('fail', 'Account does not exist!');
+    }
+}
+
 }
