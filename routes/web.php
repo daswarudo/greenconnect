@@ -52,6 +52,14 @@ Route::get('/customerDashboard', function () {
     return view('customerDashboard');
 })->name('customerDashboard');
 
+Route::get('/homeMealInput', function () {
+    return view('homeMealInput');
+})->name('homeMealInput');
+
+Route::get('/restoMealInput', function () {
+    return view('restoMealInput');
+})->name('restoMealInput');
+
 // LACKING ROUTE SA CUSTOMER APPOINTMENT UNKNOWN PAMAN 
 
 Route::get('/customerFeedback', function () {
