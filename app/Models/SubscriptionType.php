@@ -26,12 +26,12 @@ class SubscriptionType extends Model
         'plan_name',
         'description',
         'price',
-        'isAvailable_consult',
+        //'isAvailable_consult',
     ];
 
     // Optionally, you can add casts for attributes
     protected $casts = [
         'price' => 'decimal:2',
-        'isAvailable_consult' => 'boolean',
+        //'isAvailable_consult' => 'boolean',
     ];
 }

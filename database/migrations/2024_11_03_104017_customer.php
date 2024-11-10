@@ -30,7 +30,13 @@ return new class extends Migration
             $table->string('username', 255)->unique();
             $table->string('password');
             $table->string('profile_picture')->nullable();
-        
+
+            $table->boolean('prefer_pork')->default(false);
+            $table->boolean('prefer_beef')->default(false);
+            $table->boolean('prefer_fish')->default(false);
+            $table->boolean('prefer_chicken')->default(false);
+            $table->boolean('prefer_veggie')->default(false);
+
             // Foreign key to subscriptions table
         
             $table->timestamps();

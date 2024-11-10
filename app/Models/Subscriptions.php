@@ -9,28 +9,36 @@ class Subscriptions extends Model
 {
     use HasFactory;
 
-    // Define the table associated with the model (optional, if the name is not pluralized)
+    // Define the table if the name doesn't follow Laravel's naming convention
     protected $table = 'subscriptions';
 
-    // Specify the primary key if it's not the default 'id'
+    // Define the primary key (if it's not 'id')
     protected $primaryKey = 'subscription_id';
 
-    // Specify which attributes can be mass-assigned
+    // If the primary key is not auto-incrementing
+    public $incrementing = true;
+
+    // Define the fillable attributes (only the attributes you want to allow mass assignment for)
     protected $fillable = [
         'start_date',
         'end_date',
-        'subscription_type_id',
+        'mop', // method of payment
+        'ref_number', // reference number
+        'subscription_type_id', // foreign key to the subscription_type table
+        'customer_id', // foreign key to the customer table
     ];
 
-    // Define a relationship with SubscriptionType (assuming you have a SubscriptionType model)
+    // Define the relationships:
+
+    // Each subscription belongs to a subscription type
     public function subscriptionType()
     {
-        return $this->belongsTo(SubscriptionType::class, 'subscription_type_id', 'subscription_type_id');
+        return $this->belongsTo(SubscriptionType::class, 'subscription_type_id');
     }
 
-    // Define a relationship with Customer (if a subscription can belong to multiple customers)
-    public function customers()
+    // Each subscription belongs to a customer
+    public function customer()
     {
-        return $this->hasMany(Customer::class, 'subscription_id', 'subscription_id');
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }

@@ -93,7 +93,7 @@
                         <label for="health_condition">Health Condition</label>
                         <input id="health_condition" name="health_condition" type="text" placeholder="Ex. High Cholesterol"/>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                          <label for="diet_reco">Food Preference</label>
                           <select id="diet_reco" name="diet_reco" class="form-control" >
                            <option value="">Select Food Preference</option>
@@ -104,7 +104,31 @@
                            <option value="Fruit">Fruit</option>
                            <option value="Vegetable">Vegetable</option>
                           </select>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="food_preferences">Food Preferences</label>
+                        <div>
+                            <input type="checkbox" id="prefer_pork" name="prefer_pork" value="1">
+                            <label for="prefer_pork">Pork</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="prefer_beef" name="prefer_beef" value="1">
+                            <label for="prefer_beef">Beef</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="prefer_fish" name="prefer_fish" value="1">
+                            <label for="prefer_fish">Fish</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="prefer_chicken" name="prefer_chicken" value="1">
+                            <label for="prefer_chicken">Chicken</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="prefer_veggie" name="prefer_veggie" value="1">
+                            <label for="prefer_veggie">Vegetable</label>
+                        </div>
                     </div>
+
                     <div class="form-group">
                          <label for="activity_level">Select Activity Level</label>
                           <select id="activity_level" name="activity_level" class="form-control"  required>
@@ -126,7 +150,7 @@
                     </div>
                     <div class="form-group">
                         <label for="payment-option">Payment Option <span> * </span> </label>
-                        <select id="mode_of_payment" name="mode_of_payment" required >
+                        <select id="mop" name="mop" required >
                             <option value="">Select Payment Option</option>
                             <option value="GCash">GCash</option>
                             <option value="Maya">Maya</option>
@@ -135,14 +159,14 @@
                     </div>
                     <div class="form-group">
                         <label for="ref-number">Ref Number <span> * </span> </label>
-                        <input id="reference_number" name="reference_number" type="text" placeholder="" required />
+                        <input id="ref_number" name="ref_number" type="text" placeholder="" required />
                     </div>
  <!--SUBMIT FORM --><button type ="submit" class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
 
 
 
                 </div>
-                <div class="form-section allergies">
+                <div class="form-section allergies"><!--?????? -->
                     <h2>Allergies</h2>
                     <div class="checkbox-group">
                         <input id="wheat" name="allergies" type="checkbox" value="wheat"/>
