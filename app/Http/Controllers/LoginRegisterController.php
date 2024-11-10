@@ -154,7 +154,7 @@ class LoginRegisterController extends Controller
                 'prefer_fish' => $request->input('prefer_fish', false),
                 'prefer_chicken' => $request->input('prefer_chicken', false),
                 'prefer_veggie' => $request->input('prefer_veggie', false),
-                'status' => 'pending',
+                
             ]);
 
             // Create subscription record
@@ -264,13 +264,13 @@ class LoginRegisterController extends Controller
        // Validate the customer_id
        $request->validate([
         'customer_id' => 'required|exists:subscriptions,customer_id', // Check if customer_id exists in subscriptions
-    ]);
+        ]);
 
-    // Update the sub_status of all subscriptions for the specific customer
-    Subscriptions::where('customer_id', $request->customer_id)
-                ->update(['sub_status' => 'active']);
+        // Update the sub_status of all subscriptions for the specific customer
+        Subscriptions::where('customer_id', $request->customer_id)
+                    ->update(['sub_status' => 'active']);
 
-    // Redirect back to the rdnDashboard with a success message
-    return redirect()->route('rdnDashboard')->with('status', 'All subscriptions for this customer are now active!');
+        // Redirect back to the rdnDashboard with a success message
+        return redirect()->route('rdnDashboard')->with('status', 'All subscriptions for this customer are now active!');
     }
 }

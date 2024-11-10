@@ -160,7 +160,7 @@
                 <input type="hidden" name="customer_id" value="{{ $subscription->customer_id }}">
 
                 <button type="submit" class="crudButtons" style="text-transform: uppercase;">
-                    Mark as Active
+                    {{ $subscription->sub_status }}
                 </button>
             </form>
         </td>
