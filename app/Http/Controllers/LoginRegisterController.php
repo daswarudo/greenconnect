@@ -154,6 +154,7 @@ public function register(Request $request)
             'prefer_fish' => $request->input('prefer_fish', false),
             'prefer_chicken' => $request->input('prefer_chicken', false),
             'prefer_veggie' => $request->input('prefer_veggie', false),
+            'status' => 'pending',
         ]);
 
         // Create subscription record
@@ -163,7 +164,7 @@ public function register(Request $request)
             'mop' => $request->input('mop'),
             'ref_number' => $request->input('ref_number'),
             'subscription_type_id' => $request->input('subscription_type_id'),
-            'subscription_type_id' => $request->input('subscription_type_id'),
+            //'subscription_type_id' => $request->input('subscription_type_id'),
             'customer_id' => $customer->customer_id, // Associate the customer
         ]);
         // Associate the customer with the subscription using the many-to-many relationship
