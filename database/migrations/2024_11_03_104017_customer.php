@@ -37,7 +37,7 @@ return new class extends Migration
             $table->boolean('prefer_chicken')->default(false);
             $table->boolean('prefer_veggie')->default(false);
 
-            // Foreign key to subscriptions table
+            
         
             $table->timestamps();
         });
