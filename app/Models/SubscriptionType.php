@@ -34,4 +34,9 @@ class SubscriptionType extends Model
         'price' => 'decimal:2',
         //'isAvailable_consult' => 'boolean',
     ];
+    
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
 }

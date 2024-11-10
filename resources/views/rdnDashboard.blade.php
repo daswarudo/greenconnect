@@ -145,38 +145,28 @@
         </tr>
     </thead>
     <tbody>
-    @foreach ($subscriptions->where('customer.status', 'pending') as $subscription)
+    @foreach ($subscriptions->where('sub_status', 'pending') as $subscription)
     <tr>
         <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
         <td>{{ $subscription->subscriptionType->plan_name }}</td>
         <td>{{ $subscription->mop ?? 'N/A' }}</td>
         <td>{{ $subscription->ref_number ?? 'N/A' }}</td>
         <td>
-        <form action="{{ route('subscriptions.updateStatus') }}" method="POST">
-    @csrf
-    @method('PATCH')
+            <form action="{{ route('subscriptions.updateStatus') }}" method="POST">
+                @csrf
+                @method('PATCH')
 
-    <!-- Dropdown to select the new status for the customer -->
-    <select name="status" class="form-control">
-        <option value="pending" {{ $subscription->customer->status == 'pending' ? 'selected' : '' }}>Pending</option>
-        <option value="approved" {{ $subscription->customer->status == 'approved' ? 'selected' : '' }}>Approved</option>
-        <option value="canceled" {{ $subscription->customer->status == 'canceled' ? 'selected' : '' }}>Canceled</option>
-    </select>
+                <!-- Hidden field to pass the customer_id -->
+                <input type="hidden" name="customer_id" value="{{ $subscription->customer_id }}">
 
-    <!-- Hidden field to pass the subscription_id -->
-    <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
-
-    <button type="submit" class="crudButtons" style="text-transform: uppercase;">
-        Edit Status
-    </button>
-</form>
-
-
-
-
+                <button type="submit" class="crudButtons" style="text-transform: uppercase;">
+                    Mark as Active
+                </button>
+            </form>
         </td>
     </tr>
 @endforeach
+
 
     </tbody>
 </table>
@@ -200,7 +190,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($subscriptions->where('customer.status', 'active') as $subscription)
+        @foreach ($subscriptions->where('sub_status', 'active') as $subscription)
             <tr>
                 <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
                 <td>{{ $subscription->subscriptionType->plan_name }}</td>

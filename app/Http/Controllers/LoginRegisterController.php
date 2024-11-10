@@ -166,6 +166,7 @@ class LoginRegisterController extends Controller
                 'subscription_type_id' => $request->input('subscription_type_id'),
                 //'subscription_type_id' => $request->input('subscription_type_id'),
                 'customer_id' => $customer->customer_id, // Associate the customer
+                'sub_status' => 'pending',
             ]);
             // Associate the customer with the subscription using the many-to-many relationship
             //$customer->subscriptions()->save($subscription);
@@ -260,31 +261,16 @@ class LoginRegisterController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $request->validate([
-            'status' => 'required|in:pending,approved,canceled',  // Valid statuses
-            'subscription_id' => 'required|exists:subscriptions,id',  // Ensure the subscription exists
-        ]);
+       // Validate the customer_id
+       $request->validate([
+        'customer_id' => 'required|exists:subscriptions,customer_id', // Check if customer_id exists in subscriptions
+    ]);
 
-        // Find the subscription using the subscription_id passed in the request
-        $subscription = Subscription::findOrFail($request->subscription_id);
+    // Update the sub_status of all subscriptions for the specific customer
+    Subscriptions::where('customer_id', $request->customer_id)
+                ->update(['sub_status' => 'active']);
 
-        // Get the customer related to this subscription
-        $customer = $subscription->customer;
-
-        // Update the customer status based on the subscription action
-        if ($request->status == 'approved') {
-            $customer->status = 'active';  // Set customer status to 'active' when subscription is approved
-        } elseif ($request->status == 'canceled') {
-            $customer->status = 'expired'; // Set customer status to 'expired' when subscription is canceled
-        } else {
-            $customer->status = 'pending'; // Default to 'pending' if subscription is pending
-        }
-
-        // Save the updated customer status
-        $customer->save();
-
-        // Redirect with a success message
-        return redirect()->route('subscriptions.index')->with('success', 'Customer status updated successfully.');
+    // Redirect back to the rdnDashboard with a success message
+    return redirect()->route('rdnDashboard')->with('status', 'All subscriptions for this customer are now active!');
     }
-
 }

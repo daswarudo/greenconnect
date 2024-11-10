@@ -26,6 +26,7 @@ class Subscriptions extends Model
         'ref_number', // reference number
         'subscription_type_id', // foreign key to the subscription_type table
         'customer_id', // foreign key to the customer table
+        'sub_status',
     ];
 
     // Define the relationships:

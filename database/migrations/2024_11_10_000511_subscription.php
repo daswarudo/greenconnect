@@ -32,7 +32,7 @@ return new class extends Migration
                 ->on('customer')
                 ->onDelete('cascade');
 
-            //$table->string('sub_status')->default('pending')->nullable();
+            $table->string('sub_status')->default('pending')->nullable();
 
             $table->timestamps(); // created_at and updated_at
         });
