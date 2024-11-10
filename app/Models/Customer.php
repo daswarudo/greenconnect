@@ -40,6 +40,7 @@ class Customer extends Model
         'prefer_fish',
         'prefer_chicken',
         'prefer_veggie',
+        'status',
     ];
 
     // The attributes that should be hidden for arrays.
@@ -66,4 +67,9 @@ class Customer extends Model
     {
         return $this->hasMany(Subscription::class, 'customer_id');
     }*/
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'customer_id'); // 'customer_id' as foreign key in Subscription
+    
+    }
 }

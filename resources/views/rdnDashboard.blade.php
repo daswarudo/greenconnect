@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +35,49 @@
             });
             calendar.render();
         });
+        
+        /*function sortTable(n) {
+        var table = document.getElementById("subscriptionsTable");
+        var rows = Array.from(table.rows).slice(1);
+        var isAscending = table.rows[0].cells[n].getAttribute("data-sort-order") === "asc";
+        
+        rows.sort(function(a, b) {
+            var cellA = a.cells[n].textContent.trim();
+            var cellB = b.cells[n].textContent.trim();
+
+            if (cellA < cellB) return isAscending ? -1 : 1;
+            if (cellA > cellB) return isAscending ? 1 : -1;
+            return 0;
+        });
+
+        rows.forEach(function(row) {
+            table.appendChild(row);
+        });
+
+        // Toggle sorting order
+        table.rows[0].cells[n].setAttribute("data-sort-order", isAscending ? "desc" : "asc");
+        }*/
+        function sortTable(n, tableId) {
+        var table = document.getElementById(tableId);
+        var rows = Array.from(table.rows).slice(1); // Exclude the header row
+        var isAscending = table.rows[0].cells[n].getAttribute("data-sort-order") === "asc";
+        
+        rows.sort(function(a, b) {
+            var cellA = a.cells[n].textContent.trim();
+            var cellB = b.cells[n].textContent.trim();
+
+            if (cellA < cellB) return isAscending ? -1 : 1;
+            if (cellA > cellB) return isAscending ? 1 : -1;
+            return 0;
+        });
+
+        rows.forEach(function(row) {
+            table.appendChild(row);
+        });
+
+        // Toggle sorting order
+        table.rows[0].cells[n].setAttribute("data-sort-order", isAscending ? "desc" : "asc");
+    }
     </script>
 
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
@@ -52,48 +96,91 @@
     
    </div>
    <div class="dashboard">
-    <h2>
+
+   
+   <h2>
      GreenConnect Dashboard
     </h2>
+
     <h3>
      Pending Customers:
     </h3>
-    <table>
-     <tr>
-      <th>
-       Name
-      </th>
-      <th>
-       Subscription Plan
-      </th>
-      <th>
-       Mode of Payment
-      </th>
-      <th>
-       Reference Number
-      </th>
-      <th>
-       Status
-      </th>
-     </tr>
-     <tr>
-      <td>
-       Lyka Monroe
-      </td>
-      <td>
-       Weight Loss
-      </td>
-      <td>
-       GCASH
-      </td>
-      <td>
-       3019229110542
-      </td>
-      <td class="status">
-       PENDING
-      </td>
-     </tr>
-    </table>
+
+     <!--
+   <table id="subscriptionsTable1">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0, 'subscriptionsTable1')">Customer Name</th>
+            <th onclick="sortTable(1, 'subscriptionsTable1')">Plan Name</th>
+            <th onclick="sortTable(2, 'subscriptionsTable1')">Payment Method</th>
+            <th onclick="sortTable(3, 'subscriptionsTable1')">Reference Number</th>
+            <th onclick="sortTable(4, 'subscriptionsTable1')">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+        @foreach ($subscriptions->where('customer.status', 'pending') as $subscription)
+            <tr>
+                <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
+                <td>{{ $subscription->subscriptionType->plan_name }}</td>
+                <td>{{ $subscription->mop ?? 'N/A' }}</td>
+                <td>{{ $subscription->ref_number ?? 'N/A' }}</td>
+                <td>
+                    <button class = "crudButtons" style="text-transform: uppercase;">
+                        {{ $subscription->customer->status }}
+                    </button>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>-->
+<table id="subscriptionsTable1">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0, 'subscriptionsTable1')">Customer Name</th>
+            <th onclick="sortTable(1, 'subscriptionsTable1')">Plan Name</th>
+            <th onclick="sortTable(2, 'subscriptionsTable1')">Payment Method</th>
+            <th onclick="sortTable(3, 'subscriptionsTable1')">Reference Number</th>
+            <th onclick="sortTable(4, 'subscriptionsTable1')">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach ($subscriptions->where('customer.status', 'pending') as $subscription)
+    <tr>
+        <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
+        <td>{{ $subscription->subscriptionType->plan_name }}</td>
+        <td>{{ $subscription->mop ?? 'N/A' }}</td>
+        <td>{{ $subscription->ref_number ?? 'N/A' }}</td>
+        <td>
+        <form action="{{ route('subscriptions.updateStatus') }}" method="POST">
+    @csrf
+    @method('PATCH')
+
+    <!-- Dropdown to select the new status for the customer -->
+    <select name="status" class="form-control">
+        <option value="pending" {{ $subscription->customer->status == 'pending' ? 'selected' : '' }}>Pending</option>
+        <option value="approved" {{ $subscription->customer->status == 'approved' ? 'selected' : '' }}>Approved</option>
+        <option value="canceled" {{ $subscription->customer->status == 'canceled' ? 'selected' : '' }}>Canceled</option>
+    </select>
+
+    <!-- Hidden field to pass the subscription_id -->
+    <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
+
+    <button type="submit" class="crudButtons" style="text-transform: uppercase;">
+        Edit Status
+    </button>
+</form>
+
+
+
+
+        </td>
+    </tr>
+@endforeach
+
+    </tbody>
+</table>
+
    </div>
    <div class="widgets">
     <div class="widget">
@@ -103,32 +190,26 @@
      <p>
       Manage your subscriber list
      </p>
-     <table>
-      <tr>
-       <th>
-        Name
-       </th>
-       <th>
-        Subscription
-       </th>
-      </tr>
-      <tr>
-       <td>
-        Peter Griffin
-       </td>
-       <td>
-        Weight Loss
-       </td>
-      </tr>
-      <tr>
-       <td>
-        Bart Strong
-       </td>
-       <td>
-        Weight Gain
-       </td>
-      </tr>
-     </table>
+
+
+     <table id="subscriptionsTable2">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0, 'subscriptionsTable2')">Name</th>
+            <th onclick="sortTable(1, 'subscriptionsTable2')">Subscription</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($subscriptions->where('customer.status', 'active') as $subscription)
+            <tr>
+                <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
+                <td>{{ $subscription->subscriptionType->plan_name }}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+
+
     </div>
     <div class="widget calendar">
      <h3>
@@ -149,4 +230,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

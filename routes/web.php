@@ -77,4 +77,15 @@ Route::post('/signUp',[LoginRegisterController::class,'register'])->name('regist
 
 Route::post('/login', [LoginRegisterController::class, 'loginUser'])->name('login.user');
 
+//rdn
+Route::get('/rdnDashboard', [LoginRegisterController::class, 'showSubscriptions'])->name('rdnDashboard');
+Route::get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
+
+
+Route::patch('/rdnDashboard', [LoginRegisterController::class, 'updateStatus'])
+    ->name('subscriptions.updateStatus');
+
+
+
+
 //login customer

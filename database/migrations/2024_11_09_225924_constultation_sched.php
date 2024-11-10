@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('consultation_sched', function (Blueprint $table) {
+        Schema::create('consultation_sched', function (Blueprint $table) { //wdym by consult, like a check up
             $table->increments('consultation_sched_id'); // Primary key
 
             // Define other columns

@@ -93,13 +93,42 @@
      </td>
      <td>
      <button class = "crudButtons">
-     Delete Customer Info
+        Delete Customer Info
     </button>
     </td>
     </tr>
     
      
    </table>
+   <table class="table">
+        <thead>
+            <tr>
+                <th>Subscription ID</th>
+                <th>Customer Name</th>
+                <th>Plan Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Payment Method</th>
+                <th>Reference Number</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody><!--active list only-->
+            
+            @foreach($subscriptions as $subscription)
+                <tr>
+                    <td>{{ $subscription->subscription_id }}</td>
+                    <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
+                    <td>{{ $subscription->subscriptionType->plan_name }}</td>
+                    <td>{{ $subscription->start_date }}</td>
+                    <td>{{ $subscription->end_date ?? 'N/A' }}</td>
+                    <td>{{ $subscription->mop ?? 'N/A' }}</td>
+                    <td>{{ $subscription->ref_number ?? 'N/A' }}</td>
+                    <td>{{ $subscription->customer->status }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
   </div>
 
 <!-- Bootstrap JS and dependencies (optional) -->
