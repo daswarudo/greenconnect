@@ -157,16 +157,14 @@
                     <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
                 </div>
                 <p>
-                    I've tried countless diets, but this subscription has been a game-changer! 
-                    The meals are not only delicious but perfectly portioned and balanced. 
-                    I’ve lost 8 pounds in 6 weeks, and I feel more 
-                    energized than ever. 
-                    The best part? No more meal prep stress!
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+                .
                     
                     
                 </p>
 
-                <p style = "font-size:20px; margin-bottom:0px;">Kenny</p>
+                <p style = "font-size:20px; margin-bottom:0px;">John Doe</p>
                 <p">Weight Loss Meal Plan Subscriber</p>
             </div>
 
@@ -179,13 +177,12 @@
                     <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
                 </div>
                 <p>
-                    As a vegan looking to gain weight, I struggled to find the right balance of nutrients. 
-                    This subscription has exceeded my expectations! The meals are hearty, creative, and packed 
-                    
-                    with plant-based protein. I’ve noticed a steady increase in muscle mass, and I love the variety of dishes! 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+                .
                     
                 </p>
-                <p style = "font-size:20px; margin-bottom:0px;">James L.</p>
+                <p style = "font-size:20px; margin-bottom:0px;">James Doe</p>
                 <p">Weight Gain Meal Plan Subscriber</p>
             </div>
 
@@ -198,14 +195,12 @@
                     <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
                 </div>
                 <p>
-                    I have specific dietary needs due to health conditions, and finding a convenient meal 
-                    service has always been a challenge — until now. The therapeutic meal plan has made managing diet
-                    so  
-                    
-                    easy and enjoyable. The meals I have more free time, and I’ve actually started enjoying cooking again! 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+                .
                     
                 </p>
-                <p style = "font-size:20px; margin-bottom:0px;">Priya S.</p>
+                <p style = "font-size:20px; margin-bottom:0px;">Jane Joe</p>
                 <p">Therapeutic Diet Plan Subscriber</p>
             </div>
         </div>

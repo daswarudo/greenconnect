@@ -82,18 +82,20 @@ margin-right: 15px;
     flex-grow: 1;
     padding: 10px;
     border: none;
-    background-color: #f0f0f0;
+    background-color: #599c7b;
     cursor: pointer;
     font-size: 16px;
-}
-
-.tabs button:hover {
-    background-color: #0fbb7c;
     color:white;
 }
 
+.tabs button:hover {
+    
+    background-color: #f0f0f0;
+    color:black;
+}
+
 .tabs button.active {
-    background-color: #0fbb7c;
+    background-color: #599c7b;
     color: white;
 }
 
@@ -164,21 +166,36 @@ th {
     text-align: center;
 }
 
-button.crudButtons{
+button.crudButtons {
     width: 100%;
     height: 100%;
     border: none;
-    background-color: #f0f0f0;
+    background-color: #599c7b;
     cursor: pointer;
     font-size: 16px;
-    display: block; 
-    padding: 1vh 1vh 1vh 1vh;
+    display: block;
+    padding: 1vh;
+    color:white;
 }
 
 button.crudButtons:hover{
-    background-color: #0fbb7c;
-    color:white;
+    background-color: #f0f0f0;
+    color:black;
     
+}
+.flex-container {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left horizontally */
+    align-items: flex-start;     /* Align items to the top vertically */
+    width: auto;                 /* Make sure the container width is only as wide as necessary */
+    text-align: right;            /* Aligns content to the left within the container */
+    margin: 0;                   /* Remove any default margin */
+}
+
+.flex-column {
+    width: 40vh; /* Set the width of the button container */
+    height: 7vh; /* Set the height of the button container */
+    margin: 0;   /* Remove any default margin */
 }
 @media (max-width: 390px) {
     body {

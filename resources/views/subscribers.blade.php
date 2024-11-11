@@ -12,15 +12,79 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
 
-    <!-- temporary-->
+    <!-- temporary
 	<script> 
         
-    </script>
+
+    </script>-->
 
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('css/rdnDash.css') }}">
 <!-- naa sa public/css folder ang css, ignore css sa resources sdfasfda-->
     
+
+<script>
+    function sortTable(columnIndex, tableId) {
+    const table = document.getElementById(tableId);
+    const tbody = table.tBodies[0]; // Get the tbody element of the table
+    const rows = Array.from(tbody.rows); // Convert rows to an array for sorting
+
+    // Determine the current sorting order
+    const isAscending = table.getAttribute("data-sort-asc") === "true";
+    
+    // Sort rows based on the specified column
+    rows.sort((a, b) => {
+        const cellA = a.cells[columnIndex].textContent.trim();
+        const cellB = b.cells[columnIndex].textContent.trim();
+        
+        // Check if cells contain numbers, otherwise sort as strings
+        if (!isNaN(cellA) && !isNaN(cellB)) {
+            return isAscending ? cellA - cellB : cellB - cellA;
+        } else {
+            return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        }
+    });
+
+    // Re-attach sorted rows to the tbody
+    rows.forEach(row => tbody.appendChild(row));
+    
+    // Toggle sorting order for the next click
+    table.setAttribute("data-sort-asc", !isAscending);
+}
+
+    function filterTable(planName) {
+    const table = document.getElementById('subscriptionsTable1');
+    const rows = Array.from(table.tBodies[0].rows); // Get all rows in the table body
+
+    rows.forEach(row => {
+        const rowPlan = row.getAttribute('data-plan'); // Get the plan name from data attribute
+
+        // Show the row if it matches the selected plan, or if "Show All" is clicked
+        if (planName === '' || rowPlan === planName) {
+            row.style.display = ''; // Show row
+        } else {
+            row.style.display = 'none'; // Hide row
+        }
+    });
+}
+function searchTable() {
+    const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+    const rows = document.querySelectorAll('#subscriptionsTable1 tbody tr'); // Select all rows in the table body
+
+    rows.forEach(row => {
+        const firstName = row.cells[0].textContent.toLowerCase(); // First Name column
+        const lastName = row.cells[1].textContent.toLowerCase();  // Last Name column
+
+        // Check if search query matches either First Name or Last Name
+        if (firstName.includes(searchQuery) || lastName.includes(searchQuery)) {
+            row.style.display = '';  // Show row
+        } else {
+            row.style.display = 'none'; // Hide row
+        }
+    });
+}
+
+</script>
 </head>
 <body>
     @include('sidebar')
@@ -31,108 +95,57 @@
      WELCOME, RDN
         
    </div>
-   <div class="tabs">
-    <button>
-     Weight Loss
-    </button>
-    <button>
-     Weight Gain
-    </button>
-    <button>
-     Therapeutic
-    </button>
-    <button>
-     Gluten Free
-    </button>
-   </div>
-   <h2>
-    List of Subscribers
-   </h2>
-   <table>
-    <tr>
-     <th>
-      First Name
-     </th>
-     <th>
-      Last Name
-     </th>
-     <th>
-      Subscription
-     </th>
-     <th>
-      <!--add-->
-     </th>
-     <th>
-      <!--edit-->
-     </th>
-     <th>
-      <!--delete-->
-     </th>
-     
-    </tr>
-    <tr> <!--FOR DATA ROWS-->
-     <td>
-      <!--FIRSTNAME-->
-     </td>
-     <td>
-      <!--Last nAME-->
-     </td>
-     <td>
-      <!--Subs-->
-     </td>
-     <td>
-      <!--add-->
-      <button class = "crudButtons">
-     Add Customer Info
-    </button>
-     </td>
-     <td>
-     <button class = "crudButtons">
-     Edit Customer Info
-    </button>
-     </td>
-     <td>
-     <button class = "crudButtons">
-        Delete Customer Info
-    </button>
-    </td>
-    </tr>
-    
-     
-   </table>
-   <table class="table">
-        <thead>
-            <tr>
-                <th>Subscription ID</th>
-                <th>Customer Name</th>
-                <th>Plan Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Payment Method</th>
-                <th>Reference Number</th>
-                <th>Status</th>
+   
+
+    <div>
+        <input type="text" id="searchInput" placeholder="Search by First Name or Last Name" onkeyup="searchTable()" />
+    </div>
+<div class="tabs">
+    <button onclick="filterTable('Weight-Loss Plan')">Weight-Loss Plan</button>
+    <button onclick="filterTable('Weight-Gain Plan')">Weight-Gain Plan</button>
+    <button onclick="filterTable('Therapeutic Diet')">Therapeutic Diet</button>
+    <button onclick="filterTable('Gluten-Free Diet')">Gluten-Free Diet</button>
+    <button onclick="filterTable('')">Show All</button> <!-- Optional: Button to show all rows -->
+</div>
+
+
+<table class="table" id="subscriptionsTable1" data-sort-asc="true">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0, 'subscriptionsTable1')">First Name</th>
+            <th onclick="sortTable(1, 'subscriptionsTable1')">Last Name</th>
+            <th onclick="sortTable(2, 'subscriptionsTable1')">Subscription</th>
+            <th onclick="sortTable(3, 'subscriptionsTable1')">Status</th>   
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($subscriptions as $subscription)
+            <tr data-plan="{{ $subscription->subscriptionType->plan_name }}">
+                <td>{{ $subscription->customer->first_name }}</td>
+                <td>{{ $subscription->customer->last_name }}</td>
+                <td>{{ $subscription->subscriptionType->plan_name }}</td>
+                <td style="text-transform:uppercase;">{{ $subscription->sub_status }}</td>
+                <td>
+                    <button class="crudButtons">Edit Customer Info</button>
+                </td>
+                <td>
+                    <button class="crudButtons">Delete Customer Info</button>
+                </td>
             </tr>
-        </thead>
-        <tbody><!--active list only-->
-            
-            @foreach($subscriptions as $subscription)
-                <tr>
-                    <td>{{ $subscription->subscription_id }}</td>
-                    <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
-                    <td>{{ $subscription->subscriptionType->plan_name }}</td>
-                    <td>{{ $subscription->start_date }}</td>
-                    <td>{{ $subscription->end_date ?? 'N/A' }}</td>
-                    <td>{{ $subscription->mop ?? 'N/A' }}</td>
-                    <td>{{ $subscription->ref_number ?? 'N/A' }}</td>
-                    <td>{{ $subscription->customer->status }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+        @endforeach
+    </tbody>
+</table>
+
+
+
+
+
   </div>
 
 <!-- Bootstrap JS and dependencies (optional) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </body>
 </html>
