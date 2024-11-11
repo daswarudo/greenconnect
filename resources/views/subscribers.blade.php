@@ -122,6 +122,12 @@ function filterByStatus(status) {
    <h3 style = "text-align:center;">
         List of Subscribers
     </h3> 
+
+
+<div style = "margin-bottom:2vh">
+        <input type="text" id="searchInput" placeholder="Search" onkeyup="searchTable()"  style = "margin-bottom:1vh;height:4vh;width:25vh;"/>
+        <!-- <button class="crudButtons" style="width:26vh;">Add Customer</button>-->
+</div>
 <div class="tabs">
     <button onclick="filterTable('Weight-Loss Plan')">Weight-Loss Plan</button>
     <button onclick="filterTable('Weight-Gain Plan')">Weight-Gain Plan</button>
@@ -130,44 +136,34 @@ function filterByStatus(status) {
     <button onclick="filterTable('')">Show All</button> <!-- Optional: Button to show all rows -->
 </div>
 
-{{--    this is a comment
-<div class="tabs">
-    <button onclick="filterByStatus('active')">Active</button>
-    <button onclick="filterByStatus('pending')">Pending</button>
-    <button onclick="filterByStatus('')">Show All Status</button> <!-- Optional: Show all statuses -->
-</div>--}}
 
-<div style = "margin-bottom:1vh">
-        <input type="text" id="searchInput" placeholder="Search" onkeyup="searchTable()"  style = "margin-bottom:1vh;height:4vh;"/>
-        <button class="crudButtons" style="width:25vh;">Add Customer</button>
-</div>
-
-<table class="table" id="subscriptionsTable1" data-sort-asc="true">
-    <thead>
-        <tr>
-            <th onclick="sortTable(0, 'subscriptionsTable1')">First Name</th>
-            <th onclick="sortTable(1, 'subscriptionsTable1')">Last Name</th>
-            <th onclick="sortTable(2, 'subscriptionsTable1')">Subscription</th>
-            <th onclick="sortTable(3, 'subscriptionsTable1')">Status</th>   
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($subscriptions as $subscription)
-            <tr data-plan="{{ $subscription->subscriptionType->plan_name }}">
-                <td>{{ $subscription->customer->first_name }}</td>
-                <td>{{ $subscription->customer->last_name }}</td>
-                <td>{{ $subscription->subscriptionType->plan_name }}</td>
-                <td style="text-transform:uppercase;">{{ $subscription->sub_status }}</td>
-                <td>
-                    <a href="{{ route('viewsubscriber', $subscription->customer_id) }}" style="text-decoration: none;">
-                        <button class="crudButtons">View Details</button>
-                    </a>
-                </td>
+<div style="overflow: scroll;height: 60vh;">
+    <table class="table" id="subscriptionsTable1" data-sort-asc="true">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0, 'subscriptionsTable1')">First Name</th>
+                <th onclick="sortTable(1, 'subscriptionsTable1')">Last Name</th>
+                <th onclick="sortTable(2, 'subscriptionsTable1')">Subscription</th>
+                <th onclick="sortTable(3, 'subscriptionsTable1')">Status</th>   
             </tr>
-        @endforeach
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+            @foreach($subscriptions as $subscription)
+                <tr data-plan="{{ $subscription->subscriptionType->plan_name }}">
+                    <td>{{ $subscription->customer->first_name }}</td>
+                    <td>{{ $subscription->customer->last_name }}</td>
+                    <td>{{ $subscription->subscriptionType->plan_name }}</td>
+                    <td style="text-transform:uppercase;">{{ $subscription->sub_status }}</td>
+                    <td>
+                        <a href="{{ route('viewsubscriber', $subscription->customer_id) }}" style="text-decoration: none;">
+                            <button class="crudButtons">View Details</button>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
 
 

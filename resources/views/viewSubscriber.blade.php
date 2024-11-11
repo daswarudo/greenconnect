@@ -56,10 +56,11 @@
                 </div>
             </div>
              <p>
-              <b>First Name:</b>  {{ $customer->first_name }}
+              <b>First Name:</b>  <input type="text" name="first_name" value="{{ old('first_name', $customer->first_name) }}" />
              </p>
+             
              <p>
-             <b>Last Name:</b> {{ $customer->last_name }}
+             <b>Last Name:</b> <input type="text" name="last_name" value="{{ old('first_name', $customer->last_name) }}" />
              </p>
              <p>
              <b>Age:</b> {{ $customer->age }}

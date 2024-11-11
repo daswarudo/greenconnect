@@ -134,6 +134,7 @@
         @endforeach
     </tbody>
 </table>-->
+<div style="overflow: scroll;height: 30vh;">
 <table id="subscriptionsTable1">
     <thead>
         <tr>
@@ -170,7 +171,7 @@
 
     </tbody>
 </table>
-
+</div>
    </div>
    <div class="widgets">
     <div class="widget">
@@ -181,7 +182,7 @@
       Manage your subscriber list
      </p>
 
-
+     <div style="overflow: scroll;height: 60vh;">
      <table id="subscriptionsTable2">
     <thead>
         <tr>
@@ -198,6 +199,7 @@
         @endforeach
     </tbody>
 </table>
+</div>
 
 
     </div>
