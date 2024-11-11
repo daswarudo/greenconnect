@@ -37,6 +37,6 @@ class SubscriptionType extends Model
     
     public function subscriptions()
     {
-        return $this->hasMany(Subscription::class);
+        return $this->hasMany(Subscriptions::class, 'subscription_type_id');
     }
 }

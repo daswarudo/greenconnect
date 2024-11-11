@@ -47,61 +47,88 @@
    </div>
    
    <div class="details">
-            <div class="info">
+        <div class="info">
+        <div class="form-container">
+                <div class="form-section diet-program">
+                    <h2>Diet Program</h2>
+                    
+
+                </div>
+            </div>
              <p>
-              <b>First Name:</b> Joe
+              <b>First Name:</b>  {{ $customer->first_name }}
              </p>
              <p>
-             <b>Last Name:</b> Amistoso
+             <b>Last Name:</b> {{ $customer->last_name }}
              </p>
              <p>
-             <b>Age:</b> 35
+             <b>Age:</b> {{ $customer->age }}
              </p>
              <p>
-             <b>Sex:</b> M
+             <b>Sex:</b> {{ $customer->sex }}
              </p>
              <p>
-             <b>Address:</b> Larena Drive, 123, Taclobo, Dumaguete City
+             <b>Address:</b> {{ $customer->address  }}
              </p>
              <p>
-             <b>Contact Number:</b> 09391102031
+             <b>Contact Number:</b> {{ $customer->contact_num  ?? 'No phone given' }}
              </p>
              <p>
-             <b>Weight (kg):</b> 85
+             <b>Weight (kg):</b> {{ $customer->weight }}
              </p>
              <p>
-             <b>Height (cm):</b> 170
+             <b>Height (cm):</b> {{ $customer->height }}
              </p>
              <p>
-             <b>Diet Recommended:</b> Weight Loss
+             <b>Diet Recommended:</b> {{ $customer->diet_recom  ?? 'No activity level' }}
              </p>
              <p>
-             <b>Health Condition:</b> High Cholesterol
+             <b>Health Condition:</b> {{ $customer->health_condition }}
              </p>
              <p>
-             <b>BMI:</b>
+             <b>BMI:</b> {{ $customer->bmi }}
              </p>
              <p>
-             <b>Daily Calorie:</b>
+             <b>Daily Calorie:</b> {{ $customer->daily_calorie  ?? 'No daily calorie given' }}
              </p>
              <p>
-             <b>Activity Level:</b> Moderate
+             <b>Activity Level:</b> {{ $customer->activity_level  ?? 'No activity level given' }}
+             </p>
+
+
+             <p>
+                <b>Plan name:</b> {{ $subscription->subscriptionType->plan_name ?? 'N/A' }}
+            </p>
+
+             <p>
+                <b>Start:</b> {{ $subscription->start_date ?? 'N/A' }}
+             </p>
+             <p>
+                <b>End:</b> {{ $subscription->end_date ?? 'No end given' }}
+             </p>
+             <p>
+                <b>Payment Info:</b> {{ $subscription->mop  ?? 'No activity level given' }}
+             </p>
+             <p>
+                <b>Reference Number:</b> {{ $subscription->ref_number  ?? 'No activity level given' }}
              </p>
             </div>
             <div class="photo">
-                <img alt="Customer ID" height="100" src="{{ asset('images/freepik3.jpg') }}" width="100" style="border-radius:50%;"/>
+                <img alt="Customer ID" height="100" src="{{ asset($customer->profile_picture) }}" width="100" style="border-radius:50%;"/>
                 <p>
                  Customer ID
                 </p>
             </div>
-               <div class="close">
-               &#10006
-               </div>
+                <!-- <div class="close">
+                    <a href="{{ url()->previous() }}" style="text-decoration: none;">&#10006</a>
+               </div>-->
             <!-- save button-->
              <div class="save">
-                <button class = "saveButton">
-                    SAVE
-                </button>
+                <a href="#" style="text-decoration: none;">
+                    <button class = "saveButton">
+                        EDIT
+                    </button>
+                </a>
             </div>
   </div>
 

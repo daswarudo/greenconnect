@@ -74,9 +74,33 @@ function searchTable() {
     rows.forEach(row => {
         const firstName = row.cells[0].textContent.toLowerCase(); // First Name column
         const lastName = row.cells[1].textContent.toLowerCase();  // Last Name column
+        const planName = row.cells[2].textContent.toLowerCase();  // Subscription Plan column
+        const status = row.cells[3].textContent.toLowerCase();    // Status column
 
-        // Check if search query matches either First Name or Last Name
-        if (firstName.includes(searchQuery) || lastName.includes(searchQuery)) {
+        // Check if the search query matches any of the columns (First Name, Last Name, Plan, or Status)
+        if (
+            firstName.includes(searchQuery) || 
+            lastName.includes(searchQuery) || 
+            planName.includes(searchQuery) || 
+            status.includes(searchQuery)
+        ) {
+            row.style.display = '';  // Show row
+        } else {
+            row.style.display = 'none'; // Hide row
+        }
+    });
+}
+
+// Filter the table by subscription status (active or pending)
+function filterByStatus(status) {
+    const table = document.getElementById('subscriptionsTable1');
+    const rows = Array.from(table.tBodies[0].rows); // Get all rows in the table body
+
+    rows.forEach(row => {
+        const rowStatus = row.cells[3].textContent.trim().toLowerCase(); // Get the status from the 4th column (Status)
+
+        // Show the row if it matches the selected status, or if "Show All Status" is clicked
+        if (status === '' || rowStatus === status.toLowerCase()) {
             row.style.display = '';  // Show row
         } else {
             row.style.display = 'none'; // Hide row
@@ -93,13 +117,11 @@ function searchTable() {
    <div class="header">
     <h1>
      WELCOME, RDN
-        
+    </h1>  
    </div>
-   
-
-    <div>
-        <input type="text" id="searchInput" placeholder="Search by First Name or Last Name" onkeyup="searchTable()" />
-    </div>
+   <h3 style = "text-align:center;">
+        List of Subscribers
+    </h3> 
 <div class="tabs">
     <button onclick="filterTable('Weight-Loss Plan')">Weight-Loss Plan</button>
     <button onclick="filterTable('Weight-Gain Plan')">Weight-Gain Plan</button>
@@ -108,6 +130,17 @@ function searchTable() {
     <button onclick="filterTable('')">Show All</button> <!-- Optional: Button to show all rows -->
 </div>
 
+{{--    this is a comment
+<div class="tabs">
+    <button onclick="filterByStatus('active')">Active</button>
+    <button onclick="filterByStatus('pending')">Pending</button>
+    <button onclick="filterByStatus('')">Show All Status</button> <!-- Optional: Show all statuses -->
+</div>--}}
+
+<div style = "margin-bottom:1vh">
+        <input type="text" id="searchInput" placeholder="Search" onkeyup="searchTable()"  style = "margin-bottom:1vh;height:4vh;"/>
+        <button class="crudButtons" style="width:25vh;">Add Customer</button>
+</div>
 
 <table class="table" id="subscriptionsTable1" data-sort-asc="true">
     <thead>
@@ -126,15 +159,15 @@ function searchTable() {
                 <td>{{ $subscription->subscriptionType->plan_name }}</td>
                 <td style="text-transform:uppercase;">{{ $subscription->sub_status }}</td>
                 <td>
-                    <button class="crudButtons">Edit Customer Info</button>
-                </td>
-                <td>
-                    <button class="crudButtons">Delete Customer Info</button>
+                    <a href="{{ route('viewsubscriber', $subscription->customer_id) }}" style="text-decoration: none;">
+                        <button class="crudButtons">View Details</button>
+                    </a>
                 </td>
             </tr>
         @endforeach
     </tbody>
 </table>
+
 
 
 

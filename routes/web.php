@@ -80,10 +80,10 @@ Route::post('/login', [LoginRegisterController::class, 'loginUser'])->name('logi
 //rdn
 Route::get('/rdnDashboard', [LoginRegisterController::class, 'showSubscriptions'])->name('rdnDashboard');
 Route::get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
-
-
 Route::patch('/rdnDashboard', [LoginRegisterController::class, 'updateStatus'])
     ->name('subscriptions.updateStatus');
+
+Route::get('/viewsubscriber/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewsubscriber');
 
 
 

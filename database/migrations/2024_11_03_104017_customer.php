@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('username', 255)->unique();
             $table->string('password');
             $table->string('profile_picture')->nullable();
+             $table->string('contact_num')->nullable();
 
             $table->boolean('prefer_pork')->default(false);
             $table->boolean('prefer_beef')->default(false);

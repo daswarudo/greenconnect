@@ -84,7 +84,8 @@
                     </div>
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
-                        <input id="contact_num" name="contact_num" type="text" minlength="11" maxlength="11" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" />
+                        <input id="contact_num" name="contact_num" type="text" minlength="11" maxlength="11" 
+                        oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" />
                     </div>
                     <div class="form-group">
                         <label for="doctor-recommendation">Doctor's Diet Recommendation</label>
@@ -94,18 +95,7 @@
                         <label for="health_condition">Health Condition</label>
                         <input id="health_condition" name="health_condition" type="text" placeholder="Ex. High Cholesterol"/>
                     </div>
-                    <!--<div class="form-group">
-                         <label for="diet_reco">Food Preference</label>
-                          <select id="diet_reco" name="diet_reco" class="form-control" >
-                           <option value="">Select Food Preference</option>
-                           <option value="Pork">Pork</option>
-                           <option value="Fish">Fish</option>
-                           <option value="Beef">Beef</option>
-                           <option value="Vegetable">Chicken</option>
-                           <option value="Fruit">Fruit</option>
-                           <option value="Vegetable">Vegetable</option>
-                          </select>
-                    </div>-->
+                    
                     <div class="form-group">
                         <label for="food_preferences">Food Preferences</label>
                         <div>
