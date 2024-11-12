@@ -56,9 +56,7 @@
         <div class="info">
         <div class="form-container">
                 <div class="form-section diet-program">
-                    <h2>Diet Program</h2>
-                    
-
+                    <h2>Diet Program: {{ $subscription->subscriptionType->plan_name}}</h2>
                 </div>
             </div>
              <p>
@@ -115,7 +113,15 @@
                 <input type="number" name="daily_calorie" id="daily_calorie" class="form-control" value="{{ old('daily_calorie', $customer->daily_calorie) }}">
                 
              </p>
+             <p>
+                <b>Subscription Status:</b> 
+                <select name="sub_status" id="sub_status" disabled>
+                  <option value="active" {{ old('sub_status', $subscription->sub_status) == 'active' ? 'selected' : '' }}>active</option>
+                  <option value="pending" {{ old('sub_status', $subscription->sub_status) == 'pending' ? 'selected' : '' }}>pending</option>
+                  <option value="disabled" {{ old('sub_status', $subscription->sub_status) == 'disabled' ? 'selected' : '' }}>disabled</option>
+               </select>
 
+            </p>
              <p>
                 <b>Diet Recommendation:</b> 
                 <input type="text" name="diet_recom" id="diet_recom" class="form-control" value="{{ old('diet_recom', $customer->diet_recom) }}"  disabled>
@@ -162,6 +168,7 @@
                 <b>Reference Number:</b> 
                 <input id="ref_number" name="ref_number" type="text" placeholder="" value="{{ $subscription->ref_number  ?? 'No activity level given' }}"  disabled/> 
             </p>
+            
             </div>
             <div class="photo">
                 <img alt="Customer ID" height="100" src="{{ asset($customer->profile_picture) }}" width="100" style="border-radius:50%;"/>
