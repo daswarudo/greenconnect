@@ -105,39 +105,10 @@
     </h3>
 
      <!--
-   <table id="subscriptionsTable1">
-    <thead>
-        <tr>
-            <th onclick="sortTable(0, 'subscriptionsTable1')">Customer Name</th>
-            <th onclick="sortTable(1, 'subscriptionsTable1')">Plan Name</th>
-            <th onclick="sortTable(2, 'subscriptionsTable1')">Payment Method</th>
-            <th onclick="sortTable(3, 'subscriptionsTable1')">Reference Number</th>
-            <th onclick="sortTable(4, 'subscriptionsTable1')">Status</th>
-        </tr>
-    </thead>
-    <tbody>
-       
-        @foreach ($subscriptions->where('customer.status', 'pending') as $subscription)
-            <tr>
-                <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
-                <td>{{ $subscription->subscriptionType->plan_name }}</td>
-                <td>{{ $subscription->mop ?? 'N/A' }}</td>
-                <td>{{ $subscription->ref_number ?? 'N/A' }}</td>
-                <td>
-                    <button class = "crudButtons" style="text-transform: uppercase;">
-                        {{ $subscription->customer->status }}
-                    </button>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>-->
+   -->
 <!-- Search Input for Table 1 -->
 <input type="text" id="searchInput1" onkeyup="searchTable('subscriptionsTable1', 'searchInput1')" placeholder="Search in Pending Subscriptions..." style="margin-bottom: 10px; padding: 5px;">
 <div style="overflow: scroll;height: 30vh;">
-
-
-
 
 
 <table id="subscriptionsTable1">
