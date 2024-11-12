@@ -62,44 +62,44 @@
                 </div>
             </div>
              <p>
-                <b>First Name:</b>  <input type="text" name="first_name"  id="first_name" value="{{ old('first_name', $customer->first_name) }}" />
+                <b>First Name:</b>  <input type="text" name="first_name"  id="first_name" value="{{ old('first_name', $customer->first_name) }}"  disabled/>
              </p>
              
              <p>
-                <b>Last Name:</b> <input type="text" name="last_name" id="last_name" value="{{ old('last_name', $customer->last_name) }}" />
+                <b>Last Name:</b> <input type="text" name="last_name" id="last_name" value="{{ old('last_name', $customer->last_name) }}"  disabled/>
              </p>
              <p>
-                <b>Age:</b>   <input id="age" name="age" type="number" min="0" step="1" value="{{ old('age', $customer->age) }}"/>
+                <b>Age:</b>   <input id="age" name="age" type="number" min="0" step="1" value="{{ old('age', $customer->age) }}"  disabled/>
                 
              </p>
              <p>
                 <b>Sex:</b> 
-                <select name="sex" id="sex">
+                <select name="sex" id="sex" disabled>
                     <option value="M" {{ $customer->sex == 'M' ? 'selected' : '' }}>Male</option>
                     <option value="F" {{ $customer->sex == 'F' ? 'selected' : '' }}>Female</option>
                 </select>
              </p>
              <p>
                 <b>Address:</b> 
-                <input id="address" name="address" type="text" value="{{ old('address', $customer->address) }}" />
+                <input id="address" name="address" type="text" value="{{ old('address', $customer->address) }}"  disabled/>
              </p>
              <p>
                 <b>Contact Number:</b> 
                 <input id="contact_num" name="contact_num" type="text" minlength="11" maxlength="11" 
-                        oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  value="{{ old('age', $customer->contact_num) }}"  />
+                        oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  value="{{ old('age', $customer->contact_num) }}"  disabled/>
              </p>
              
              <p>
                 <b>Diet Recommended:</b> 
-                <input id="diet_reco" name="diet_reco" type="text" value="{{ $customer->diet_recom  ?? 'No activity level' }}"/>
+                <input id="diet_reco" name="diet_reco" type="text" value="{{ $customer->diet_recom  ?? 'No activity level' }}"  disabled/>
              </p>
              <p>
                 <b>Health Condition:</b> 
-                <input id="health_condition" name="health_condition" type="text" value="{{ $customer->health_condition }}"/>
+                <input id="health_condition" name="health_condition" type="text" value="{{ $customer->health_condition }}"  disabled/>
              </p>
              <p>
                 <b>Height (cm):</b> 
-                <input id="height" name="height" type="number"  step="0.01" value="{{ $customer->height }}"  oninput="calculateBMI()" required />
+                <input id="height" name="height" type="number"  step="0.01" value="{{ $customer->height }}"  oninput="calculateBMI()" required  disabled/>
              </p>
 
              <p>
@@ -118,12 +118,12 @@
 
              <p>
                 <b>Diet Recommendation:</b> 
-                <input type="text" name="diet_recom" id="diet_recom" class="form-control" value="{{ old('diet_recom', $customer->diet_recom) }}">
+                <input type="text" name="diet_recom" id="diet_recom" class="form-control" value="{{ old('diet_recom', $customer->diet_recom) }}"  disabled>
                 
              </p>
              <p>
                 <b>Activity Level:</b> 
-                <select name="activity_level" id="activity_level">
+                <select name="activity_level" id="activity_level"  disabled>
                     <option value="Sedentary" {{ $customer->activity_level == 'Sedentary' ? 'selected' : '' }}>Sedentary</option>
                     <option value="Low Active" {{ $customer->activity_level == 'Low Active' ? 'selected' : '' }}>Low Active</option>
                     <option value="Active" {{ $customer->activity_level == 'Active' ? 'selected' : '' }}>Active</option>
@@ -133,7 +133,7 @@
 
              <p>
                 <b>Plan name:</b> 
-                <select name="activity_level" id="activity_level">
+                <select name="activity_level" id="activity_level"  disabled>
                     <option value="Weight-Loss Plan" {{ $subscription->subscriptionType->plan_name == 'Weight-Loss Plan' ? 'selected' : '' }}>Weight-Loss Plan</option>
                     <option value="Weight-Gain Plan" {{ $subscription->subscriptionType->plan_name == 'Weight-Gain Plan' ? 'selected' : '' }}>Weight-Gain Plan</option>
                     <option value="Therapeutic Diet" {{ $subscription->subscriptionType->plan_name == 'Therapeutic Diet' ? 'selected' : '' }}>Therapeutic Diet</option>
@@ -143,16 +143,16 @@
 
              <p>
                 <b>Start:</b> 
-                    <input type="date" name="start_date" id="start_date" value="{{ $subscription->start_date ?? '' }}">
+                    <input type="date" name="start_date" id="start_date" value="{{ $subscription->start_date ?? '' }}"  disabled/>
 
              </p>
              <p>
                 <b>End:</b> 
-                <input type="date" name="end_date" id="end_date" value="{{ $subscription->end_date ?? '' }}">
+                <input type="date" name="end_date" id="end_date" value="{{ $subscription->end_date ?? '' }}"  disabled/>
              </p>
              <p>
                 <b>Payment Info:</b> 
-                <select name="activity_level" id="activity_level">
+                <select name="activity_level" id="activity_level"  disabled>
                     <option value="GCash" {{ $subscription->mop == 'GCash' ? 'selected' : '' }}>GCash</option>
                     <option value="Maya" {{ $subscription->mop == 'Maya' ? 'selected' : '' }}>Maya</option>
                     <option value="BPI" {{ $subscription->mop == 'BPI' ? 'selected' : '' }}>BPI</option>
@@ -160,7 +160,7 @@
              </p>
              <p>
                 <b>Reference Number:</b> 
-                <input id="ref_number" name="ref_number" type="text" placeholder="" value="{{ $subscription->ref_number  ?? 'No activity level given' }}"/> 
+                <input id="ref_number" name="ref_number" type="text" placeholder="" value="{{ $subscription->ref_number  ?? 'No activity level given' }}"  disabled/> 
             </p>
             </div>
             <div class="photo">
