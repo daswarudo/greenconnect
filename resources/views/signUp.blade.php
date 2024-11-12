@@ -89,7 +89,7 @@
                     </div>
                     <div class="form-group">
                         <label for="doctor-recommendation">Doctor's Diet Recommendation</label>
-                        <input id="diet_reco" name="diet_reco" type="text" placeholder="Ex. Less red meat"/>
+                        <input id="diet_recom" name="diet_recom" type="text" placeholder="Ex. Less red meat"/>
                     </div>
                     <div class="form-group">
                         <label for="health_condition">Health Condition</label>
