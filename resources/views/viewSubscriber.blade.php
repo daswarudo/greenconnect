@@ -101,6 +101,7 @@
                 <b>Height (cm):</b> 
                 <input id="height" name="height" type="number"  step="0.01" value="{{ $customer->height }}"  oninput="calculateBMI()" required />
              </p>
+
              <p>
                 <b>Weight (kg):</b> 
                 <input id="weight" name="weight" type="number"  step="0.01" value="{{ old('weight', $customer->weight) }}"  oninput="calculateBMI()" required />
@@ -112,6 +113,12 @@
              <p>
                 <b>Daily Calorie:</b> 
                 <input type="number" name="daily_calorie" id="daily_calorie" class="form-control" value="{{ old('daily_calorie', $customer->daily_calorie) }}">
+                
+             </p>
+
+             <p>
+                <b>Diet Recommendation:</b> 
+                <input type="text" name="diet_recom" id="diet_recom" class="form-control" value="{{ old('diet_recom', $customer->diet_recom) }}">
                 
              </p>
              <p>
