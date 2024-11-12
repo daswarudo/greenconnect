@@ -83,7 +83,17 @@ Route::get('/subscribers', [LoginRegisterController::class, 'showSubscriptions']
 Route::patch('/rdnDashboard', [LoginRegisterController::class, 'updateStatus'])
     ->name('subscriptions.updateStatus');
 
-Route::get('/viewsubscriber/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewsubscriber');
+/*Route::get('/viewsubscriber/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewsubscriber');
+Route::put('/viewsubscriber/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewsubscriber.edit');*/
+// Route to view customer details
+
+Route::get('/viewsubscriber/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewSubscriber.view');
+
+
+// Route to edit customer details (use PUT or PATCH for updating)
+// This route is for editing customer details (handles both GET and POST)
+//Route::match(['get', 'post'], '/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
+Route::put('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
 
 
 

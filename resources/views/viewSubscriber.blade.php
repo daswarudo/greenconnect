@@ -31,6 +31,7 @@
      WELCOME, RDN
         
    </div>
+   {{--
    <div class="tabs">
     <button>
      Weight Loss
@@ -44,8 +45,13 @@
     <button>
      Gluten Free
     </button>
-   </div>
+   </div>--}}
    
+   {{--<!--<form class="right-panel" action="{{ route('viewSubscriber.edit', $customer->customer_id) }}" method="POST">-->
+<!--form-->--}}
+<form method="POST" action="{{ route('viewSubscriber.custEditRnd', ['id' => $customer->customer_id]) }}">
+@csrf
+@method('PUT')
    <div class="details">
         <div class="info">
         <div class="form-container">
@@ -56,63 +62,99 @@
                 </div>
             </div>
              <p>
-              <b>First Name:</b>  <input type="text" name="first_name" value="{{ old('first_name', $customer->first_name) }}" />
+                <b>First Name:</b>  <input type="text" name="first_name"  id="first_name" value="{{ old('first_name', $customer->first_name) }}" />
              </p>
              
              <p>
-             <b>Last Name:</b> <input type="text" name="last_name" value="{{ old('first_name', $customer->last_name) }}" />
+                <b>Last Name:</b> <input type="text" name="last_name" id="last_name" value="{{ old('last_name', $customer->last_name) }}" />
              </p>
              <p>
-             <b>Age:</b> {{ $customer->age }}
+                <b>Age:</b>   <input id="age" name="age" type="number" min="0" step="1" value="{{ old('age', $customer->age) }}"/>
+                
              </p>
              <p>
-             <b>Sex:</b> {{ $customer->sex }}
+                <b>Sex:</b> 
+                <select name="sex" id="sex">
+                    <option value="M" {{ $customer->sex == 'M' ? 'selected' : '' }}>Male</option>
+                    <option value="F" {{ $customer->sex == 'F' ? 'selected' : '' }}>Female</option>
+                </select>
              </p>
              <p>
-             <b>Address:</b> {{ $customer->address  }}
+                <b>Address:</b> 
+                <input id="address" name="address" type="text" value="{{ old('address', $customer->address) }}" />
              </p>
              <p>
-             <b>Contact Number:</b> {{ $customer->contact_num  ?? 'No phone given' }}
+                <b>Contact Number:</b> 
+                <input id="contact_num" name="contact_num" type="text" minlength="11" maxlength="11" 
+                        oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  value="{{ old('age', $customer->contact_num) }}"  />
+             </p>
+             
+             <p>
+                <b>Diet Recommended:</b> 
+                <input id="diet_reco" name="diet_reco" type="text" value="{{ $customer->diet_recom  ?? 'No activity level' }}"/>
              </p>
              <p>
-             <b>Weight (kg):</b> {{ $customer->weight }}
+                <b>Health Condition:</b> 
+                <input id="health_condition" name="health_condition" type="text" value="{{ $customer->health_condition }}"/>
              </p>
              <p>
-             <b>Height (cm):</b> {{ $customer->height }}
+                <b>Height (cm):</b> 
+                <input id="height" name="height" type="number"  step="0.01" value="{{ $customer->height }}"  oninput="calculateBMI()" required />
              </p>
              <p>
-             <b>Diet Recommended:</b> {{ $customer->diet_recom  ?? 'No activity level' }}
+                <b>Weight (kg):</b> 
+                <input id="weight" name="weight" type="number"  step="0.01" value="{{ old('weight', $customer->weight) }}"  oninput="calculateBMI()" required />
              </p>
              <p>
-             <b>Health Condition:</b> {{ $customer->health_condition }}
+                <b>BMI:</b>
+                <input type="text" name="bmi" id="bmi" class="form-control" value="{{ old('bmi', $customer->bmi) }}">
              </p>
              <p>
-             <b>BMI:</b> {{ $customer->bmi }}
+                <b>Daily Calorie:</b> 
+                <input type="number" name="daily_calorie" id="daily_calorie" class="form-control" value="{{ old('daily_calorie', $customer->daily_calorie) }}">
+                
              </p>
              <p>
-             <b>Daily Calorie:</b> {{ $customer->daily_calorie  ?? 'No daily calorie given' }}
-             </p>
-             <p>
-             <b>Activity Level:</b> {{ $customer->activity_level  ?? 'No activity level given' }}
+                <b>Activity Level:</b> 
+                <select name="activity_level" id="activity_level">
+                    <option value="Sedentary" {{ $customer->activity_level == 'Sedentary' ? 'selected' : '' }}>Sedentary</option>
+                    <option value="Low Active" {{ $customer->activity_level == 'Low Active' ? 'selected' : '' }}>Low Active</option>
+                    <option value="Active" {{ $customer->activity_level == 'Active' ? 'selected' : '' }}>Active</option>
+                    <option value="Very Active" {{ $customer->activity_level == 'Very Active' ? 'selected' : '' }}>Very Active</option>
+                </select>
              </p>
 
-
              <p>
-                <b>Plan name:</b> {{ $subscription->subscriptionType->plan_name ?? 'N/A' }}
+                <b>Plan name:</b> 
+                <select name="activity_level" id="activity_level">
+                    <option value="Weight-Loss Plan" {{ $subscription->subscriptionType->plan_name == 'Weight-Loss Plan' ? 'selected' : '' }}>Weight-Loss Plan</option>
+                    <option value="Weight-Gain Plan" {{ $subscription->subscriptionType->plan_name == 'Weight-Gain Plan' ? 'selected' : '' }}>Weight-Gain Plan</option>
+                    <option value="Therapeutic Diet" {{ $subscription->subscriptionType->plan_name == 'Therapeutic Diet' ? 'selected' : '' }}>Therapeutic Diet</option>
+                    {{--<option value="BPI" {{ $subscription->subscriptionType->plan_name == 'BPI' ? 'selected' : '' }}>BPI</option>--}}
+                </select>
             </p>
 
              <p>
-                <b>Start:</b> {{ $subscription->start_date ?? 'N/A' }}
+                <b>Start:</b> 
+                    <input type="date" name="start_date" id="start_date" value="{{ $subscription->start_date ?? '' }}">
+
              </p>
              <p>
-                <b>End:</b> {{ $subscription->end_date ?? 'No end given' }}
+                <b>End:</b> 
+                <input type="date" name="end_date" id="end_date" value="{{ $subscription->end_date ?? '' }}">
              </p>
              <p>
-                <b>Payment Info:</b> {{ $subscription->mop  ?? 'No activity level given' }}
+                <b>Payment Info:</b> 
+                <select name="activity_level" id="activity_level">
+                    <option value="GCash" {{ $subscription->mop == 'GCash' ? 'selected' : '' }}>GCash</option>
+                    <option value="Maya" {{ $subscription->mop == 'Maya' ? 'selected' : '' }}>Maya</option>
+                    <option value="BPI" {{ $subscription->mop == 'BPI' ? 'selected' : '' }}>BPI</option>
+                </select>
              </p>
              <p>
-                <b>Reference Number:</b> {{ $subscription->ref_number  ?? 'No activity level given' }}
-             </p>
+                <b>Reference Number:</b> 
+                <input id="ref_number" name="ref_number" type="text" placeholder="" value="{{ $subscription->ref_number  ?? 'No activity level given' }}"/> 
+            </p>
             </div>
             <div class="photo">
                 <img alt="Customer ID" height="100" src="{{ asset($customer->profile_picture) }}" width="100" style="border-radius:50%;"/>
@@ -122,17 +164,38 @@
             </div>
                 <!-- <div class="close">
                     <a href="{{ url()->previous() }}" style="text-decoration: none;">&#10006</a>
-               </div>-->
-            <!-- save button-->
+                </div>-->
+                <!-- save button-->
              <div class="save">
-                <a href="#" style="text-decoration: none;">
-                    <button class = "saveButton">
-                        EDIT
-                    </button>
-                </a>
+                
+                <button class = "saveButton" type="submit">
+                    APPLY CHANGES
+                </button>
+                       
+                
             </div>
   </div>
+   </form>
+<script>
+    //bmi calculator
+    function calculateBMI() {
+            // Get weight and height values
+            let weight = parseFloat(document.getElementById('weight').value);
+            let height = parseFloat(document.getElementById('height').value);
 
+            // Check if both weight and height are valid numbers
+            if (!isNaN(weight) && !isNaN(height) && height > 0) {
+                // Convert height to meters if in cm
+                if (height > 3) {
+                    height = height / 100; // Assuming input in cm, convert to m
+                }
+                // Calculate BMI
+                let bmi = weight / (height * height);
+                // Set the calculated BMI to the BMI input field with two decimal places
+                document.getElementById('bmi').value = bmi.toFixed(2);
+            }
+        }
+</script>
 <!-- Bootstrap JS and dependencies (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -155,9 +155,19 @@ function filterByStatus(status) {
                     <td>{{ $subscription->subscriptionType->plan_name }}</td>
                     <td style="text-transform:uppercase;">{{ $subscription->sub_status }}</td>
                     <td>
-                        <a href="{{ route('viewsubscriber', $subscription->customer_id) }}" style="text-decoration: none;">
+                        
+                        <!--<a href="{{ route('viewsubscriber', $subscription->customer_id) }}" style="text-decoration: none;">
                             <button class="crudButtons">View Details</button>
+                        </a>-->
+                        <!-- Correct Usage for View Details -->
+                        <a href="{{ route('viewSubscriber.view', $subscription->customer_id) }}" style="text-decoration: none;">
+                            <button class="crudButtons">Edit Details</button>
                         </a>
+                        
+                        <td>
+                            
+                        
+
                     </td>
                 </tr>
             @endforeach

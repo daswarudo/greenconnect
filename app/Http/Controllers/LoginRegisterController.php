@@ -272,9 +272,54 @@ public function register(Request $request)
         $subscription = Subscriptions::where('customer_id', $id)->first(); // Assuming a customer has one subscription
 
         //return view('customer.view', compact('customer', 'subscription'));
-        return view('viewsubscriber', compact('customer', 'subscription'));
+        return view('viewSubscriber', compact('customer', 'subscription'));
 
     }
+
+    public function custEditRnd(Request $request, $id)
+{
+    // Validate the incoming request data
+    $request->validate([
+        'customer_id' => 'required|exists:subscriptions,customer_id', // Ensure customer_id exists in subscriptions
+        'daily_calorie' => 'nullable|numeric',
+        'weight' => 'nullable|numeric|between:0,999.99',
+        'bmi' => 'nullable|numeric|between:0,999.99',
+    ]);
+
+    // Start a transaction to ensure atomicity
+    DB::transaction(function () use ($request, $id) {
+        try {
+            // Find the customer record by ID
+            $customer = Customer::findOrFail($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // If customer not found, return error message
+            return redirect()->route('errorPage')->with('error', 'Customer not found!');
+        }
+
+        // Prepare the data to be updated
+        $updateData = [
+            'daily_calorie' => $request->input('daily_calorie', $customer->daily_calorie),
+            'weight' => $request->input('weight', $customer->weight),
+            'bmi' => $request->input('bmi', $customer->bmi),
+        ];
+
+        // If customer_id is provided in the request, update related subscription (optional)
+        if ($request->has('customer_id')) {
+            $updateData['customer_id'] = $request->customer_id;
+        }
+
+        // Perform the update
+        $customer->update($updateData);
+
+        // Return updated view with success message
+        return view('viewsubscriber', compact('customer'))->with('success', 'Customer information updated successfully.');
+    });
+}
+
+
+
+
+    
     /*
     // Edit customer details
     public function editCustomer($id)

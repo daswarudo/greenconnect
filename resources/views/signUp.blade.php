@@ -75,7 +75,7 @@
 
                     <div class="form-group">
                         <label for="bmi">BMI <span> * </span></label>
-                        <input type="text" name="bmi" id="bmi" class="form-control" readonly>
+                        <input type="text" name="bmi" id="bmi" class="form-control">
                     </div>
 
                     <div class="form-group">
