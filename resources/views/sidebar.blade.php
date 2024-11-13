@@ -41,7 +41,7 @@
     </i>
     Meal Plans
    </a>
-   <a href="#">
+   <a href="{{ route('login') }}">
     <i class="fas fa-sign-out-alt">
     </i>
     Log Out

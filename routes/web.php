@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginRegisterController;
+use App\Http\Controllers\ConsultationController;
 
 
 //RND
@@ -37,6 +38,11 @@ Route::get('/events/{id}', [EventController::class, 'show']);
 Route::put('/events/{id}', [EventController::class, 'update']);
 Route::delete('/events/{id}', [EventController::class, 'destroy']);
 
+// Route to get events for the calendar
+Route::get('/events', [EventController::class, 'getEvents']);
+
+// Route to create a new event
+Route::post('/events', [EventController::class, 'createEvent']);
 
 Route::get('/mealplans', function () {
     return view('mealplans');
@@ -47,6 +53,8 @@ Route::get('/viewsubscriber', function () {
 })->name('viewsubscriber');
 
 // CUSTOMERS
+
+Route::get('/custTest', [LoginRegisterController::class, 'showCustomerDashboard'])->name('custTest');
 
 Route::get('/customerDashboard', function () {
     return view('customerDashboard');
@@ -60,7 +68,7 @@ Route::get('/restoMealInput', function () {
     return view('restoMealInput');
 })->name('restoMealInput');
 
-// LACKING ROUTE SA CUSTOMER APPOINTMENT UNKNOWN PAMAN 
+// LACKING ROUTE IN CUSTOMER APPOINTMENT SINCE IT IS UNKNOWN 
 
 Route::get('/customerFeedback', function () {
     return view('customerFeedback');
@@ -94,6 +102,17 @@ Route::get('/viewsubscriber/{id}', [LoginRegisterController::class, 'viewDetails
 // This route is for editing customer details (handles both GET and POST)
 //Route::match(['get', 'post'], '/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
 Route::put('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
+
+
+
+//CONSULTATIONSSSSS
+// Show the form to add a new consultation
+Route::get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
+
+// Handle form submission
+Route::post('/consultation/store', [ConsultationController::class, 'store'])->name('consultation.store');
+
+Route::get('/appointments', [ConsultationController::class, 'showCalendar'])->name('appointments');
 
 
 

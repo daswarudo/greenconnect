@@ -73,4 +73,8 @@ class Customer extends Model
         return $this->hasMany(Subscriptions::class, 'customer_id'); // 'customer_id' as foreign key in Subscription
     
     }
+    public function consultations()
+    {
+        return $this->hasMany(ConsultationSched::class, 'customer_id');
+    }
 }

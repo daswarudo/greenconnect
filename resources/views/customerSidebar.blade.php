@@ -22,7 +22,8 @@
 <div class="sidebar">
 	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
     
-    <a href="{{ route('customerDashboard') }}">
+    <!--<a href="{{ route('customerDashboard') }}">-->
+    <a href="#">
     <i class="fas fa-utensils">
     </i>
     Meal Plans
@@ -32,17 +33,19 @@
     </i>
     Appointments
    </a>
-   <a href="{{ route('customerFeedback') }}">
+   <!--<a href="{{ route('customerFeedback') }}">-->
+   <a href="#">
    <i class="fa fa-comment" ></i>
     </i>
     Feedback
    </a>
-   <a href="{{ route('customerSubscription') }}">
+   <!--<a href="{{ route('customerSubscription') }}">-->
+   <a href="#">
    <i class="fa fa-info" ></i>
     </i>
     Subscription
    </a>
-   <a href="#">
+   <a href="{{ route('login') }}">
     <i class="fas fa-sign-out-alt">
     </i>
     Log Out

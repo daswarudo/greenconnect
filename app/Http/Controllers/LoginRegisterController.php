@@ -12,6 +12,7 @@ use App\Models\SubscriptionType;
 use App\Models\Subscriptions;
 use App\Models\Payments;
 use Illuminate\Support\Facades\Hash;
+use App\Models\ConsultationSched;
 
 
 
@@ -175,53 +176,71 @@ public function register(Request $request)
     }
     /*
    */
-    public function loginUser(Request $request)
-    {
-        // Validate the input
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
+  public function loginUser(Request $request)
+  {
+      // Validate the input
+      $request->validate([
+          'username' => 'required',
+          'password' => 'required'
+      ]);
+  
+      // Attempt to find the user as a Customer
+      $user = Customer::where('username', '=', $request->username)->first();
+  
+      // If not found as Customer, check if the user is an Rdn
+      if (!$user) {
+          $user = Rdn::where('username', '=', $request->username)->first();
+      }
+  
+      // If the user exists (either Customer or Rdn)
+      if ($user) {
+          // Verify the password
+          if (Hash::check($request->password, $user->password)) {
+              // Flash a success message
+              session()->flash('message', 'Log In successful!');
+  
+              // Store the user ID and type in the session based on the model (Customer or Rdn)
+              if ($user instanceof Customer) {
+                  $request->session()->put('loginId', $user->customer_id); // Store customer ID
+                  $request->session()->put('userType', 'customer');       // Store user type as 'customer'
+                  
+                  // Redirect to the customer-specific dashboard or welcome page
+                  //return redirect()->route('custTest'); 
+                  return redirect('/custTest');
+              } elseif ($user instanceof Rdn) {
+                  $request->session()->put('loginId', $user->rdn_id); // Store RDN ID
+                  $request->session()->put('userType', 'rdn');        // Store user type as 'rdn'
+                  
+                  // Redirect to the Rdn-specific dashboard
+                  return redirect()->route('rdnDashboard'); 
+              }
+          } else {
+              // If the password is incorrect, return with an error
+              return back()->withInput()->with('fail', 'Invalid username or password!');
+          }
+      } else {
+          // If no user is found in either model, send an error
+          return back()->with('fail', 'Account does not exist!');
+      }
+  }
+  public function showCustomerDashboard()
+{
+    $loginId = session()->get('loginId'); // Retrieve loginId
+    $userType = session()->get('userType'); // Retrieve userType
 
-        // Check if the user is a Customer
-        $user = Customer::where('username', '=', $request->username)->first();
+    // Fetch the customer data based on the loginId
+    $customer = Customer::where('customer_id', $loginId)->first();  
 
-        // If not found as Customer, check if the user is an Rdn
-        if (!$user) {
-            $user = Rdn::where('username', '=', $request->username)->first();
-        }
-
-        // If the user exists (either Customer or Rdn)
-        if ($user) {
-            // Verify the password
-            if (Hash::check($request->password, $user->password)) {
-                // Flash a success message and track the user session
-                session()->flash('message', 'Log In successful!');
-
-                // Store the user session with their ID based on the model (Customer or Rdn)
-                if ($user instanceof Customer) {
-                    $request->session()->put('loginId', $user->customer_id); // For Customer
-                    $request->session()->put('userType', 'customer');
-                    
-                    // Redirect to the customer-specific welcome page
-                    return redirect()->route('welcome');
-                } elseif ($user instanceof Rdn) {
-                    $request->session()->put('loginId', $user->id); // For Rdn
-                    $request->session()->put('userType', 'rdn');
-                    
-                    // Redirect to the Rdn-specific welcome page
-                    return redirect()->route('rdnDashboard');
-                }
-            } else {
-                // If the password is incorrect, send an error
-                    return back()->withInput()->with('fail', 'Invalid username or password!');
-
-            }
-        } else {
-            // If no user is found in either model, send an error
-            return back()->with('fail', 'Account does not exist!');
-        }
+    // Check if values are set
+    if ($loginId && $userType) {
+        // Pass the data to the view
+        return view('custTest', compact('userType', 'loginId', 'customer'));
+    } else {
+        // Redirect to login page if not authenticated
+        return redirect()->route('login')->with('fail', 'Please log in first');
     }
+}
+
     /*
     public function showSubscriptions()
     {
@@ -316,56 +335,5 @@ public function register(Request $request)
     });
 }
 
-
-
-
     
-    /*
-    // Edit customer details
-    public function editCustomer($id)
-    {
-        $customer = Customer::findOrFail($id);
-        return view('customer.edit', compact('customer'));
-    }
-
-    // Update customer details
-    public function updateCustomer(Request $request, $id)
-    {
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            // Add validation rules for other customer fields
-        ]);
-
-        $customer = Customer::findOrFail($id);
-        $customer->first_name = $request->input('first_name');
-        $customer->last_name = $request->input('last_name');
-        // Update other customer fields as needed
-        $customer->save();
-
-        return redirect()->route('viewsubscriber', $id)->with('success', 'Customer details updated successfully.');
-    }
-    public function editeditSubs($id)
-    {
-        $subscription = Subscriptions::findOrFail($id);
-        return view('subscription.edit', compact('subscription'));
-    }
-
-    // Update subscription details
-    public function editSubs(Request $request, $id)
-    {
-        $request->validate([
-            'plan_name' => 'required|string|max:255',
-            'sub_status' => 'required|string|max:255',
-            // Add validation rules for other subscription fields
-        ]);
-
-        $subscription = Subscriptions::findOrFail($id);
-        $subscription->plan_name = $request->input('plan_name');
-        $subscription->sub_status = $request->input('sub_status');
-        // Update other subscription fields as needed
-        $subscription->save();
-
-        return redirect()->route('viewsubscriber', $subscription->customer_id)->with('success', 'Subscription details updated successfully.');
-    }*/
 }
