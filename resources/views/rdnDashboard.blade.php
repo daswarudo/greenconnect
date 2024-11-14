@@ -180,6 +180,7 @@
 
     </div>
     <div class="widget calendar">
+        <!--
      <h3>
       Appointments
      </h3>
@@ -187,8 +188,8 @@
       View your upcoming appointments
      </p>
 
-	<!--insert calendar-->
-	<div id='calendar'></div>
+	
+	<div id='calendar'></div>-->
 		
     </div>
    </div>

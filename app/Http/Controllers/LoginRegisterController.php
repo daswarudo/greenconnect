@@ -380,7 +380,7 @@ public function register(Request $request)
             return view('viewsubscriber', compact('customer'))->with('success', 'Customer information updated successfully.');
         });
     }
-    public function showAppointTable()
+    public function showAppointTable()//ADD LATERS PROBS AFTER 50 PERCENT DEF
     {
         /*$subscriptions = Subscriptions::with(['customer', 'subscriptionType'])->get();
 
