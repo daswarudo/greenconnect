@@ -39,4 +39,10 @@ class SubscriptionType extends Model
     {
         return $this->hasMany(Subscriptions::class, 'subscription_type_id');
     }
+
+    public function meals()
+    {
+        
+        return $this->hasMany(Meals::class, 'subscription_type_id');
+    }
 }

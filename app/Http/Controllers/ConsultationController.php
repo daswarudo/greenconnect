@@ -15,6 +15,7 @@ use App\Models\Subscriptions;
 use App\Models\Payments;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ConsultationSched;
+use App\Models\Meals;
 
 class ConsultationController extends Controller
 {

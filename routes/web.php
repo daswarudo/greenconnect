@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\MealController;
 
 
 //RND
@@ -31,6 +32,7 @@ Route::get('/rdnDashboard', function () {
 Route::get('/appointments', function () {
     return view('appointments');
 })->name('appointments');
+
 //viewAppointmentsRdn
 Route::get('/viewAppointmentsRdn', function () {
     return view('viewAppointmentsRdn');
@@ -117,6 +119,12 @@ Route::get('/consultation/create', [ConsultationController::class, 'create'])->n
 Route::post('/consultation/store', [ConsultationController::class, 'store'])->name('consultation.store');
 
 Route::get('/appointments', [ConsultationController::class, 'showCalendar'])->name('appointments');
+
+//MEALSssss
+
+Route::get('mealplans', [MealController::class, 'index'])->name('mealplans');
+Route::get('mealplansAdd', [MealController::class, 'viewSubs'])->name('mealplansAdd');
+Route::post('mealplans',[MealController::class,'add'])->name('mealplans.add');
 
 
 
