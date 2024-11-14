@@ -37,23 +37,23 @@
         });
         
         function searchTable(tableId, inputId) {
-    let input = document.getElementById(inputId);
-    let filter = input.value.toLowerCase();
-    let table = document.getElementById(tableId);
-    let rows = table.getElementsByTagName("tr");
+            let input = document.getElementById(inputId);
+            let filter = input.value.toLowerCase();
+            let table = document.getElementById(tableId);
+            let rows = table.getElementsByTagName("tr");
 
-    for (let i = 1; i < rows.length; i++) { // Skip the header row
-        let td = rows[i].getElementsByTagName("td")[0]; // Customer Name column
-        if (td) {
-            let textValue = td.textContent || td.innerText;
-            if (textValue.toLowerCase().indexOf(filter) > -1) {
-                rows[i].style.display = "";
-            } else {
-                rows[i].style.display = "none";
+            for (let i = 1; i < rows.length; i++) { // Skip the header row
+                let td = rows[i].getElementsByTagName("td")[0]; // Customer Name column
+                if (td) {
+                    let textValue = td.textContent || td.innerText;
+                    if (textValue.toLowerCase().indexOf(filter) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
             }
         }
-    }
-}
 
         function sortTable(n, tableId) {
         var table = document.getElementById(tableId);

@@ -29,8 +29,18 @@
                     @if(Session::has('fail'))
                         <div class="alert alert-danger">{{ Session::get('fail') }}</div>
                     @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             <div class="form-container">
                 <div class="form-section diet-program">
+
                     <h2>Diet Program</h2>
                     <label for="diet-program">Diet Program</label>
 
@@ -75,7 +85,7 @@
 
                     <div class="form-group">
                         <label for="bmi">BMI <span> * </span></label>
-                        <input type="text" name="bmi" id="bmi" class="form-control">
+                        <input type="text" name="bmi" id="bmi" class="form-control" required />
                     </div>
 
                     <div class="form-group">
@@ -152,53 +162,77 @@
                         <label for="ref-number">Ref Number <span> * </span> </label>
                         <input id="ref_number" name="ref_number" type="text" placeholder="" required />
                     </div>
- <!--SUBMIT FORM --><button type ="submit" class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
+ 
 
 
 
                 </div>
-                <div class="form-section allergies"><!--?????? -->
+                <div class="form-section allergies">
+                    <!--basis:
+                    $table->boolean('allergy_wheat')->default(false);
+                    $table->boolean('allergy_milk')->default(false);
+                    $table->boolean('allergy_egg')->default(false);
+                    $table->boolean('allergy_peanut')->default(false);
+                    $table->boolean('allergy_fish')->default(false);
+                    $table->boolean('allergy_soy')->default(false);
+                    $table->boolean('allergy_shellfish')->default(false);
+                    $table->boolean('allergy_treenut')->default(false);
+                    $table->boolean('allergy_sesame')->default(false);
+                    $table->boolean('allergy_corn')->default(false);
+                            
+                    -->
                     <h2>Allergies</h2>
                     <div class="checkbox-group">
-                        <input id="wheat" name="allergies" type="checkbox" value="wheat"/>
+                        <input type="hidden" name="allergy_wheat" value="0">
+                        <input id="allergy_wheat" name="allergy_wheat" type="checkbox" value="1">
                         <label for="wheat">Wheat</label>
                     </div>
                     <div class="checkbox-group">
-                        <input id="milk" name="allergies" type="checkbox" value="milk"/>
+                        <input type="hidden" name="allergy_milk" value="0">
+                        <input id="allergy_milk" name="allergy_milk" type="checkbox" value="1">
                         <label for="milk">Milk</label>
                     </div>
                     <div class="checkbox-group">
-                        <input id="egg" name="allergies" type="checkbox" value="egg"/>
+                        <input type="hidden" name="allergy_egg" value="0">
+                        <input id="allergy_egg" name="allergy_egg" type="checkbox" value="1">
                         <label for="egg">Egg</label>
                     </div>
                     <div class="checkbox-group">
-                        <input id="peanut" name="allergies" type="checkbox" value="peanut"/>
+                        <input type="hidden" name="allergy_peanut" value="0">
+                        <input id="allergy_peanut" name="allergy_peanut" type="checkbox" value="1">
                         <label for="peanut">Peanut</label>
                     </div>
                     <div class="checkbox-group">
-                        <input id="soy" name="allergies" type="checkbox" value="soy"/>
+                        <input type="hidden" name="allergy_soy" value="0">
+                        <input id="allergy_soy" name="allergy_soy" type="checkbox" value="1">
                         <label for="soy">Soy</label>
                     </div>
                     <div class="checkbox-group">
-                        <input id="fish" name="allergies" type="checkbox" value="fish"/>
+                        <input type="hidden" name="allergy_fish" value="0">
+                        <input id="allergy_fish" name="allergy_fish" type="checkbox" value="1">
                         <label for="fish">Fish</label>
                     </div>
                     <div class="checkbox-group">
-                        <input id="shellfish" name="allergies" type="checkbox" value="shellfish"/>
+                        <input type="hidden" name="allergy_shellfish" value="0">
+                        <input id="allergy_shellfish" name="allergy_shellfish" type="checkbox" value="1">
                         <label for="shellfish">Shellfish</label>
                     </div>
                     <div class="checkbox-group">
-                        <input id="tree-nuts" name="allergies" type="checkbox" value="tree-nuts"/>
+                        <input type="hidden" name="allergy_treenut" value="0">
+                        <input id="allergy_treenut" name="allergy_treenut" type="checkbox" value="1">
                         <label for="tree-nuts">Tree Nuts</label>
                     </div>
                     <div class="checkbox-group">
-                        <input id="sesame" name="allergies" type="checkbox" value="sesame"/>
+                        <input type="hidden" name="allergy_sesame" value="0">
+                        <input id="allergy_sesame" name="allergy_sesame" type="checkbox" value="1">
                         <label for="sesame">Sesame</label>
                     </div>
                     <div class="checkbox-group">
-                        <input id="corn" name="allergies" type="checkbox" value="corn"/>
+                        <input type="hidden" name="allergy_corn" value="0">
+                        <input id="allergy_corn" name="allergy_corn" type="checkbox" value="1">
                         <label for="corn">Corn</label>
                     </div>
+                    <!--
                     <div class="checkbox-group">
                         <input id="chicken" name="allergies" type="checkbox" value="chicken"/>
                         <label for="chicken">Chicken</label>
@@ -218,8 +252,9 @@
                     <div class="checkbox-group">
                         <input id="gluten" name="allergies" type="checkbox" value="gluten"/>
                         <label for="gluten">Gluten</label>
-                    </div>
+                    </div>-->
                 </div>
+                <!--SUBMIT FORM --><button type ="submit" class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
             </div>
         <!--</form>-->
         </form>

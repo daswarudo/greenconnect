@@ -38,8 +38,18 @@ return new class extends Migration
             $table->boolean('prefer_chicken')->default(false);
             $table->boolean('prefer_veggie')->default(false);
 
+
             //$table->string('status')->default('pending')->nullable();//moves to subs
-        
+            $table->boolean('allergy_wheat')->default(false);
+            $table->boolean('allergy_milk')->default(false);
+            $table->boolean('allergy_egg')->default(false);
+            $table->boolean('allergy_peanut')->default(false);
+            $table->boolean('allergy_fish')->default(false);
+            $table->boolean('allergy_soy')->default(false);
+            $table->boolean('allergy_shellfish')->default(false);
+            $table->boolean('allergy_treenut')->default(false);
+            $table->boolean('allergy_sesame')->default(false);
+            $table->boolean('allergy_corn')->default(false);
             $table->timestamps();
         });
     }

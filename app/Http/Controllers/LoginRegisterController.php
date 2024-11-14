@@ -117,11 +117,34 @@ public function register(Request $request)
         'prefer_fish' => 'nullable|boolean',
         'prefer_chicken' => 'nullable|boolean',
         'prefer_veggie' => 'nullable|boolean',
+
+        'allergy_wheat' => 'nullable|boolean',
+        'allergy_milk' => 'nullable|boolean',
+        'allergy_egg' => 'nullable|boolean',
+        'allergy_peanut' => 'nullable|boolean',
+        'allergy_fish' => 'nullable|boolean',
+        'allergy_soy' => 'nullable|boolean',
+        'allergy_shellfish' => 'nullable|boolean',
+        'allergy_treenut' => 'nullable|boolean',
+        'allergy_sesame' => 'nullable|boolean',
+        'allergy_corn' => 'nullable|boolean',
     ]);
 
+    /* use this as basis
+            $table->boolean('allergy_wheat')->default(false);
+            $table->boolean('allergy_milk')->default(false);
+            $table->boolean('allergy_egg')->default(false);
+            $table->boolean('allergy_peanut')->default(false);
+            $table->boolean('allergy_fish')->default(false);
+            $table->boolean('allergy_soy')->default(false);
+            $table->boolean('allergy_shellfish')->default(false);
+            $table->boolean('allergy_treenut')->default(false);
+            $table->boolean('allergy_sesame')->default(false);
+            $table->boolean('allergy_corn')->default(false);
+    */
     // Return validation errors if any
     if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
+        return back()->withErrors($validator)->withInput();
     }
 
     // Use a transaction to ensure atomicity
@@ -145,11 +168,34 @@ public function register(Request $request)
             'profile_picture' => $request->hasFile('profile_picture') ?
                 $request->file('profile_picture')->store('images', 'public') : 'images/freepik1-min.jpg',
             'contact_num' => $request->input('contact_num'),
+
             'prefer_pork' => $request->boolean('prefer_pork'),
             'prefer_beef' => $request->boolean('prefer_beef'),
             'prefer_fish' => $request->boolean('prefer_fish'),
             'prefer_chicken' => $request->boolean('prefer_chicken'),
             'prefer_veggie' => $request->boolean('prefer_veggie'),
+            /* use this as basis
+                $table->boolean('allergy_wheat')->default(false);
+                $table->boolean('allergy_milk')->default(false);
+                $table->boolean('allergy_egg')->default(false);
+                $table->boolean('allergy_peanut')->default(false);
+                $table->boolean('allergy_fish')->default(false);
+                $table->boolean('allergy_soy')->default(false);
+                $table->boolean('allergy_shellfish')->default(false);
+                $table->boolean('allergy_treenut')->default(false);
+                $table->boolean('allergy_sesame')->default(false);
+                $table->boolean('allergy_corn')->default(false);
+            */
+            'allergy_wheat' => $request->boolean('allergy_wheat'),
+            'allergy_milk' => $request->boolean('allergy_milk'),
+            'allergy_egg' => $request->boolean('allergy_egg'),
+            'allergy_peanut' => $request->boolean('allergy_peanut'),
+            'allergy_fish' => $request->boolean('allergy_fish'),
+            'allergy_soy' => $request->boolean('allergy_soy'),
+            'allergy_shellfish' => $request->boolean('allergy_shellfish'),
+            'allergy_treenut' => $request->boolean('allergy_treenut'),
+            'allergy_sesame' => $request->boolean('allergy_sesame'),
+            'allergy_corn' => $request->boolean('allergy_corn'),
         ]);
 
         // Create subscription record
