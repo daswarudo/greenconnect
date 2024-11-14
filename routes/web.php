@@ -122,11 +122,9 @@ Route::get('/appointments', [ConsultationController::class, 'showCalendar'])->na
 
 //MEALSssss
 
-Route::get('mealplans', [MealController::class, 'index'])->name('mealplans');
-Route::get('mealplansAdd', [MealController::class, 'viewSubs'])->name('mealplansAdd');
-Route::post('mealplans',[MealController::class,'add'])->name('mealplans.add');
-
-
-
+Route::get('/mealplans', [MealController::class, 'index'])->name('mealplans');
+Route::get('/mealplansAdd', [MealController::class, 'viewSubs'])->name('mealplansAdd');
+Route::post('/mealplansAdd',[MealController::class,'addMeals'])->name('mealplans.addition');
+//Route::post('/mealplansAdd',[MealController::class,'add'])->name('mealplans.add');//dili wokring husahay
 
 //login customer

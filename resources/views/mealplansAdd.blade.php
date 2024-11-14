@@ -17,7 +17,7 @@
 				{{ session('message') }}
 			</div>
 		@endif
-<form class="right-panel" action="{{ route('mealplans.add') }}" method="POST">
+<form class="right-panel" action="{{ route('mealplans.addition') }}" method="POST"><!--form-->
 @csrf
 <div class="content">
     <h1>Meal Plans</h1>

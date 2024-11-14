@@ -44,7 +44,7 @@ class MealController extends Controller
         return view('mealplansAdd', compact('subscriptionTypes'));
     }
 
-    public function add(Request $request)
+    public function addMeals(Request $request)
     {
         $validatedData = $request->validate([
             'meal_name' => 'nullable|string|max:50',
@@ -104,7 +104,7 @@ class MealController extends Controller
 
         //return redirect()->back()->with('success', 'Meal added successfully.');
         session()->flash('message', 'Registration successful! You can now log in.');
-        return redirect()->route('mealplansAdd');
+        return redirect()->route('mealplans');
     }
 
 
