@@ -10,19 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('css/rdnDash.css') }}">
     <style>
-        /* Basic styling for the page and calendar 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }*/
-        
+
         #calendar {
             width:120vh;
             max-width: 200vh;
@@ -30,6 +18,7 @@
             padding: 10px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin:5vh 10vh 10vh 10vh;
         }
 
         /* Styling for FullCalendar events */
@@ -58,45 +47,49 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
     </style>
-</head>
-<body>
-@include('sidebar')
-    <div id="calendar"></div>
-
-    <script>
-   {{--
-    
---}}
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        events: [
-            @foreach($appointments as $consultation)
-                {
-                    title: '{{ $consultation->first_name ?? 'Unknown' }}', // Display first name
-                    start: '{{ $consultation->start }}', // Full datetime (combined date + time)
-                    extendedProps: {
-                        customer_name: '{{ $consultation->first_name ?? 'Unknown' }}',
-                        time: '{{ $consultation->formatted_time }}' // Formatted time (HH:mm)
-                    }
-                }@if(!$loop->last),@endif
-            @endforeach
-        ],
-        eventContent: function(arg) {
-            // Custom display for event content as <first_name>,<time>
-            let customLabel = document.createElement('div');
-            customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
+    </head>
+    <body>
+        @include('sidebar')
+        
+        
+        <div id="calendar">
+        </div>
+        <div style="width: 30vh; height: 10vh;padding:10vh 10vh 10vh 5vh;">
             
-            return { domNodes: [customLabel] };
-        }
+        <!--<button class="crudButtons" onclick="window.location.href='{{ url('viewAppointmentsRdn') }}'">View All Consultations</button>
+                EDIT BUTTON IS HERERE-->
+
+
+        </div>
+        <script>
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                events: [
+                    @foreach($appointments as $consultation)
+                        {
+                            title: '{{ $consultation->first_name ?? 'Unknown' }}', // Display first name
+                            start: '{{ $consultation->start }}', // Full datetime (combined date + time)
+                            extendedProps: {
+                                customer_name: '{{ $consultation->first_name ?? 'Unknown' }}',
+                                time: '{{ $consultation->formatted_time }}' // Formatted time (HH:mm)
+                            }
+                        }@if(!$loop->last),@endif
+                    @endforeach
+                ],
+                eventContent: function(arg) {
+                    // Custom display for event content as <first_name>,<time>
+                    let customLabel = document.createElement('div');
+                    customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
+                    
+                    return { domNodes: [customLabel] };
+                }
+        });
+
+        calendar.render();
     });
-
-    calendar.render();
-});
-
-
-
 
     </script>
 </body>

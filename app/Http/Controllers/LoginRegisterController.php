@@ -224,22 +224,22 @@ public function register(Request $request)
       }
   }
   public function showCustomerDashboard()
-{
-    $loginId = session()->get('loginId'); // Retrieve loginId
-    $userType = session()->get('userType'); // Retrieve userType
+    {
+        $loginId = session()->get('loginId'); // Retrieve loginId
+        $userType = session()->get('userType'); // Retrieve userType
 
-    // Fetch the customer data based on the loginId
-    $customer = Customer::where('customer_id', $loginId)->first();  
+        // Fetch the customer data based on the loginId
+        $customer = Customer::where('customer_id', $loginId)->first();  
 
-    // Check if values are set
-    if ($loginId && $userType) {
-        // Pass the data to the view
-        return view('custTest', compact('userType', 'loginId', 'customer'));
-    } else {
-        // Redirect to login page if not authenticated
-        return redirect()->route('login')->with('fail', 'Please log in first');
+        // Check if values are set
+        if ($loginId && $userType) {
+            // Pass the data to the view
+            return view('custTest', compact('userType', 'loginId', 'customer'));
+        } else {
+            // Redirect to login page if not authenticated
+            return redirect()->route('login')->with('fail', 'Please log in first');
+        }
     }
-}
 
     /*
     public function showSubscriptions()
@@ -296,44 +296,52 @@ public function register(Request $request)
     }
 
     public function custEditRnd(Request $request, $id)
-{
-    // Validate the incoming request data
-    $request->validate([
-        'customer_id' => 'required|exists:subscriptions,customer_id', // Ensure customer_id exists in subscriptions
-        'daily_calorie' => 'nullable|numeric',
-        'weight' => 'nullable|numeric|between:0,999.99',
-        'bmi' => 'nullable|numeric|between:0,999.99',
-    ]);
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'customer_id' => 'required|exists:subscriptions,customer_id', // Ensure customer_id exists in subscriptions
+            'daily_calorie' => 'nullable|numeric',
+            'weight' => 'nullable|numeric|between:0,999.99',
+            'bmi' => 'nullable|numeric|between:0,999.99',
+        ]);
 
-    // Start a transaction to ensure atomicity
-    DB::transaction(function () use ($request, $id) {
-        try {
-            // Find the customer record by ID
-            $customer = Customer::findOrFail($id);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            // If customer not found, return error message
-            return redirect()->route('errorPage')->with('error', 'Customer not found!');
-        }
+        // Start a transaction to ensure atomicity
+        DB::transaction(function () use ($request, $id) {
+            try {
+                // Find the customer record by ID
+                $customer = Customer::findOrFail($id);
+            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                // If customer not found, return error message
+                return redirect()->route('errorPage')->with('error', 'Customer not found!');
+            }
 
-        // Prepare the data to be updated
-        $updateData = [
-            'daily_calorie' => $request->input('daily_calorie', $customer->daily_calorie),
-            'weight' => $request->input('weight', $customer->weight),
-            'bmi' => $request->input('bmi', $customer->bmi),
-        ];
+            // Prepare the data to be updated
+            $updateData = [
+                'daily_calorie' => $request->input('daily_calorie', $customer->daily_calorie),
+                'weight' => $request->input('weight', $customer->weight),
+                'bmi' => $request->input('bmi', $customer->bmi),
+            ];
 
-        // If customer_id is provided in the request, update related subscription (optional)
-        if ($request->has('customer_id')) {
-            $updateData['customer_id'] = $request->customer_id;
-        }
+            // If customer_id is provided in the request, update related subscription (optional)
+            if ($request->has('customer_id')) {
+                $updateData['customer_id'] = $request->customer_id;
+            }
 
-        // Perform the update
-        $customer->update($updateData);
+            // Perform the update
+            $customer->update($updateData);
 
-        // Return updated view with success message
-        return view('viewsubscriber', compact('customer'))->with('success', 'Customer information updated successfully.');
-    });
-}
+            // Return updated view with success message
+            return view('viewsubscriber', compact('customer'))->with('success', 'Customer information updated successfully.');
+        });
+    }
+    public function showAppointTable()
+    {
+        /*$subscriptions = Subscriptions::with(['customer', 'subscriptionType'])->get();
 
+        // Determine which view to return based on the route name
+        $viewName = request()->routeIs('subscribers') ? 'subscribers' : 'rdnDashboard';
+
+        return view($viewName, compact('subscriptions'));*/
+    }
     
 }

@@ -31,6 +31,10 @@ Route::get('/rdnDashboard', function () {
 Route::get('/appointments', function () {
     return view('appointments');
 })->name('appointments');
+//viewAppointmentsRdn
+Route::get('/viewAppointmentsRdn', function () {
+    return view('viewAppointmentsRdn');
+})->name('viewAppointmentsRdn');
 
 Route::get('/events', [EventController::class, 'index']);
 Route::post('/events', [EventController::class, 'store']);
