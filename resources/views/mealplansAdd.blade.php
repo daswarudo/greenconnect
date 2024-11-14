@@ -9,17 +9,34 @@
     
  </head>
  <body>
+
  @include('sidebar')
+
+
   <!--
 -->
-@if(session('message'))
+
+
+<div class="content">
+    <form class="right-panel" action="{{ route('mealplans.addition') }}" method="POST"><!--form-->
+    @csrf
+    @if(session('message'))
 			<div class="alert alert-success">
 				{{ session('message') }}
 			</div>
-		@endif
-<form class="right-panel" action="{{ route('mealplans.addition') }}" method="POST"><!--form-->
-@csrf
-<div class="content">
+	@endif
+    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{ Session::get('fail') }}</div>
+                    @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                     @endif
     <h1>Meal Plans</h1>
     <div class="container">
         
@@ -79,7 +96,7 @@
                 </div>
                 
                 <label for="description">Allergens</label>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="allergy_wheat">wheat</label>
                     <input id="allergy_wheat" name="allergy_wheat" type="checkbox" />
                 </div>
@@ -138,12 +155,88 @@
                 <div class="form-group">
                     <label for="allergy_gluten">Gluten</label>
                     <input id="allergy_gluten" name="allergy_gluten" type="checkbox" />
-                </div>
+                </div>-->
+                <br>
+                <label>
+        <input type="checkbox" name="allergy_wheat" value="1" {{ old('allergy_wheat') ? 'checked' : '' }}>
+        Wheat
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_milk" value="1" {{ old('allergy_milk') ? 'checked' : '' }}>
+        Milk
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_egg" value="1" {{ old('allergy_egg') ? 'checked' : '' }}>
+        Egg
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_peanut" value="1" {{ old('allergy_peanut') ? 'checked' : '' }}>
+        Peanut
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_fish" value="1" {{ old('allergy_fish') ? 'checked' : '' }}>
+        Fish
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_soy" value="1" {{ old('allergy_soy') ? 'checked' : '' }}>
+        Soy
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_shellfish" value="1" {{ old('allergy_shellfish') ? 'checked' : '' }}>
+        Shellfish
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_treenut" value="1" {{ old('allergy_treenut') ? 'checked' : '' }}>
+        Tree Nut
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_sesame" value="1" {{ old('allergy_sesame') ? 'checked' : '' }}>
+        Sesame
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_corn" value="1" {{ old('allergy_corn') ? 'checked' : '' }}>
+        Corn
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_chicken" value="1" {{ old('allergy_chicken') ? 'checked' : '' }}>
+        Chicken
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_beef" value="1" {{ old('allergy_beef') ? 'checked' : '' }}>
+        Beef
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_pork" value="1" {{ old('allergy_pork') ? 'checked' : '' }}>
+        Pork
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_lamb" value="1" {{ old('allergy_lamb') ? 'checked' : '' }}>
+        Lamb
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_gluten" value="1" {{ old('allergy_gluten') ? 'checked' : '' }}>
+        Gluten
+    </label><br>
             </div>
             
             
     </div>
     <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;">Add Meal</button>
+    </form> 
 </div>
 </form> 
  </body>

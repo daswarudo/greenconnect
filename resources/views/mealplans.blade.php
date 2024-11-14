@@ -43,7 +43,7 @@
             
     </div>
     <a href="/mealplansAdd" style="text-decoration: none;">
-        <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;">Add Meals</button>
+        Add Meals
     </a>
 
 </div>
