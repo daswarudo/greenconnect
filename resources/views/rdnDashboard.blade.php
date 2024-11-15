@@ -136,7 +136,7 @@
                 <!-- Hidden field to pass the customer_id -->
                 <input type="hidden" name="customer_id" value="{{ $subscription->customer_id }}">
 
-                <button type="submit" class="crudButtons" style="text-transform: uppercase;">
+                <button type="submit" class="crudButtons" style="text-transform: uppercase;"  onclick="return confirm('Are you sure you want to change status?')">
                     {{ $subscription->sub_status }}
                 </button>
             </form>

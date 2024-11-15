@@ -21,6 +21,7 @@
 
 <div class="content">
     <h1>Meal Plans</h1>
+    <input type="text" id="mealSearch" placeholder="Search by meal name, calories, or description" style="margin-bottom: 10px; padding: 5px; width: 100%;">
     <div class="container" style="overflow: scroll;height: 70vh;">
             
 
@@ -41,7 +42,10 @@
                             <td>{{ $meal->description }}</td>
                             <td>{{ number_format($meal->calories, 2) }}</td>
 
-                            <td><button class="crudButtons">View Details</button></td>
+                            <!--<td><button class="crudButtons" >View Details</button></td>-->
+                            
+                            <td><a href="{{ route('meals.edit', $meal->meal_id) }}">Edit Meal</a></td>
+                            
                         </tr>
                     @endforeach
                 </tbody>
@@ -56,4 +60,21 @@
 </div>
     
  </body>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#mealSearch').on('keyup', function() {
+            var searchValue = $(this).val().toLowerCase();
+
+            // Loop through each row in the table body
+            $('table tbody tr').filter(function() {
+                // Toggle row visibility based on the presence of searchValue in any cell
+                $(this).toggle(
+                    $(this).text().toLowerCase().indexOf(searchValue) > -1
+                );
+            });
+        });
+    });
+</script>
+
 </html>

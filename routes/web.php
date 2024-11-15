@@ -53,6 +53,10 @@ Route::post('/events', [EventController::class, 'createEvent']);
 Route::get('/mealplans', function () {
     return view('mealplans');
 })->name('mealplans');
+Route::get('/mealplansEdit', function () {
+    return view('mealplansEdit');
+})->name('mealplansEdit');
+
 
 Route::get('/viewsubscriber', function () {
     return view('viewsubscriber');
@@ -125,6 +129,14 @@ Route::get('/appointments', [ConsultationController::class, 'showCalendar'])->na
 Route::get('/mealplans', [MealController::class, 'index'])->name('mealplans');
 Route::get('/mealplansAdd', [MealController::class, 'viewSubs'])->name('mealplansAdd');
 Route::post('/mealplansAdd',[MealController::class,'addMeals'])->name('mealplans.addition');
-//Route::post('/mealplansAdd',[MealController::class,'add'])->name('mealplans.add');//dili wokring husahay
+//Route::post('/mealplansAdd',[MealController::class,'add'])->name('mealplans.add');//
+
+
+Route::get('/mealplansEdit/edit/{id}', [MealController::class, 'edit'])->name('meals.edit');
+Route::put('/mealplans/{id}', [MealController::class, 'update'])->name('meals.update');
+Route::delete('/mealplans/{id}', [MealController::class, 'destroy'])->name('meals.destroy');
+
+//Route::get('/mealplansEdit', [MealController::class, 'viewSubs2'])->name('mealplansEdit');
+Route::get('/mealplansEdit/edit/{id}', [MealController::class, 'viewSubs2'])->name('meals.edit');
 
 //login customer
