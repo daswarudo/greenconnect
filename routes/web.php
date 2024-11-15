@@ -25,7 +25,7 @@ Route::get('/login', function () {
     return view('login');
 })->name('login');
 
-Route::view('/subscribers', 'subscribers')->name('subscribers');
+
 
 
 Route::get('/rdnDashboard', function () {
@@ -99,17 +99,16 @@ Route::post('/signUp',[LoginRegisterController::class,'register'])->name('regist
 Route::post('/login', [LoginRegisterController::class, 'loginUser'])->name('login.user');
 
 //rdn
+Route::view('/subscribers', 'subscribers')->name('subscribers');
 Route::get('/rdnDashboard', [LoginRegisterController::class, 'showSubscriptions'])->name('rdnDashboard');
-Route::get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
+
 Route::patch('/rdnDashboard', [LoginRegisterController::class, 'updateStatus'])
     ->name('subscriptions.updateStatus');
 
 
 // Route to view customer details
-
+Route::get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
 Route::get('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewSubscriber.view');///EDITS
-//goods ning duha controller napud
-//Route::put('/subscribers/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');//BUGGY
 Route::put('/subscribers/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
 
 

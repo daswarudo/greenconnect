@@ -345,7 +345,7 @@ public function register(Request $request)
     {
         // Validate the incoming request data
         $request->validate([
-            'customer_id' => 'required|exists:subscriptions,customer_id',// Ensure customer_id exists in subscriptions
+            'customer_id' => 'nullable|exists:subscriptions,customer_id',// Ensure customer_id exists in subscriptions
             'daily_calorie' => 'nullable|numeric',
             'weight' => 'nullable|numeric|between:0,999.99',
             'bmi' => 'nullable|numeric|between:0,999.99',
@@ -377,11 +377,12 @@ public function register(Request $request)
             $customer->update($updateData);
             //dd('Redirecting to subscribers');
             
-            return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!')->setStatusCode(302);
+            
 
             //return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!');
             
         });
+        return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!')->setStatusCode(302);
     }
 
     public function showAppointTable()//ADD LATERS PROBS AFTER 50 PERCENT DEF
