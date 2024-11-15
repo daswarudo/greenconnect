@@ -5,7 +5,13 @@
   </title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="{{ asset('css/mealplans.css') }}">
-  
+    <style>
+        td, th {
+            height: 3vh;
+            max-height: 3vh;
+        }
+
+    </style>
     
  </head>
  <body>
@@ -15,7 +21,7 @@
 
 <div class="content">
     <h1>Meal Plans</h1>
-    <div class="container">
+    <div class="container" style="overflow: scroll;height: 70vh;">
             
 
             <!-- Table for displaying meals -->
@@ -42,9 +48,10 @@
             </table>
             
     </div>
-    <a href="/mealplansAdd" style="text-decoration: none;">
+    <a href="/mealplansAdd" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; display: inline-block; font-weight: bold; text-align: center; margin-top:3vh;">
         Add Meals
     </a>
+
 
 </div>
     

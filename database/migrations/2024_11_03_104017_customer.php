@@ -50,6 +50,11 @@ return new class extends Migration
             $table->boolean('allergy_treenut')->default(false);
             $table->boolean('allergy_sesame')->default(false);
             $table->boolean('allergy_corn')->default(false);
+            $table->boolean('allergy_chicken')->default(false);//
+            $table->boolean('allergy_beef')->default(false);
+            $table->boolean('allergy_pork')->default(false);
+            $table->boolean('allergy_lamb')->default(false);
+            $table->boolean('allergy_gluten')->default(false);
             $table->timestamps();
         });
     }
