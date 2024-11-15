@@ -115,7 +115,7 @@
              </p>
              <p>
                 <b>Subscription Status:</b> 
-                <select name="sub_status" id="sub_status" disabled>
+                <select name="sub_status" id="sub_status">
                   <option value="active" {{ old('sub_status', $subscription->sub_status) == 'active' ? 'selected' : '' }}>active</option>
                   <option value="pending" {{ old('sub_status', $subscription->sub_status) == 'pending' ? 'selected' : '' }}>pending</option>
                   <option value="disabled" {{ old('sub_status', $subscription->sub_status) == 'disabled' ? 'selected' : '' }}>disabled</option>

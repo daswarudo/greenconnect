@@ -349,6 +349,7 @@ public function register(Request $request)
             'daily_calorie' => 'nullable|numeric',
             'weight' => 'nullable|numeric|between:0,999.99',
             'bmi' => 'nullable|numeric|between:0,999.99',
+            'sub_status' => 'nullable|string|max:50',
         ]);
 
         // Start a transaction to ensure atomicity
@@ -361,7 +362,7 @@ public function register(Request $request)
                 return redirect()->route('errorPage')->with('error', 'Customer not found!');
             }
 
-            // Prepare the data to be updated
+            // Prepare the data to be updated for the customer
             $updateData = [
                 'daily_calorie' => $request->input('daily_calorie', $customer->daily_calorie),
                 'weight' => $request->input('weight', $customer->weight),
@@ -373,13 +374,22 @@ public function register(Request $request)
                 $updateData['customer_id'] = $request->customer_id;
             }
 
-            // Perform the update
+            // Perform the update for the customer
             $customer->update($updateData);
 
+            // Now, update the sub_status in the subscriptions table
+            $subscription = Subscriptions::where('customer_id', $customer->customer_id)->first();
+            if ($subscription) {
+                $subscription->update([
+                    'sub_status' => $request->input('sub_status', $subscription->sub_status),
+                ]);
+            }
+
             // Return updated view with success message
-            return view('viewsubscriber', compact('customer'))->with('success', 'Customer information updated successfully.');
+            return view('viewsubscriber', compact('customer'))->with('success', 'Customer information and subscription status updated successfully.');
         });
     }
+
     public function showAppointTable()//ADD LATERS PROBS AFTER 50 PERCENT DEF
     {
         /*$subscriptions = Subscriptions::with(['customer', 'subscriptionType'])->get();
