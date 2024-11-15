@@ -15,12 +15,13 @@
     
 </head>
 <body>
+
+<script src="login.js"></script>
 @if(session('message'))
 			<div class="alert alert-success">
 				{{ session('message') }}
 			</div>
 		@endif
-<script src="login.js"></script>
 <form method="POST" action="{{ route('login.user') }}" class="right-panel">
 		
 		@csrf
