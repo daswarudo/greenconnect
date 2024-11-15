@@ -17,13 +17,16 @@ Route::get('/welcome', function () {//dashboard
     return view('welcome');
 })->name('welcome');
 
+Route::get('/test', function () {//dashboard
+    return view('test');
+})->name('test');
+
 Route::get('/login', function () {
     return view('login');
 })->name('login');
 
-Route::get('/subscribers', function () {
-    return view('subscribers');
-})->name('subscribers');
+Route::view('/subscribers', 'subscribers')->name('subscribers');
+
 
 Route::get('/rdnDashboard', function () {
     return view('rdnDashboard');
@@ -101,18 +104,13 @@ Route::get('/subscribers', [LoginRegisterController::class, 'showSubscriptions']
 Route::patch('/rdnDashboard', [LoginRegisterController::class, 'updateStatus'])
     ->name('subscriptions.updateStatus');
 
-/*Route::get('/viewsubscriber/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewsubscriber');
-Route::put('/viewsubscriber/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewsubscriber.edit');*/
+
 // Route to view customer details
 
-Route::get('/viewsubscriber/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewSubscriber.view');
-
-
-// Route to edit customer details (use PUT or PATCH for updating)
-// This route is for editing customer details (handles both GET and POST)
-//Route::match(['get', 'post'], '/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
-Route::put('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
-
+Route::get('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewSubscriber.view');///EDITS
+//goods ning duha controller napud
+//Route::put('/subscribers/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');//BUGGY
+Route::put('/subscribers/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
 
 
 //CONSULTATIONSSSSS

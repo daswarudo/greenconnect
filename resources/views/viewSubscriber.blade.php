@@ -49,9 +49,28 @@
    
    {{--<!--<form class="right-panel" action="{{ route('viewSubscriber.edit', $customer->customer_id) }}" method="POST">-->
 <!--form-->--}}
-<form method="POST" action="{{ route('viewSubscriber.custEditRnd', ['id' => $customer->customer_id]) }}">
+
+<form action="{{route('viewSubscriber.custEditRnd', $customer->customer_id) }}" method="POST">
 @csrf
 @method('PUT')
+
+    @if(session('message'))
+			<div class="alert alert-success">
+				{{ session('message') }}
+			</div>
+	@endif
+    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{ Session::get('fail') }}</div>
+                    @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                     @endif
    <div class="details">
         <div class="info">
         <div class="form-container">
@@ -60,6 +79,7 @@
                 </div>
             </div>
              <p>
+                <input type="hidden" name="customer_id" value="{{ $customer->customer_id }}">
                 <b>First Name:</b>  <input type="text" name="first_name"  id="first_name" value="{{ old('first_name', $customer->first_name) }}"  disabled/>
              </p>
              
@@ -115,7 +135,7 @@
              </p>
              <p>
                 <b>Subscription Status:</b> 
-                <select name="sub_status" id="sub_status">
+                <select name="sub_status" id="sub_status" disabled>
                   <option value="active" {{ old('sub_status', $subscription->sub_status) == 'active' ? 'selected' : '' }}>active</option>
                   <option value="pending" {{ old('sub_status', $subscription->sub_status) == 'pending' ? 'selected' : '' }}>pending</option>
                   <option value="disabled" {{ old('sub_status', $subscription->sub_status) == 'disabled' ? 'selected' : '' }}>disabled</option>
@@ -182,7 +202,7 @@
                 <!-- save button-->
              <div class="save">
                 
-                <button class = "saveButton" type="submit" onclick="return confirm('Are you sure you want to edit?')">
+                <button class = "saveButton" type="submit">
                     APPLY CHANGES
                 </button>
                        

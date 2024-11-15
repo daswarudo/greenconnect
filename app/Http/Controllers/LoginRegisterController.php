@@ -345,11 +345,10 @@ public function register(Request $request)
     {
         // Validate the incoming request data
         $request->validate([
-            'customer_id' => 'required|exists:subscriptions,customer_id', // Ensure customer_id exists in subscriptions
+            'customer_id' => 'required|exists:subscriptions,customer_id',// Ensure customer_id exists in subscriptions
             'daily_calorie' => 'nullable|numeric',
             'weight' => 'nullable|numeric|between:0,999.99',
             'bmi' => 'nullable|numeric|between:0,999.99',
-            'sub_status' => 'nullable|string|max:50',
         ]);
 
         // Start a transaction to ensure atomicity
@@ -362,7 +361,7 @@ public function register(Request $request)
                 return redirect()->route('errorPage')->with('error', 'Customer not found!');
             }
 
-            // Prepare the data to be updated for the customer
+            // Prepare the data to be updated
             $updateData = [
                 'daily_calorie' => $request->input('daily_calorie', $customer->daily_calorie),
                 'weight' => $request->input('weight', $customer->weight),
@@ -374,19 +373,14 @@ public function register(Request $request)
                 $updateData['customer_id'] = $request->customer_id;
             }
 
-            // Perform the update for the customer
+            // Perform the update
             $customer->update($updateData);
+            //dd('Redirecting to subscribers');
+            
+            return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!')->setStatusCode(302);
 
-            // Now, update the sub_status in the subscriptions table
-            $subscription = Subscriptions::where('customer_id', $customer->customer_id)->first();
-            if ($subscription) {
-                $subscription->update([
-                    'sub_status' => $request->input('sub_status', $subscription->sub_status),
-                ]);
-            }
-
-            // Return updated view with success message
-            return view('viewsubscriber', compact('customer'))->with('success', 'Customer information and subscription status updated successfully.');
+            //return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!');
+            
         });
     }
 

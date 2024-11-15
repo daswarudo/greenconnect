@@ -161,7 +161,7 @@ function filterByStatus(status) {
                         </a>-->
                         <!-- Correct Usage for View Details -->
                         <a href="{{ route('viewSubscriber.view', $subscription->customer_id) }}" style="text-decoration: none;">
-                            <button class="crudButtons">Edit Details</button>
+                            <button class="crudButtons">View Details</button>
                         </a>
                         
                         <td>
