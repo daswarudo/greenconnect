@@ -60,7 +60,7 @@
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-success">Add Consultation</button>
+            <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure about that?')">Add Consultation</button>
         </form>
     </div>
 </body>

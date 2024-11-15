@@ -235,7 +235,7 @@
             
             
     </div>
-    <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;">Add Meal</button>
+    <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;"  onclick="return confirm('Are you sure about that?')">Add Meal</button>
     </form> 
 </div>
 </form> 
