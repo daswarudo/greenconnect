@@ -56,11 +56,12 @@
         </div>
         <div style="width: 30vh; height: 10vh;padding:10vh 10vh 10vh 5vh;">
             
-        <!--<button class="crudButtons" onclick="window.location.href='{{ url('viewAppointmentsRdn') }}'">View All Consultations</button>
-                EDIT BUTTON IS HERERE-->
+        <button class="crudButtons" onclick="window.location.href='{{ url('viewAppointmentsRdn') }}'">View All Consultations</button>
+                
 
 
         </div>
+        <!--
         <script>
 
             document.addEventListener('DOMContentLoaded', function() {
@@ -91,6 +92,54 @@
         calendar.render();
     });
 
-    </script>
+    </script>-->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: [
+                @foreach($appointments as $consultation)
+                    {
+                        title: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}', // Display first and last name
+                        start: '{{ $consultation->start }}', // Full datetime (combined date + time)
+                        extendedProps: {
+                            customer_name: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
+                            time: '{{ $consultation->formatted_time }}', // Formatted time (HH:mm)
+                            notes: '{{ $consultation->notes ?? 'No notes provided' }}' // Notes or default message
+                        }
+                    }@if(!$loop->last),@endif
+                @endforeach
+            ],
+            eventContent: function(arg) {
+                // Custom display for event content as <first_name> <last_name>, <time>
+                let customLabel = document.createElement('div');
+                customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
+                return { domNodes: [customLabel] };
+            },
+            dateClick: function(info) {
+                // Action when a day is clicked
+                alert('Date clicked: ' + info.dateStr);
+                // Add logic to fetch and display events for the clicked day
+            },
+            eventClick: function(info) {
+                // Action when an event is clicked
+                let eventDetails = `
+                    Customer Name: ${info.event.extendedProps.customer_name}
+                    Time: ${info.event.extendedProps.time}
+                    Date: ${info.event.start.toISOString().split('T')[0]}
+                    Notes:${info.event.extendedProps.notes}
+                `;
+                // Display details (can be a modal or any other UI component)
+                alert('Event Details:\n' + eventDetails);
+            }
+        });
+
+        calendar.render();
+    });
+</script>
+
+
 </body>
 </html>

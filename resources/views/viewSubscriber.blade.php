@@ -202,7 +202,7 @@
                 <!-- save button-->
              <div class="save">
                 
-                <button class = "saveButton" type="submit">
+                <button class = "saveButton" type="submit" onclick="return confirm('Are you sure about that')">
                     APPLY CHANGES
                 </button>
                        

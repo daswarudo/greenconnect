@@ -31,6 +31,9 @@ return new class extends Migration
                 ->references('rdn_id')
                 ->on('rdn')
                 ->onDelete('cascade');
+
+
+            $table->string('notes');
             
             // Add timestamps
             $table->timestamps();

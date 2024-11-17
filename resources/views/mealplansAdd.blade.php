@@ -53,24 +53,25 @@
                         @endforeach
                     </select>
                 </div>
-                <label for="meal_name">Meal Name</label>
+                <label for="meal_name"><br>Meal Name</label>
                 <div class="form-group">
                     
                     <input id="meal_name" name="meal_name" type="text" required />
                 </div>
-                <label for="calories">calories</label>
+                <label for="calories"><br>calories</label>
                 <div class="form-group">
                     
                     <input id="calories" name="calories" type="number" step="0.01" required />
 
                 </div>
-                <label for="description">description</label>
+                <label for="description"><br>description</label>
                 <div class="form-group">
                     
-                    <input id="description" name="description" type="text" required />
+                    <!--<input id="description" name="description" type="text" required />-->
+                    <textarea name="description" class="form-control" rows="4" required></textarea>
                 </div>
                 
-                <label for="meal_type">Meal Type</label>
+                <label for="meal_type"><br>Meal Type</label>
                     <div class="radio-group">
                             <input id="breakfast" name="meal_type" type="radio" value="breakfast" required />
                             <label for="breakfast">breakfast</label>
@@ -85,17 +86,17 @@
                 
                 <!-- Date Input -->
                 <div class="form-group">
-                    <label for="date">Date</label>
+                    <label for="date"><br>Date</label>
                     <input type="date" name="date" id="date" class="form-control" required>
                 </div>
 
                 <!-- Time Input -->
                 <div class="form-group">
-                    <label for="time">Time</label>
+                    <label for="time"><br>Time</label>
                     <input type="time" name="time" id="time" class="form-control" required>
                 </div>
                 
-                <label for="description">Allergens</label>
+                <label for="description"><br>Allergens</label>
                 <!--<div class="form-group">
                     <label for="allergy_wheat">wheat</label>
                     <input id="allergy_wheat" name="allergy_wheat" type="checkbox" />

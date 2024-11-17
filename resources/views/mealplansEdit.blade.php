@@ -58,24 +58,24 @@
 </select>
 
                 </div>
-                <label for="meal_name">Meal Name</label>
+                <label for="meal_name"><br>Meal Name</label>
                 <div class="form-group">
                     
                     <input id="meal_name" name="meal_name" type="text" value="{{ old('meal_name', $meal->meal_name) }}" />
                 </div>
-                <label for="calories">calories</label>
+                <label for="calories"><br>calories</label>
                 <div class="form-group">
                     
                     <input id="calories" name="calories" type="number" step="0.01"  value="{{ old('calories', $meal->calories) }}" />
 
                 </div>
-                <label for="description">description</label>
+                <label for="description"><br>description</label>
                 <div class="form-group">
-                    
-                    <input id="description" name="description" type="text" value="{{ old('calories', $meal->description) }}" />
+                    <textarea name="description" class="form-control" rows="4">{{ $meal->description }}</textarea>
+                    <!--<input id="description" name="description" type="text" value="{{ old('calories', $meal->description) }}" />-->
                 </div>
                 
-                <label for="meal_type">Meal Type</label>
+                <label for="meal_type"><br>Meal Type</label>
                 <div class="radio-group">
                     <input id="breakfast" name="meal_type" type="radio" value="breakfast" 
                         {{ old('meal_type', $meal->meal_type) == 'breakfast' ? 'checked' : '' }} />
@@ -99,20 +99,20 @@
                 
                 <!-- Date Input -->
 <div class="form-group">
-    <label for="date">Date</label>
+    <label for="date"><br>Date</label>
     <input type="date" name="date" id="date" class="form-control" 
         value="{{ old('date', $meal->date) }}">
 </div>
 
 <!-- Time Input -->
 <div class="form-group">
-    <label for="time">Time</label>
+    <label for="time"><br>Time</label>
     <input type="time" name="time" id="time" class="form-control" 
         value="{{ old('time', \Carbon\Carbon::parse($meal->time)->format('H:i')) }}">
 </div>
 
                 
-                <label for="description">Allergens</label>
+                <label for="description"><br>Allergens</label>
                 <!--<div class="form-group">
                     <label for="allergy_wheat">wheat</label>
                     <input id="allergy_wheat" name="allergy_wheat" type="checkbox" />
@@ -268,13 +268,13 @@
             
             
     </div>
-    <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;">Add Meal</button>
+    <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;"  onclick="return confirm('Are you sure you want to edit this meal?')">Edit Meal</button>
     </form> 
     
     <form action="{{ route('meals.destroy', $meal->meal_id) }}" method="POST" style="margin-top: 10px;">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this meal?')">Delete Meal</button>
+        <button  class="crudButtons" style="height:5vh;width:15vh;margin:2vh 0vh 2vh 0vh;" type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this meal?')">Delete Meal</button>
     </form> 
 </div>
 

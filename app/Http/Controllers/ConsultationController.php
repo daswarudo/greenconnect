@@ -56,6 +56,8 @@ class ConsultationController extends Controller
         $request->validate([
             'date' => 'required|date', // Validate the date
             'time' => 'required|date_format:H:i', // Validate the time (HH:MM format)
+            'notes' => 'nullable|string|max:255',
+
         ]);
 
         // Create a new consultation record
@@ -64,6 +66,7 @@ class ConsultationController extends Controller
             'rdn_id' => 1, // Hardcoded RDN ID for the single RDN
             'date' => $request->date,
             'time' => $request->time,
+            'notes' => $request->notes ?? '', // Use an empty string as the default
         ]);
 
         // Redirect back with a success message
@@ -109,7 +112,7 @@ class ConsultationController extends Controller
         // Fetch appointments with the customer's first name by joining the consultation_sched and customer tables
         $appointments = DB::table('consultation_sched')
             ->join('customer', 'consultation_sched.customer_id', '=', 'customer.customer_id')  // Join with customer table
-            ->select('consultation_sched.consultation_sched_id', 'consultation_sched.customer_id', 'consultation_sched.date', 'consultation_sched.time', 'customer.first_name')  // Select necessary fields
+            ->select('consultation_sched.consultation_sched_id', 'consultation_sched.customer_id', 'consultation_sched.date', 'consultation_sched.time', 'consultation_sched.notes', 'customer.first_name', 'customer.last_name')  // Select necessary fields
             ->get()
             ->map(function($appointment) {
                 // Format the date and time separately, then combine them into a full datetime for FullCalendar
@@ -124,6 +127,38 @@ class ConsultationController extends Controller
 
         // Return the data to a view (appointments.blade.php)
         return view('appointments', compact('appointments'));
+    }
+    public function index()
+    {
+        
+        // Fetch all consultations with customer data
+        $consultations = ConsultationSched::with('customer')->get();
+
+        // Pass consultations to the view
+        return view('viewAppointmentsRdn', compact('consultations'));
+    }
+    public function edit($id)
+    {
+        // Fetch consultation by ID
+        $consultation = ConsultationSched::findOrFail($id);
+
+        // Fetch customers for the dropdown
+        $customer = Customer::all();
+
+        return view('viewAppointmentsRdnEdit', compact('consultation', 'customer'));
+    }
+    
+    public function update(Request $request, $id)
+    {
+        
+        $consultation = ConsultationSched::findOrFail($id);
+
+    // Update only the 'notes' field
+        $consultation->update([
+            'notes' => $request->input('notes'),
+        ]);
+
+        return redirect()->route('viewAppointmentsRdn')->with('success', 'Consultation notes updated successfully!');
     }
 
 

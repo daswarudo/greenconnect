@@ -186,16 +186,21 @@ public function register(Request $request)
                 $table->boolean('allergy_sesame')->default(false);
                 $table->boolean('allergy_corn')->default(false);
             */
-            'allergy_wheat' => $request->boolean('allergy_wheat'),
-            'allergy_milk' => $request->boolean('allergy_milk'),
-            'allergy_egg' => $request->boolean('allergy_egg'),
-            'allergy_peanut' => $request->boolean('allergy_peanut'),
-            'allergy_fish' => $request->boolean('allergy_fish'),
-            'allergy_soy' => $request->boolean('allergy_soy'),
-            'allergy_shellfish' => $request->boolean('allergy_shellfish'),
-            'allergy_treenut' => $request->boolean('allergy_treenut'),
-            'allergy_sesame' => $request->boolean('allergy_sesame'),
-            'allergy_corn' => $request->boolean('allergy_corn'),
+            'allergy_wheat' => 'nullable|boolean',
+                'allergy_milk' => 'nullable|boolean',
+                'allergy_egg' => 'nullable|boolean',
+                'allergy_peanut' => 'nullable|boolean',
+                'allergy_fish' => 'nullable|boolean',
+                'allergy_soy' => 'nullable|boolean',
+                'allergy_shellfish' => 'nullable|boolean',
+                'allergy_treenut' => 'nullable|boolean',
+                'allergy_sesame' => 'nullable|boolean',
+                'allergy_corn' => 'nullable|boolean',
+                'allergy_chicken' => 'nullable|boolean',
+                'allergy_beef' => 'nullable|boolean',
+                'allergy_pork' => 'nullable|boolean',
+                'allergy_lamb' => 'nullable|boolean',
+                'allergy_gluten' => 'nullable|boolean',
         ]);
 
         // Create subscription record

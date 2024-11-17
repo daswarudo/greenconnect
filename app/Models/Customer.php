@@ -52,7 +52,7 @@ class Customer extends Model
         'allergy_shellfish',
         'allergy_treenut',
         'allergy_sesame',
-        'allergy_corn',
+        'allergy_corn', 'allergy_chicken', 'allergy_beef', 'allergy_pork', 'allergy_lamb', 'allergy_gluten'
     ];
 
     /*

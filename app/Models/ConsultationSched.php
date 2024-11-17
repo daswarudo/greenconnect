@@ -11,13 +11,15 @@ class ConsultationSched extends Model
 
     // Define the table name (optional if it follows Laravel's naming convention)
     protected $table = 'consultation_sched';
+    protected $primaryKey = 'consultation_sched_id';
 
     // Specify which attributes are mass assignable
     protected $fillable = [
         'customer_id', 
         'rdn_id', 
         'date', 
-        'time'
+        'time',
+        'notes',
     ];
 
     // Define relationships if needed

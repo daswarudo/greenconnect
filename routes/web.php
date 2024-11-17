@@ -120,6 +120,9 @@ Route::get('/consultation/create', [ConsultationController::class, 'create'])->n
 Route::post('/consultation/store', [ConsultationController::class, 'store'])->name('consultation.store');
 
 Route::get('/appointments', [ConsultationController::class, 'showCalendar'])->name('appointments');
+Route::get('/viewAppointmentsRdn', [ConsultationController::class, 'index'])->name('viewAppointmentsRdn');
+Route::get('/viewAppointmentsRdnEdit/edit/{id}', [ConsultationController::class, 'edit'])->name('viewAppointmentsRdnEdit.edit');
+Route::put('/viewAppointmentsRdn/{id}', [ConsultationController::class, 'update'])->name('consultations.update');//krazy routing bug
 
 //MEALSssss
 
