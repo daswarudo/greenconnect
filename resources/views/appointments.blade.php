@@ -54,9 +54,9 @@
         
         <div id="calendar">
         </div>
-        <div style="width: 30vh; height: 10vh;padding:10vh 10vh 10vh 5vh;">
+        <div style="width: 30vh; height: 10vh; padding:10vh 10vh 10vh 5vh;">
             
-        <button class="crudButtons" onclick="window.location.href='{{ url('viewAppointmentsRdn') }}'">View All Consultations</button>
+            <button class="crudButtons" onclick="window.location.href='{{ url('viewAppointmentsRdn') }}'">View All Consultations</button>
                 
 
 

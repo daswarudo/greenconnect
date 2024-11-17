@@ -16,13 +16,13 @@
     <body>
         @include('sidebar')
         
-        <div class="container">
+        <div class="container" style="margin:5vh 10vh 10vh 10vh;">
         <h1 class="text-center my-4">Consultation Schedule</h1>
 
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Schedule ID</th>
                     <th>Time</th>
                     <th>Date</th>
                     <th>Customer</th>
