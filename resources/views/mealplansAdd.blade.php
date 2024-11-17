@@ -58,13 +58,13 @@
                     
                     <input id="meal_name" name="meal_name" type="text" required />
                 </div>
-                <label for="calories"><br>calories</label>
+                <label for="calories"><br>Calories</label>
                 <div class="form-group">
                     
                     <input id="calories" name="calories" type="number" step="0.01" required />
 
                 </div>
-                <label for="description"><br>description</label>
+                <label for="description"><br>Description</label>
                 <div class="form-group">
                     
                     <!--<input id="description" name="description" type="text" required />-->

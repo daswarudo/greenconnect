@@ -63,13 +63,13 @@
                     
                     <input id="meal_name" name="meal_name" type="text" value="{{ old('meal_name', $meal->meal_name) }}" />
                 </div>
-                <label for="calories"><br>calories</label>
+                <label for="calories"><br>Calories</label>
                 <div class="form-group">
                     
                     <input id="calories" name="calories" type="number" step="0.01"  value="{{ old('calories', $meal->calories) }}" />
 
                 </div>
-                <label for="description"><br>description</label>
+                <label for="description"><br>Description</label>
                 <div class="form-group">
                     <textarea name="description" class="form-control" rows="4">{{ $meal->description }}</textarea>
                     <!--<input id="description" name="description" type="text" value="{{ old('calories', $meal->description) }}" />-->
