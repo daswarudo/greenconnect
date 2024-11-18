@@ -44,7 +44,7 @@
                 <label for="diet-program">Diet Program</label>
                 <div class="form-group">
                     
-                    <select id="subscription_type_id" name="subscription_type_id" required><!-- query subs type-->
+                    <select id="subscription_type_id" name="subscription_type_id"  style="width: 50vh;" required><!-- query subs type-->
                         <option value="">Select Diet Program</option>
                         @foreach ($subscriptionTypes as $subscriptionType)
                             <option value="{{ $subscriptionType->subscription_type_id }}">
@@ -56,19 +56,19 @@
                 <label for="meal_name"><br>Meal Name</label>
                 <div class="form-group">
                     
-                    <input id="meal_name" name="meal_name" type="text" required />
+                    <input id="meal_name" name="meal_name" type="text"  style="width: 50vh;" required />
                 </div>
                 <label for="calories"><br>Calories</label>
                 <div class="form-group">
                     
-                    <input id="calories" name="calories" type="number" step="0.01" required />
+                    <input id="calories" name="calories" type="number" step="0.01" style="width: 50vh;" required />
 
                 </div>
                 <label for="description"><br>Description</label>
                 <div class="form-group">
                     
                     <!--<input id="description" name="description" type="text" required />-->
-                    <textarea name="description" class="form-control" rows="4" required></textarea>
+                    <textarea name="description" class="form-control" rows="4" style="height:30vh;width: 50vh;"  max="747" required></textarea>
                 </div>
                 
                 <label for="meal_type"><br>Meal Type</label>
@@ -86,14 +86,14 @@
                 
                 <!-- Date Input -->
                 <div class="form-group">
-                    <label for="date"><br>Date</label>
-                    <input type="date" name="date" id="date" class="form-control" required>
+                    <label for="date"><br>Date</label><br>
+                    <input type="date" name="date" id="date" class="form-control" style="width: 50vh;" required>
                 </div>
 
                 <!-- Time Input -->
                 <div class="form-group">
-                    <label for="time"><br>Time</label>
-                    <input type="time" name="time" id="time" class="form-control" required>
+                    <label for="time"><br>Time</label><br>
+                    <input type="time" name="time" id="time" class="form-control"  style="width: 50vh;" required>
                 </div>
                 
                 <label for="description"><br>Allergens</label>
@@ -241,4 +241,15 @@
 </div>
 </form> 
  </body>
+ <script>
+    document.getElementById('calories').addEventListener('input', function (e) {
+        const max = 747;
+        const value = parseFloat(e.target.value);
+
+        if (value > max) {
+            alert('Calories cannot exceed 747.');
+            e.target.value = max; // Reset to max value
+        }
+    });
+</script>
 </html>

@@ -45,7 +45,7 @@
                 <label for="diet-program">Diet Program</label>
                 <div class="form-group">
                     
-                <select id="subscription_type_id" name="subscription_type_id" required>
+                <select id="subscription_type_id" name="subscription_type_id"  style="width: 50vh;"  required>
     <option value="">Select Diet Program</option>
     @foreach ($subscriptionTypes as $subscriptionType)
         <option value="{{ $subscriptionType->subscription_type_id }}" 
@@ -61,17 +61,17 @@
                 <label for="meal_name"><br>Meal Name</label>
                 <div class="form-group">
                     
-                    <input id="meal_name" name="meal_name" type="text" value="{{ old('meal_name', $meal->meal_name) }}" />
+                    <input id="meal_name" name="meal_name" type="text" value="{{ old('meal_name', $meal->meal_name) }}"  style="width: 50vh;" />
                 </div>
                 <label for="calories"><br>Calories</label>
                 <div class="form-group">
                     
-                    <input id="calories" name="calories" type="number" step="0.01"  value="{{ old('calories', $meal->calories) }}" />
-
+                    <input id="calories" name="calories" type="number" step="0.01"  value="{{ old('calories', $meal->calories) }}"  style="width: 50vh;"  max="747" />
+                    
                 </div>
                 <label for="description"><br>Description</label>
                 <div class="form-group">
-                    <textarea name="description" class="form-control" rows="4">{{ $meal->description }}</textarea>
+                    <textarea name="description" class="form-control" rows="4"  style="height:30vh;width: 50vh;" >{{ $meal->description }}</textarea>
                     <!--<input id="description" name="description" type="text" value="{{ old('calories', $meal->description) }}" />-->
                 </div>
                 
@@ -99,16 +99,16 @@
                 
                 <!-- Date Input -->
 <div class="form-group">
-    <label for="date"><br>Date</label>
+    <label for="date"><br>Date</label><br>
     <input type="date" name="date" id="date" class="form-control" 
-        value="{{ old('date', $meal->date) }}">
+        value="{{ old('date', $meal->date) }}"  style="width: 50vh;" >
 </div>
 
 <!-- Time Input -->
 <div class="form-group">
-    <label for="time"><br>Time</label>
+    <label for="time"><br>Time</label><br>
     <input type="time" name="time" id="time" class="form-control" 
-        value="{{ old('time', \Carbon\Carbon::parse($meal->time)->format('H:i')) }}">
+        value="{{ old('time', \Carbon\Carbon::parse($meal->time)->format('H:i')) }}"  style="width: 50vh;" >
 </div>
 
                 
@@ -280,4 +280,17 @@
 
 
  </body>
+
+ <script>
+    document.getElementById('calories').addEventListener('input', function (e) {
+        const max = 747;
+        const value = parseFloat(e.target.value);
+
+        if (value > max) {
+            alert('Calories cannot exceed 747.');
+            e.target.value = max; // Reset to max value
+        }
+    });
+</script>
+
 </html>

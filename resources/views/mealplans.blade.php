@@ -27,29 +27,40 @@
 
             <!-- Table for displaying meals -->
             <table class="table table-bordered" style="height:auto;max-height:80vh;">
-                <thead>
-                    <tr>
-                        <th>Meal Name</th>
-                        <th>Description</th>
-                        <th>Calories</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($meals as $meal)
-                        <tr>
-                            <td>{{ $meal->meal_name }}</td>
-                            <td>{{ $meal->description }}</td>
-                            <td>{{ number_format($meal->calories, 2) }}</td>
+    <thead>
+        <tr>
+            <th>Meal Name</th>
+            <th>Description</th>
+            <th>Calories</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($meals as $meal)
+            <tr>
+                <td>{{ $meal->meal_name }}</td>
+                <td>{{ $meal->description }}</td>
+                <td>
+                    @php
+                        $calorieLevel = '';
+                        if ($meal->calories <= 361) {
+                            $calorieLevel = 'Low Serving';
+                        } elseif ($meal->calories <= 445) {
+                            $calorieLevel = 'Regular Serving';
+                        } elseif ($meal->calories <= 540) {
+                            $calorieLevel = 'Medium Serving';
+                        } elseif ($meal->calories <= 747) {
+                            $calorieLevel = 'Maximum Serving';
+                        }
+                    @endphp
+                    {{ $calorieLevel }} ({{ number_format($meal->calories, 2) }} cal)
+                </td>
+                <td><a href="{{ route('meals.edit', $meal->meal_id) }}">Edit Meal</a></td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 
-                            <!--<td><button class="crudButtons" >View Details</button></td>-->
-                            
-                            <td><a href="{{ route('meals.edit', $meal->meal_id) }}">Edit Meal</a></td>
-                            
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
             
     </div>
     <a href="/mealplansAdd" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; display: inline-block; font-weight: bold; text-align: center; margin-top:3vh;">

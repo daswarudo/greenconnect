@@ -242,11 +242,18 @@ public function register(Request $request)
   
       // Attempt to find the user as a Customer
       $user = Customer::where('username', '=', $request->username)->first();
-  
+      
       // If not found as Customer, check if the user is an Rdn
-      if (!$user) {
-          $user = Rdn::where('username', '=', $request->username)->first();
-      }
+      if ($user) {
+        // Check if the customer has an active subscription
+        $subscription = $user->subscriptions()->where('sub_status', 'active')->first();
+        if (!$subscription) {
+            return back()->with('fail', 'Your subscription is not active!');
+        }
+        } else {
+            // If not found as Customer, check if the user is an Rdn
+            $user = Rdn::where('username', '=', $request->username)->first();
+        }
   
       // If the user exists (either Customer or Rdn)
       if ($user) {

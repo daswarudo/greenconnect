@@ -49,14 +49,14 @@
 
                 <label>Date</label><br>
                 <input type="date" name="date" id="date" class="form-control" 
-                    value="{{ old('date', $consultation->date) }}" disabled><br><br>
+                    value="{{ old('date', $consultation->date) }}"   style="width: 50vh;"  disabled><br><br>
 
                 <label>Time</label><br>
                 <input type="time" name="time" id="time" class="form-control" 
-                    value="{{ old('time', $consultation->time) }}" disabled><br><br>
+                    value="{{ old('time', $consultation->time) }}"   style="width: 50vh;"  disabled><br><br>
 
                 <label>Notes</label><br>
-                <textarea name="notes" class="form-control" rows="4">{{ $consultation->notes }}</textarea><br>
+                <textarea name="notes" class="form-control" rows="4"   style="height:30vh;width: 50vh;" >{{ $consultation->notes }}</textarea><br>
                 <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;">Save</button>
         </form>      
         </p>
