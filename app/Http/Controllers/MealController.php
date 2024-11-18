@@ -53,8 +53,8 @@ class MealController extends Controller
                 'calories' => 'required|numeric|between:0,999999.99',
                 'description' => 'nullable|string|max:250',
                 'meal_type' => 'nullable|string|max:50',
-                'time' => 'required|date_format:H:i',
-                'date' => 'required|date',
+                'time' => 'nullable|date_format:H:i',
+                'date' => 'nullable|date',
                 'subscription_type_id' => 'nullable|exists:subscription_type,subscription_type_id',
 
                 // Allergy fields as nullable booleans
@@ -137,8 +137,8 @@ class MealController extends Controller
             'meal_name' => 'required|string',
             'description' => 'required|string',
             'calories' => 'required|numeric',
-            'time' => 'required|date_format:H:i',
-            'date' => 'required|date',
+            'time' => 'nullable|date_format:H:i',
+            'date' => 'nullable|date',
             'subscription_type_id' => 'nullable|exists:subscription_type,subscription_type_id',
 
             'allergy_wheat' => 'nullable|boolean',

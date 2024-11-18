@@ -41,10 +41,10 @@
     <div class="container">
         
             <div>
-                <label for="diet-program">Diet Program</label>
+                <label for="diet-program"><b>Diet Program</b></label>
                 <div class="form-group">
                     
-                    <select id="subscription_type_id" name="subscription_type_id" required><!-- query subs type-->
+                    <select id="subscription_type_id" name="subscription_type_id"  style="width: 50vh;" required><!-- query subs type-->
                         <option value="">Select Diet Program</option>
                         @foreach ($subscriptionTypes as $subscriptionType)
                             <option value="{{ $subscriptionType->subscription_type_id }}">
@@ -53,25 +53,25 @@
                         @endforeach
                     </select>
                 </div>
-                <label for="meal_name"><br>Meal Name</label>
+                <label for="meal_name"><br><b>Meal Name</b></label>
                 <div class="form-group">
                     
-                    <input id="meal_name" name="meal_name" type="text" required />
+                    <input id="meal_name" name="meal_name" type="text"  style="width: 50vh;" required />
                 </div>
-                <label for="calories"><br>Calories</label>
+                <label for="calories"><br><b>Calories</b></label>
                 <div class="form-group">
                     
-                    <input id="calories" name="calories" type="number" step="0.01" required />
+                    <input id="calories" name="calories" type="number" step="0.01" style="width: 50vh;" required />
 
                 </div>
-                <label for="description"><br>Description</label>
+                <label for="description"><br><b>Description</b></label>
                 <div class="form-group">
                     
                     <!--<input id="description" name="description" type="text" required />-->
-                    <textarea name="description" class="form-control" rows="4" required></textarea>
+                    <textarea name="description" class="form-control" rows="4" style="height:30vh;width: 50vh;"  max="747" required></textarea>
                 </div>
                 
-                <label for="meal_type"><br>Meal Type</label>
+                <label for="meal_type"><br><b>Meal Type</b></label>
                     <div class="radio-group">
                             <input id="breakfast" name="meal_type" type="radio" value="breakfast" required />
                             <label for="breakfast">breakfast</label>
@@ -86,77 +86,18 @@
                 
                 <!-- Date Input -->
                 <div class="form-group">
-                    <label for="date"><br>Date</label>
-                    <input type="date" name="date" id="date" class="form-control" required>
+                    <!--<label for="date"><br><b>Date</b></label><br>-->
+                    <input name="date" id="date" class="form-control" style="width: 50vh;"  type="hidden">
                 </div>
 
                 <!-- Time Input -->
                 <div class="form-group">
-                    <label for="time"><br>Time</label>
-                    <input type="time" name="time" id="time" class="form-control" required>
+                    <!--<label for="time"><br><b>Time</b></label><br>-->
+                    <input name="time" id="time" class="form-control"  style="width: 50vh;"  type="hidden">
                 </div>
                 
-                <label for="description"><br>Allergens</label>
-                <!--<div class="form-group">
-                    <label for="allergy_wheat">wheat</label>
-                    <input id="allergy_wheat" name="allergy_wheat" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_milk">milk</label>
-                    <input id="allergy_milk" name="allergy_milk" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_egg">Egg</label>
-                    <input id="allergy_egg" name="allergy_egg" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_peanut">Nuts</label>
-                    <input id="allergy_peanut" name="allergy_peanut" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_fish">Fish</label>
-                    <input id="allergy_fish" name="allergy_fish" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_soy">Soy</label>
-                    <input id="allergy_soy" name="allergy_soy" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_shellfish">Shellfish</label>
-                    <input id="allergy_shellfish" name="allergy_shellfish" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_treenut">Tree nut</label>
-                    <input id="allergy_treenut" name="allergy_treenut" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_sesame">Sesame</label>
-                    <input id="allergy_sesame" name="allergy_sesame" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_corn">Corn</label>
-                    <input id="allergy_corn" name="allergy_corn" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_chicken">Chicken</label>
-                    <input id="allergy_chicken" name="allergy_chicken" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_beef">Beef</label>
-                    <input id="allergy_beef" name="allergy_beef" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_pork">Pork</label>
-                    <input id="allergy_pork" name="allergy_pork" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_lamb">Lamb</label>
-                    <input id="allergy_lamb" name="allergy_lamb" type="checkbox" />
-                </div>
-                <div class="form-group">
-                    <label for="allergy_gluten">Gluten</label>
-                    <input id="allergy_gluten" name="allergy_gluten" type="checkbox" />
-                </div>-->
+                <label for="description"><br><b>Allergens</b></label>
+                
                 <br>
                 <label>
         <input type="checkbox" name="allergy_wheat" value="1" {{ old('allergy_wheat') ? 'checked' : '' }}>
@@ -236,9 +177,20 @@
             
             
     </div>
-    <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;"  onclick="return confirm('Are you sure about that?')">Add Meal</button>
+    <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;margin-bottom:2vh;"  onclick="return confirm('Are you sure about that?')">Add Meal</button>
     </form> 
 </div>
 </form> 
  </body>
+ <script>
+    document.getElementById('calories').addEventListener('input', function (e) {
+        const max = 747;
+        const value = parseFloat(e.target.value);
+
+        if (value > max) {
+            alert('Calories cannot exceed 747.');
+            e.target.value = max; // Reset to max value
+        }
+    });
+</script>
 </html>

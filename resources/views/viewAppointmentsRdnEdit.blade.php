@@ -40,24 +40,24 @@
                             </ul>
                         </div>
                      @endif
-                <label>Name</label><br>
+                <label><b>Name</b></label><br>
                 <input name="customer_id" value="{{ $consultation->customer_id }}"  type="hidden">
 
                 <input name="customer_first_name" value="{{ $consultation->customer->first_name ?? 'Customer not found' }}" disabled>
 
                 <input name="customer_last_name" value="{{ $consultation->customer->last_name ?? 'Customer not found' }}" disabled><br><br>
 
-                <label>Date</label><br>
+                <label><b>Date</b></label><br>
                 <input type="date" name="date" id="date" class="form-control" 
-                    value="{{ old('date', $consultation->date) }}" disabled><br><br>
+                    value="{{ old('date', $consultation->date) }}"   style="width: 50vh;"  disabled><br><br>
 
-                <label>Time</label><br>
+                <label><b>Time</b></label><br>
                 <input type="time" name="time" id="time" class="form-control" 
-                    value="{{ old('time', $consultation->time) }}" disabled><br><br>
+                    value="{{ old('time', $consultation->time) }}"   style="width: 50vh;"  disabled><br><br>
 
-                <label>Notes</label><br>
-                <textarea name="notes" class="form-control" rows="4">{{ $consultation->notes }}</textarea><br>
-                <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;">Add Meal</button>
+                <label><b>Notes</b></label><br>
+                <textarea name="notes" class="form-control" rows="4"   style="height:30vh;width: 50vh;" >{{ $consultation->notes }}</textarea><br>
+                <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;">Save</button>
         </form>      
         </p>
         </div>

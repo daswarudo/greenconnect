@@ -54,13 +54,14 @@
             </div>
 
             <!-- Time Input -->
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom:2vh;">
                 <label for="time">Consultation Time</label>
                 <input type="time" name="time" id="time" class="form-control" required>
+                
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure about that?')">Add Consultation</button>
+            <button style="width:30vh;" class="crudButtons" type="submit" class="btn btn-success" onclick="return confirm('Are you sure about that?')">Add Consultation</button>
         </form>
     </div>
 </body>
