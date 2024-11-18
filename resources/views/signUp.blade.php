@@ -29,8 +29,18 @@
                     @if(Session::has('fail'))
                         <div class="alert alert-danger">{{ Session::get('fail') }}</div>
                     @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                     @endif
             <div class="form-container">
                 <div class="form-section diet-program">
+
                     <h2>Diet Program</h2>
                     <label for="diet-program">Diet Program</label>
 
@@ -75,7 +85,7 @@
 
                     <div class="form-group">
                         <label for="bmi">BMI <span> * </span></label>
-                        <input type="text" name="bmi" id="bmi" class="form-control" readonly>
+                        <input type="text" name="bmi" id="bmi" class="form-control" required />
                     </div>
 
                     <div class="form-group">
@@ -89,7 +99,7 @@
                     </div>
                     <div class="form-group">
                         <label for="doctor-recommendation">Doctor's Diet Recommendation</label>
-                        <input id="diet_reco" name="diet_reco" type="text" placeholder="Ex. Less red meat"/>
+                        <input id="diet_recom" name="diet_recom" type="text" placeholder="Ex. Less red meat"/>
                     </div>
                     <div class="form-group">
                         <label for="health_condition">Health Condition</label>
@@ -98,7 +108,7 @@
                     
                     <div class="form-group">
                         <label for="food_preferences">Food Preferences</label>
-                        <div>
+                        <!--<div>
                             <input type="checkbox" id="prefer_pork" name="prefer_pork" value="1">
                             <label for="prefer_pork">Pork</label>
                         </div>
@@ -117,7 +127,29 @@
                         <div>
                             <input type="checkbox" id="prefer_veggie" name="prefer_veggie" value="1">
                             <label for="prefer_veggie">Vegetable</label>
-                        </div>
+                        </div>-->
+                        <br><input type="checkbox" name="prefer_pork" value="1" {{ old('prefer_pork') ? 'checked' : '' }}>
+                            Pork
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" name="prefer_beef" value="1" {{ old('prefer_beef') ? 'checked' : '' }}>
+                            Beef
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" name="prefer_fish" value="1" {{ old('prefer_fish') ? 'checked' : '' }}>
+                            Fish
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" name="prefer_chicken" value="1" {{ old('prefer_chicken') ? 'checked' : '' }}>
+                            Chicken
+                        </label><br>
+                        <label>
+                            <input type="checkbox" name="prefer_veggie" value="1" {{ old('prefer_veggie') ? 'checked' : '' }}>
+                            Veggie
+                        </label><br>
                     </div>
 
                     <div class="form-group">
@@ -152,74 +184,102 @@
                         <label for="ref-number">Ref Number <span> * </span> </label>
                         <input id="ref_number" name="ref_number" type="text" placeholder="" required />
                     </div>
- <!--SUBMIT FORM --><button type ="submit" class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
+ 
 
 
 
                 </div>
-                <div class="form-section allergies"><!--?????? -->
+                <div class="form-section allergies">
+                    <!--basis:
+                    $table->boolean('allergy_wheat')->default(false);
+                    $table->boolean('allergy_milk')->default(false);
+                    $table->boolean('allergy_egg')->default(false);
+                    $table->boolean('allergy_peanut')->default(false);
+                    $table->boolean('allergy_fish')->default(false);
+                    $table->boolean('allergy_soy')->default(false);
+                    $table->boolean('allergy_shellfish')->default(false);
+                    $table->boolean('allergy_treenut')->default(false);
+                    $table->boolean('allergy_sesame')->default(false);
+                    $table->boolean('allergy_corn')->default(false);
+                            
+                    -->
                     <h2>Allergies</h2>
-                    <div class="checkbox-group">
-                        <input id="wheat" name="allergies" type="checkbox" value="wheat"/>
-                        <label for="wheat">Wheat</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="milk" name="allergies" type="checkbox" value="milk"/>
-                        <label for="milk">Milk</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="egg" name="allergies" type="checkbox" value="egg"/>
-                        <label for="egg">Egg</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="peanut" name="allergies" type="checkbox" value="peanut"/>
-                        <label for="peanut">Peanut</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="soy" name="allergies" type="checkbox" value="soy"/>
-                        <label for="soy">Soy</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="fish" name="allergies" type="checkbox" value="fish"/>
-                        <label for="fish">Fish</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="shellfish" name="allergies" type="checkbox" value="shellfish"/>
-                        <label for="shellfish">Shellfish</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="tree-nuts" name="allergies" type="checkbox" value="tree-nuts"/>
-                        <label for="tree-nuts">Tree Nuts</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="sesame" name="allergies" type="checkbox" value="sesame"/>
-                        <label for="sesame">Sesame</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="corn" name="allergies" type="checkbox" value="corn"/>
-                        <label for="corn">Corn</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="chicken" name="allergies" type="checkbox" value="chicken"/>
-                        <label for="chicken">Chicken</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="beef" name="allergies" type="checkbox" value="beef"/>
-                        <label for="beef">Beef</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="pork" name="allergies" type="checkbox" value="pork"/>
-                        <label for="pork">Pork</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="lamb" name="allergies" type="checkbox" value="lamb"/>
-                        <label for="lamb">Lamb</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input id="gluten" name="allergies" type="checkbox" value="gluten"/>
-                        <label for="gluten">Gluten</label>
-                    </div>
+                    <label>
+        <input type="checkbox" name="allergy_wheat" value="1" {{ old('allergy_wheat') ? 'checked' : '' }}>
+        Wheat
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_milk" value="1" {{ old('allergy_milk') ? 'checked' : '' }}>
+        Milk
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_egg" value="1" {{ old('allergy_egg') ? 'checked' : '' }}>
+        Egg
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_peanut" value="1" {{ old('allergy_peanut') ? 'checked' : '' }}>
+        Peanut
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_fish" value="1" {{ old('allergy_fish') ? 'checked' : '' }}>
+        Fish
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_soy" value="1" {{ old('allergy_soy') ? 'checked' : '' }}>
+        Soy
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_shellfish" value="1" {{ old('allergy_shellfish') ? 'checked' : '' }}>
+        Shellfish
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_treenut" value="1" {{ old('allergy_treenut') ? 'checked' : '' }}>
+        Tree Nut
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_sesame" value="1" {{ old('allergy_sesame') ? 'checked' : '' }}>
+        Sesame
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_corn" value="1" {{ old('allergy_corn') ? 'checked' : '' }}>
+        Corn
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_chicken" value="1" {{ old('allergy_chicken') ? 'checked' : '' }}>
+        Chicken
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_beef" value="1" {{ old('allergy_beef') ? 'checked' : '' }}>
+        Beef
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_pork" value="1" {{ old('allergy_pork') ? 'checked' : '' }}>
+        Pork
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_lamb" value="1" {{ old('allergy_lamb') ? 'checked' : '' }}>
+        Lamb
+    </label><br>
+    
+    <label>
+        <input type="checkbox" name="allergy_gluten" value="1" {{ old('allergy_gluten') ? 'checked' : '' }}>
+        Gluten
+    </label>
                 </div>
+                <!--SUBMIT FORM --><button type ="submit" class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
             </div>
         <!--</form>-->
         </form>

@@ -12,7 +12,8 @@ use App\Models\SubscriptionType;
 use App\Models\Subscriptions;
 use App\Models\Payments;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\ConsultationSched;
+use App\Models\Meals;
 
 
 class LoginRegisterController extends Controller
@@ -116,11 +117,34 @@ public function register(Request $request)
         'prefer_fish' => 'nullable|boolean',
         'prefer_chicken' => 'nullable|boolean',
         'prefer_veggie' => 'nullable|boolean',
+
+        'allergy_wheat' => 'nullable|boolean',
+        'allergy_milk' => 'nullable|boolean',
+        'allergy_egg' => 'nullable|boolean',
+        'allergy_peanut' => 'nullable|boolean',
+        'allergy_fish' => 'nullable|boolean',
+        'allergy_soy' => 'nullable|boolean',
+        'allergy_shellfish' => 'nullable|boolean',
+        'allergy_treenut' => 'nullable|boolean',
+        'allergy_sesame' => 'nullable|boolean',
+        'allergy_corn' => 'nullable|boolean',
     ]);
 
+    /* use this as basis
+            $table->boolean('allergy_wheat')->default(false);
+            $table->boolean('allergy_milk')->default(false);
+            $table->boolean('allergy_egg')->default(false);
+            $table->boolean('allergy_peanut')->default(false);
+            $table->boolean('allergy_fish')->default(false);
+            $table->boolean('allergy_soy')->default(false);
+            $table->boolean('allergy_shellfish')->default(false);
+            $table->boolean('allergy_treenut')->default(false);
+            $table->boolean('allergy_sesame')->default(false);
+            $table->boolean('allergy_corn')->default(false);
+    */
     // Return validation errors if any
     if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
+        return back()->withErrors($validator)->withInput();
     }
 
     // Use a transaction to ensure atomicity
@@ -144,11 +168,44 @@ public function register(Request $request)
             'profile_picture' => $request->hasFile('profile_picture') ?
                 $request->file('profile_picture')->store('images', 'public') : 'images/freepik1-min.jpg',
             'contact_num' => $request->input('contact_num'),
+
             'prefer_pork' => $request->boolean('prefer_pork'),
             'prefer_beef' => $request->boolean('prefer_beef'),
             'prefer_fish' => $request->boolean('prefer_fish'),
             'prefer_chicken' => $request->boolean('prefer_chicken'),
             'prefer_veggie' => $request->boolean('prefer_veggie'),
+            /* use this as basis
+                $meal->allergy_wheat = $request->boolean('allergy_wheat');
+        $meal->allergy_milk = $request->boolean('allergy_milk');
+        $meal->allergy_egg = $request->boolean('allergy_egg');
+        $meal->allergy_peanut = $request->boolean('allergy_peanut');
+        $meal->allergy_fish = $request->boolean('allergy_fish');
+        $meal->allergy_soy = $request->boolean('allergy_soy');
+        $meal->allergy_shellfish = $request->boolean('allergy_shellfish');
+        $meal->allergy_treenut = $request->boolean('allergy_treenut');
+        $meal->allergy_sesame = $request->boolean('allergy_sesame');
+        $meal->allergy_corn = $request->boolean('allergy_corn');
+        $meal->allergy_chicken = $request->boolean('allergy_chicken');
+        $meal->allergy_beef = $request->boolean('allergy_beef');
+        $meal->allergy_pork = $request->boolean('allergy_pork');
+        $meal->allergy_lamb = $request->boolean('allergy_lamb');
+        $meal->allergy_gluten = $request->boolean('allergy_gluten');
+            */
+                'allergy_wheat' => $request->boolean('allergy_wheat'),
+                'allergy_milk' => $request->boolean('allergy_milk'),
+                'allergy_egg' => $request->boolean('allergy_egg'),
+                'allergy_peanut' => $request->boolean('allergy_peanut'),
+                'allergy_fish' => $request->boolean('allergy_fish'),
+                'allergy_soy' => $request->boolean('allergy_soy'),
+                'allergy_shellfish' => $request->boolean('allergy_shellfish'),
+                'allergy_treenut' => $request->boolean('allergy_treenut'),
+                'allergy_sesame' => $request->boolean('allergy_sesame'),
+                'allergy_corn' => $request->boolean('allergy_corn'),
+                'allergy_chicken' => $request->boolean('allergy_chicken'),
+                'allergy_beef' => $request->boolean('allergy_beef'),
+                'allergy_pork' => $request->boolean('allergy_pork'),
+                'allergy_lamb' => $request->boolean('allergy_lamb'),
+                'allergy_gluten' => $request->boolean('allergy_gluten'),
         ]);
 
         // Create subscription record
@@ -175,53 +232,71 @@ public function register(Request $request)
     }
     /*
    */
-    public function loginUser(Request $request)
+  public function loginUser(Request $request)
+  {
+      // Validate the input
+      $request->validate([
+          'username' => 'required',
+          'password' => 'required'
+      ]);
+  
+      // Attempt to find the user as a Customer
+      $user = Customer::where('username', '=', $request->username)->first();
+  
+      // If not found as Customer, check if the user is an Rdn
+      if (!$user) {
+          $user = Rdn::where('username', '=', $request->username)->first();
+      }
+  
+      // If the user exists (either Customer or Rdn)
+      if ($user) {
+          // Verify the password
+          if (Hash::check($request->password, $user->password)) {
+              // Flash a success message
+              session()->flash('message', 'Log In successful!');
+  
+              // Store the user ID and type in the session based on the model (Customer or Rdn)
+              if ($user instanceof Customer) {
+                  $request->session()->put('loginId', $user->customer_id); // Store customer ID
+                  $request->session()->put('userType', 'customer');       // Store user type as 'customer'
+                  
+                  // Redirect to the customer-specific dashboard or welcome page
+                  //return redirect()->route('custTest'); 
+                  return redirect('/custTest');
+              } elseif ($user instanceof Rdn) {
+                  $request->session()->put('loginId', $user->rdn_id); // Store RDN ID
+                  $request->session()->put('userType', 'rdn');        // Store user type as 'rdn'
+                  
+                  // Redirect to the Rdn-specific dashboard
+                  return redirect()->route('rdnDashboard'); 
+              }
+          } else {
+              // If the password is incorrect, return with an error
+              return back()->withInput()->with('fail', 'Invalid username or password!');
+          }
+      } else {
+          // If no user is found in either model, send an error
+          return back()->with('fail', 'Account does not exist!');
+      }
+  }
+  public function showCustomerDashboard()
     {
-        // Validate the input
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
+        $loginId = session()->get('loginId'); // Retrieve loginId
+        $userType = session()->get('userType'); // Retrieve userType
 
-        // Check if the user is a Customer
-        $user = Customer::where('username', '=', $request->username)->first();
+        // Fetch the customer data based on the loginId
+        $customer = Customer::where('customer_id', $loginId)->first();  
 
-        // If not found as Customer, check if the user is an Rdn
-        if (!$user) {
-            $user = Rdn::where('username', '=', $request->username)->first();
-        }
-
-        // If the user exists (either Customer or Rdn)
-        if ($user) {
-            // Verify the password
-            if (Hash::check($request->password, $user->password)) {
-                // Flash a success message and track the user session
-                session()->flash('message', 'Log In successful!');
-
-                // Store the user session with their ID based on the model (Customer or Rdn)
-                if ($user instanceof Customer) {
-                    $request->session()->put('loginId', $user->customer_id); // For Customer
-                    $request->session()->put('userType', 'customer');
-                    
-                    // Redirect to the customer-specific welcome page
-                    return redirect()->route('welcome');
-                } elseif ($user instanceof Rdn) {
-                    $request->session()->put('loginId', $user->id); // For Rdn
-                    $request->session()->put('userType', 'rdn');
-                    
-                    // Redirect to the Rdn-specific welcome page
-                    return redirect()->route('rdnDashboard');
-                }
-            } else {
-                // If the password is incorrect, send an error
-                    return back()->withInput()->with('fail', 'Invalid username or password!');
-
-            }
+        // Check if values are set
+        if ($loginId && $userType) {
+            // Pass the data to the view
+            return view('custTest', compact('userType', 'loginId', 'customer'));
         } else {
-            // If no user is found in either model, send an error
-            return back()->with('fail', 'Account does not exist!');
+            // Redirect to login page if not authenticated
+            return redirect()->route('login')->with('fail', 'Please log in first');
         }
     }
+
     /*
     public function showSubscriptions()
     {
@@ -272,55 +347,62 @@ public function register(Request $request)
         $subscription = Subscriptions::where('customer_id', $id)->first(); // Assuming a customer has one subscription
 
         //return view('customer.view', compact('customer', 'subscription'));
-        return view('viewsubscriber', compact('customer', 'subscription'));
+        return view('viewSubscriber', compact('customer', 'subscription'));
 
     }
-    /*
-    // Edit customer details
-    public function editCustomer($id)
-    {
-        $customer = Customer::findOrFail($id);
-        return view('customer.edit', compact('customer'));
-    }
 
-    // Update customer details
-    public function updateCustomer(Request $request, $id)
+    public function custEditRnd(Request $request, $id)
     {
+        // Validate the incoming request data
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            // Add validation rules for other customer fields
+            'customer_id' => 'nullable|exists:subscriptions,customer_id',// Ensure customer_id exists in subscriptions
+            'daily_calorie' => 'nullable|numeric',
+            'weight' => 'nullable|numeric|between:0,999.99',
+            'bmi' => 'nullable|numeric|between:0,999.99',
         ]);
 
-        $customer = Customer::findOrFail($id);
-        $customer->first_name = $request->input('first_name');
-        $customer->last_name = $request->input('last_name');
-        // Update other customer fields as needed
-        $customer->save();
+        // Start a transaction to ensure atomicity
+        DB::transaction(function () use ($request, $id) {
+            try {
+                // Find the customer record by ID
+                $customer = Customer::findOrFail($id);
+            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                // If customer not found, return error message
+                return redirect()->route('errorPage')->with('error', 'Customer not found!');
+            }
 
-        return redirect()->route('viewsubscriber', $id)->with('success', 'Customer details updated successfully.');
+            // Prepare the data to be updated
+            $updateData = [
+                'daily_calorie' => $request->input('daily_calorie', $customer->daily_calorie),
+                'weight' => $request->input('weight', $customer->weight),
+                'bmi' => $request->input('bmi', $customer->bmi),
+            ];
+
+            // If customer_id is provided in the request, update related subscription (optional)
+            if ($request->has('customer_id')) {
+                $updateData['customer_id'] = $request->customer_id;
+            }
+
+            // Perform the update
+            $customer->update($updateData);
+            //dd('Redirecting to subscribers');
+            
+            
+
+            //return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!');
+            
+        });
+        return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!')->setStatusCode(302);
     }
-    public function editeditSubs($id)
+
+    public function showAppointTable()//ADD LATERS PROBS AFTER 50 PERCENT DEF
     {
-        $subscription = Subscriptions::findOrFail($id);
-        return view('subscription.edit', compact('subscription'));
+        /*$subscriptions = Subscriptions::with(['customer', 'subscriptionType'])->get();
+
+        // Determine which view to return based on the route name
+        $viewName = request()->routeIs('subscribers') ? 'subscribers' : 'rdnDashboard';
+
+        return view($viewName, compact('subscriptions'));*/
     }
-
-    // Update subscription details
-    public function editSubs(Request $request, $id)
-    {
-        $request->validate([
-            'plan_name' => 'required|string|max:255',
-            'sub_status' => 'required|string|max:255',
-            // Add validation rules for other subscription fields
-        ]);
-
-        $subscription = Subscriptions::findOrFail($id);
-        $subscription->plan_name = $request->input('plan_name');
-        $subscription->sub_status = $request->input('sub_status');
-        // Update other subscription fields as needed
-        $subscription->save();
-
-        return redirect()->route('viewsubscriber', $subscription->customer_id)->with('success', 'Subscription details updated successfully.');
-    }*/
+    
 }

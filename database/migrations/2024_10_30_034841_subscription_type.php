@@ -36,6 +36,12 @@ return new class extends Migration
                 'description' => 'Customized for individuals with specific health needs.',
                 'price' => 3500.00,
                 //'isAvailable_consult' => false, // not available for consultation
+            ],
+            [
+                'plan_name' => 'Gluten-Free Diet',
+                'description' => 'Specially curated gluten-free meals for individuals with celiac disease or gluten sensitivity.',
+                'price' => 3500.00,
+                //'isAvailable_consult' => false, // not available for consultation
             ]
         ]);
     }

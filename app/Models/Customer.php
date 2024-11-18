@@ -42,8 +42,34 @@ class Customer extends Model
         'prefer_veggie',
         'status',
         'contact_num',
+        
+        'allergy_wheat',
+        'allergy_milk',
+        'allergy_egg',
+        'allergy_peanut',
+        'allergy_fish',
+        'allergy_soy',
+        'allergy_shellfish',
+        'allergy_treenut',
+        'allergy_sesame',
+        'allergy_corn', 'allergy_chicken', 'allergy_beef', 'allergy_pork', 'allergy_lamb', 'allergy_gluten'
     ];
 
+    /*
+    <!--basis:
+                    $table->boolean('allergy_wheat')->default(false);
+                    $table->boolean('allergy_milk')->default(false);
+                    $table->boolean('allergy_egg')->default(false);
+                    $table->boolean('allergy_peanut')->default(false);
+                    $table->boolean('allergy_fish')->default(false);
+                    $table->boolean('allergy_soy')->default(false);
+                    $table->boolean('allergy_shellfish')->default(false);
+                    $table->boolean('allergy_treenut')->default(false);
+                    $table->boolean('allergy_sesame')->default(false);
+                    $table->boolean('allergy_corn')->default(false);
+                            
+                    -->
+    */
     // The attributes that should be hidden for arrays.
     protected $hidden = [
         'password',
@@ -72,5 +98,11 @@ class Customer extends Model
     {
         return $this->hasMany(Subscriptions::class, 'customer_id'); // 'customer_id' as foreign key in Subscription
     
+    }
+    
+
+    public function consultations()
+    {
+        return $this->hasMany(ConsultationSched::class, 'customer_id');
     }
 }

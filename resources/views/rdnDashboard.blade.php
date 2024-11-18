@@ -36,27 +36,25 @@
             calendar.render();
         });
         
-        /*function sortTable(n) {
-        var table = document.getElementById("subscriptionsTable");
-        var rows = Array.from(table.rows).slice(1);
-        var isAscending = table.rows[0].cells[n].getAttribute("data-sort-order") === "asc";
-        
-        rows.sort(function(a, b) {
-            var cellA = a.cells[n].textContent.trim();
-            var cellB = b.cells[n].textContent.trim();
+        function searchTable(tableId, inputId) {
+            let input = document.getElementById(inputId);
+            let filter = input.value.toLowerCase();
+            let table = document.getElementById(tableId);
+            let rows = table.getElementsByTagName("tr");
 
-            if (cellA < cellB) return isAscending ? -1 : 1;
-            if (cellA > cellB) return isAscending ? 1 : -1;
-            return 0;
-        });
+            for (let i = 1; i < rows.length; i++) { // Skip the header row
+                let td = rows[i].getElementsByTagName("td")[0]; // Customer Name column
+                if (td) {
+                    let textValue = td.textContent || td.innerText;
+                    if (textValue.toLowerCase().indexOf(filter) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
 
-        rows.forEach(function(row) {
-            table.appendChild(row);
-        });
-
-        // Toggle sorting order
-        table.rows[0].cells[n].setAttribute("data-sort-order", isAscending ? "desc" : "asc");
-        }*/
         function sortTable(n, tableId) {
         var table = document.getElementById(tableId);
         var rows = Array.from(table.rows).slice(1); // Exclude the header row
@@ -107,34 +105,12 @@
     </h3>
 
      <!--
-   <table id="subscriptionsTable1">
-    <thead>
-        <tr>
-            <th onclick="sortTable(0, 'subscriptionsTable1')">Customer Name</th>
-            <th onclick="sortTable(1, 'subscriptionsTable1')">Plan Name</th>
-            <th onclick="sortTable(2, 'subscriptionsTable1')">Payment Method</th>
-            <th onclick="sortTable(3, 'subscriptionsTable1')">Reference Number</th>
-            <th onclick="sortTable(4, 'subscriptionsTable1')">Status</th>
-        </tr>
-    </thead>
-    <tbody>
-       
-        @foreach ($subscriptions->where('customer.status', 'pending') as $subscription)
-            <tr>
-                <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
-                <td>{{ $subscription->subscriptionType->plan_name }}</td>
-                <td>{{ $subscription->mop ?? 'N/A' }}</td>
-                <td>{{ $subscription->ref_number ?? 'N/A' }}</td>
-                <td>
-                    <button class = "crudButtons" style="text-transform: uppercase;">
-                        {{ $subscription->customer->status }}
-                    </button>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>-->
+   -->
+<!-- Search Input for Table 1 -->
+<input type="text" id="searchInput1" onkeyup="searchTable('subscriptionsTable1', 'searchInput1')" placeholder="Search in Pending Subscriptions..." style="margin-bottom: 10px; padding: 5px;">
 <div style="overflow: scroll;height: 30vh;">
+
+
 <table id="subscriptionsTable1">
     <thead>
         <tr>
@@ -160,15 +136,13 @@
                 <!-- Hidden field to pass the customer_id -->
                 <input type="hidden" name="customer_id" value="{{ $subscription->customer_id }}">
 
-                <button type="submit" class="crudButtons" style="text-transform: uppercase;">
+                <button type="submit" class="crudButtons" style="text-transform: uppercase;"  onclick="return confirm('Are you sure you want to change status?')">
                     {{ $subscription->sub_status }}
                 </button>
             </form>
         </td>
     </tr>
-@endforeach
-
-
+    @endforeach
     </tbody>
 </table>
 </div>
@@ -181,8 +155,10 @@
      <p>
       Manage your subscriber list
      </p>
-
+    <!-- Search Input for Table 2 -->
+<input type="text" id="searchInput2" onkeyup="searchTable('subscriptionsTable2', 'searchInput2')" placeholder="Search in Active Subscriptions..." style="margin-bottom: 10px; padding: 5px;">
      <div style="overflow: scroll;height: 60vh;">
+        
      <table id="subscriptionsTable2">
     <thead>
         <tr>
@@ -204,6 +180,7 @@
 
     </div>
     <div class="widget calendar">
+        <!--
      <h3>
       Appointments
      </h3>
@@ -211,8 +188,8 @@
       View your upcoming appointments
      </p>
 
-	<!--insert calendar-->
-	<div id='calendar'></div>
+	
+	<div id='calendar'></div>-->
 		
     </div>
    </div>
