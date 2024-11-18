@@ -20,8 +20,8 @@
     </h1>
        </div>
        <div class="table-container">
-      
-       <a href="{{ route('consultation.create') }}" class="btn btn-primary">Add Consultation</a>
+      <br>
+       <a href="{{ route('consultation.create') }}" class="btn btn-primary"><b>Add Consultation</b></a>
         </div>
         @endif
 </body>

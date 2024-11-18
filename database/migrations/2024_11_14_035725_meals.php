@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('description', 250)->nullable();
 
             $table->string('meal_type', 50)->nullable();
-            $table->time('time');
-            $table->date('date');
+            $table->time('time')->nullable();
+            $table->date('date')->nullable();
 
             //$table->string('status')->default('pending')->nullable();//moves to subs
             $table->boolean('allergy_wheat')->default(false);
