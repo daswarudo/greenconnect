@@ -175,32 +175,37 @@ public function register(Request $request)
             'prefer_chicken' => $request->boolean('prefer_chicken'),
             'prefer_veggie' => $request->boolean('prefer_veggie'),
             /* use this as basis
-                $table->boolean('allergy_wheat')->default(false);
-                $table->boolean('allergy_milk')->default(false);
-                $table->boolean('allergy_egg')->default(false);
-                $table->boolean('allergy_peanut')->default(false);
-                $table->boolean('allergy_fish')->default(false);
-                $table->boolean('allergy_soy')->default(false);
-                $table->boolean('allergy_shellfish')->default(false);
-                $table->boolean('allergy_treenut')->default(false);
-                $table->boolean('allergy_sesame')->default(false);
-                $table->boolean('allergy_corn')->default(false);
+                $meal->allergy_wheat = $request->boolean('allergy_wheat');
+        $meal->allergy_milk = $request->boolean('allergy_milk');
+        $meal->allergy_egg = $request->boolean('allergy_egg');
+        $meal->allergy_peanut = $request->boolean('allergy_peanut');
+        $meal->allergy_fish = $request->boolean('allergy_fish');
+        $meal->allergy_soy = $request->boolean('allergy_soy');
+        $meal->allergy_shellfish = $request->boolean('allergy_shellfish');
+        $meal->allergy_treenut = $request->boolean('allergy_treenut');
+        $meal->allergy_sesame = $request->boolean('allergy_sesame');
+        $meal->allergy_corn = $request->boolean('allergy_corn');
+        $meal->allergy_chicken = $request->boolean('allergy_chicken');
+        $meal->allergy_beef = $request->boolean('allergy_beef');
+        $meal->allergy_pork = $request->boolean('allergy_pork');
+        $meal->allergy_lamb = $request->boolean('allergy_lamb');
+        $meal->allergy_gluten = $request->boolean('allergy_gluten');
             */
-            'allergy_wheat' => 'nullable|boolean',
-                'allergy_milk' => 'nullable|boolean',
-                'allergy_egg' => 'nullable|boolean',
-                'allergy_peanut' => 'nullable|boolean',
-                'allergy_fish' => 'nullable|boolean',
-                'allergy_soy' => 'nullable|boolean',
-                'allergy_shellfish' => 'nullable|boolean',
-                'allergy_treenut' => 'nullable|boolean',
-                'allergy_sesame' => 'nullable|boolean',
-                'allergy_corn' => 'nullable|boolean',
-                'allergy_chicken' => 'nullable|boolean',
-                'allergy_beef' => 'nullable|boolean',
-                'allergy_pork' => 'nullable|boolean',
-                'allergy_lamb' => 'nullable|boolean',
-                'allergy_gluten' => 'nullable|boolean',
+                'allergy_wheat' => $request->boolean('allergy_wheat'),
+                'allergy_milk' => $request->boolean('allergy_milk'),
+                'allergy_egg' => $request->boolean('allergy_egg'),
+                'allergy_peanut' => $request->boolean('allergy_peanut'),
+                'allergy_fish' => $request->boolean('allergy_fish'),
+                'allergy_soy' => $request->boolean('allergy_soy'),
+                'allergy_shellfish' => $request->boolean('allergy_shellfish'),
+                'allergy_treenut' => $request->boolean('allergy_treenut'),
+                'allergy_sesame' => $request->boolean('allergy_sesame'),
+                'allergy_corn' => $request->boolean('allergy_corn'),
+                'allergy_chicken' => $request->boolean('allergy_chicken'),
+                'allergy_beef' => $request->boolean('allergy_beef'),
+                'allergy_pork' => $request->boolean('allergy_pork'),
+                'allergy_lamb' => $request->boolean('allergy_lamb'),
+                'allergy_gluten' => $request->boolean('allergy_gluten'),
         ]);
 
         // Create subscription record
