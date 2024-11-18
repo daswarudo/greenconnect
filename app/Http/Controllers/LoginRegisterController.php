@@ -228,7 +228,7 @@ public function register(Request $request)
     public function viewSubs()
     {
         $subscriptionTypes = SubscriptionType::all(); // Fetch all subscription types
-        return view('SignUp', compact('subscriptionTypes'));
+        return view('signUp', compact('subscriptionTypes'));
     }
     /*
    */

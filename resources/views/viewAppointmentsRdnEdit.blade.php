@@ -57,7 +57,7 @@
 
                 <label>Notes</label><br>
                 <textarea name="notes" class="form-control" rows="4">{{ $consultation->notes }}</textarea><br>
-                <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;">Add Meal</button>
+                <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;">Save</button>
         </form>      
         </p>
         </div>
