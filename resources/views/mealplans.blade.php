@@ -32,6 +32,7 @@
             <th>Meal Name</th>
             <th>Description</th>
             <th>Calories</th>
+            <th>Purpose</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -43,23 +44,31 @@
                 <td>
                     @php
                         $calorieLevel = '';
+                        $mealPurpose = '';
+
                         if ($meal->calories <= 361) {
                             $calorieLevel = 'Low Serving';
+                            $mealPurpose = 'Weight Loss';
                         } elseif ($meal->calories <= 445) {
                             $calorieLevel = 'Regular Serving';
+                            $mealPurpose = 'Therapeutic, Gluten-Free';
                         } elseif ($meal->calories <= 540) {
                             $calorieLevel = 'Medium Serving';
+                            $mealPurpose = 'Weight Gain';
                         } elseif ($meal->calories <= 747) {
                             $calorieLevel = 'Maximum Serving';
+                            $mealPurpose = 'Weight Gain';
                         }
                     @endphp
-                    {{ $calorieLevel }} ({{ number_format($meal->calories, 2) }} cal)
+                    {{ number_format($meal->calories, 2) }} cal ({{ $calorieLevel }})
                 </td>
+                <td>{{ $mealPurpose }}</td>
                 <td><a href="{{ route('meals.edit', $meal->meal_id) }}">Edit Meal</a></td>
             </tr>
         @endforeach
     </tbody>
 </table>
+
 
             
     </div>
