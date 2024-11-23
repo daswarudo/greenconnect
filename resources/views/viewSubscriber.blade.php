@@ -96,7 +96,7 @@
                 </p>
                 <p>
                     <b>Height (cm):</b> 
-                    <input id="height" name="height" type="number"  step="0.01" value="{{ $customer->height }}"  oninput="calculateBMI()" required  disabled/>
+                    <input id="height" name="height" type="number"  step="0.01" value="{{ $customer->height }}"  oninput="calculateBMI()" required/>
                 </p>
 
                 <p>

@@ -365,6 +365,7 @@ public function register(Request $request)
         $request->validate([
             'customer_id' => 'nullable|exists:subscriptions,customer_id',// Ensure customer_id exists in subscriptions
             'daily_calorie' => 'nullable|numeric',
+            'height' => 'nullable|numeric|between:0,999.99',
             'weight' => 'nullable|numeric|between:0,999.99',
             'bmi' => 'nullable|numeric|between:0,999.99',
         ]);
@@ -382,6 +383,7 @@ public function register(Request $request)
             // Prepare the data to be updated
             $updateData = [
                 'daily_calorie' => $request->input('daily_calorie', $customer->daily_calorie),
+                'height' => $request->input('height', $customer->height),
                 'weight' => $request->input('weight', $customer->weight),
                 'bmi' => $request->input('bmi', $customer->bmi),
             ];
