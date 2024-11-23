@@ -84,7 +84,6 @@
                   <img src="{{ asset('images/6.png') }}" alt="Gcash">
                 </div>
                 <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
-              
         </div>
       </div>
     </div>
