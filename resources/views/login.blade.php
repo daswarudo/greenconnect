@@ -36,14 +36,13 @@
 		
 
 		<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />				<!-- LOGIN FORM -->
-			<h1>Sign In</h1>
+			
 			
 			<h3><i class="fa fa-user"></i> Username</h3>
-			<input type="username" class="form-control" id="username" placeholder="username" name="username" required>
+			<input type="username" class="form-control" id="username" placeholder="Username" name="username" required>
             <h3><i class='fas fa-lock'></i> Password </h3>
-			<input type="password" class="form-control" id="password" placeholder="password" name="password" required>
+			<input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
 			<button type="submit">Login</button>
-		
 	</div>
 	<div class="overlay-container mobile-row">
 		<div class="overlay">

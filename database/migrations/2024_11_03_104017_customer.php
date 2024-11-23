@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('first_name', 255)->nullable();
             $table->string('last_name', 255)->nullable();
             $table->string('address', 255)->nullable();
-            $table->integer('age')->nullable();
+            //$table->integer('age')->nullable();
+            $table->date('age')->nullable();
             $table->string('sex', 50)->nullable();
             $table->decimal('weight', 5, 2)->nullable();
             $table->decimal('height', 5, 2)->nullable();
@@ -32,6 +33,7 @@ return new class extends Migration
             $table->string('profile_picture')->nullable();
              $table->string('contact_num')->nullable();
 
+             /*
             $table->boolean('prefer_pork')->default(false);
             $table->boolean('prefer_beef')->default(false);
             $table->boolean('prefer_fish')->default(false);
@@ -55,6 +57,30 @@ return new class extends Migration
             $table->boolean('allergy_pork')->default(false);
             $table->boolean('allergy_lamb')->default(false);
             $table->boolean('allergy_gluten')->default(false);
+            */
+
+            $table->boolean('prefer_pork')->nullable();
+            $table->boolean('prefer_beef')->nullable();
+            $table->boolean('prefer_fish')->nullable();
+            $table->boolean('prefer_chicken')->nullable();
+            $table->boolean('prefer_veggie')->nullable();
+
+            $table->boolean('allergy_wheat')->nullable();
+            $table->boolean('allergy_milk')->nullable();
+            $table->boolean('allergy_egg')->nullable();
+            $table->boolean('allergy_peanut')->nullable();
+            $table->boolean('allergy_fish')->nullable();
+            $table->boolean('allergy_soy')->nullable();
+            $table->boolean('allergy_shellfish')->nullable();
+            $table->boolean('allergy_treenut')->nullable();
+            $table->boolean('allergy_sesame')->nullable();
+            $table->boolean('allergy_corn')->nullable();
+            $table->boolean('allergy_chicken')->nullable();
+            $table->boolean('allergy_beef')->nullable();
+            $table->boolean('allergy_pork')->nullable();
+            $table->boolean('allergy_lamb')->nullable();
+            $table->boolean('allergy_gluten')->nullable();
+
             $table->timestamps();
         });
     }

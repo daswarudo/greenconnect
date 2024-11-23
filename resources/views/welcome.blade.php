@@ -75,7 +75,7 @@
                     <p style = "font-size:30px;"><b>₱3000.00/2 weeks</b></p>
                 </div>
 
-                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> 
                 <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
                 <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
@@ -142,20 +142,18 @@
     </div>
 </div>
 
-<!--testimonial-->
+
 <div style = "height: 7vh;"></div>
-<div class="container">
+<div class="container" hidden><!--hide-->
     <h1 class ="title4"><b>Testimonials</b></h1>
 </div>
 
-<div class="div-2"> <!--di ma align if lahi ang text for each testi, may use 'see more' function or change text-->
+<div class="div-2" hidden> <!--hide-->
     <div class="flex-container2">
         <div class="flex-item2">
 
             <div style="height: 500px;overflow: hidden;position: relative;">
-                <div class = "picture">
-                    <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
-                </div>
+                
                 <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
@@ -173,9 +171,7 @@
 
 
             <div style="height: 500px;overflow: hidden;position: relative;">
-                <div class = "picture">
-                    <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
-                </div>
+                
                 <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
@@ -191,9 +187,7 @@
 
 
             <div style="height: 500px;overflow: hidden;position: relative;">
-                <div class = "picture">
-                    <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
-                </div>
+                
                 <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 

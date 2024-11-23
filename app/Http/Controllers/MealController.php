@@ -49,7 +49,7 @@ class MealController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'meal_name' => 'nullable|string|max:50',
+                'meal_name' => 'nullable|string|max:500',
                 'calories' => 'required|numeric|between:0,999999.99',
                 'description' => 'nullable|string|max:250',
                 'meal_type' => 'nullable|string|max:50',

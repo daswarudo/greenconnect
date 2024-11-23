@@ -42,8 +42,7 @@
                 <div class="form-section diet-program">
 
                     <h2>Diet Program</h2>
-                    <label for="diet-program">Diet Program</label>
-
+                
                     <select id="subscription_type_id" name="subscription_type_id" required><!-- query subs type-->
                         <option value="">Select Diet Program</option>
                         @foreach ($subscriptionTypes as $subscriptionType)
@@ -52,7 +51,7 @@
                             </option>
                         @endforeach
                     </select>
-
+                    <h2>Personal Information</h2>
                     <div class="form-group">
                         <label for="first-name">First Name <span> * </span></label>
                         <input id="first_name" name="first_name" type="text" required />
@@ -61,6 +60,15 @@
                         <label for="last-name">Last Name <span> * </span> </label>
                         <input id="last_name" name="last_name" type="text" required />
                     </div>
+                    <div class="form-group">
+                        <label for="username">Username <span> * </span></label>
+                        <input id="username" name="username" type="text"/ placholder="username" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password <span> * </span></label>
+                        <input id="password" name="password" type="password" placholder="password" required />
+                    </div>
+                    <!--
                     <div class="form-group">
                         <label for="sex">Sex</label>
                         <div class="radio-group">
@@ -71,8 +79,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="age">Age</label>
-                        <input id="age" name="age" type="number" min="0" step="1" required />
+                        <label for="age">Date of Birth</label>
+                       
+                        <input type="date" name="age" id="age" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="height">Height (cm) <span> * </span></label>
@@ -84,7 +93,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="bmi">BMI <span> * </span></label>
+                        <label for="bmi">BMI </label>
                         <input type="text" name="bmi" id="bmi" class="form-control" required />
                     </div>
 
@@ -97,6 +106,7 @@
                         <input id="contact_num" name="contact_num" type="text" minlength="11" maxlength="11" 
                         oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" />
                     </div>
+                    <h2>Health Concerns</h2>
                     <div class="form-group">
                         <label for="doctor-recommendation">Doctor's Diet Recommendation</label>
                         <input id="diet_recom" name="diet_recom" type="text" placeholder="Ex. Less red meat"/>
@@ -107,27 +117,8 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="food_preferences">Food Preferences</label>
-                        <!--<div>
-                            <input type="checkbox" id="prefer_pork" name="prefer_pork" value="1">
-                            <label for="prefer_pork">Pork</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="prefer_beef" name="prefer_beef" value="1">
-                            <label for="prefer_beef">Beef</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="prefer_fish" name="prefer_fish" value="1">
-                            <label for="prefer_fish">Fish</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="prefer_chicken" name="prefer_chicken" value="1">
-                            <label for="prefer_chicken">Chicken</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="prefer_veggie" name="prefer_veggie" value="1">
-                            <label for="prefer_veggie">Vegetable</label>
-                        </div>-->
+                        <label for="food_preferences"><h2>Food Preferences</h2></label>
+                        
                         <br><input type="checkbox" name="prefer_pork" value="1" {{ old('prefer_pork') ? 'checked' : '' }}>
                             Pork
                         </label><br>
@@ -151,7 +142,7 @@
                             Veggie
                         </label><br>
                     </div>
-
+                    <h2>Lifestyle</h2>
                     <div class="form-group">
                          <label for="activity_level">Select Activity Level</label>
                           <select id="activity_level" name="activity_level" class="form-control"  required>
@@ -162,15 +153,7 @@
                            <option value="Very Active">Very Active</option>
                           </select>
                     </div>
-                    <h2>Account and Payment</h2>
-                    <div class="form-group">
-                        <label for="username">Username <span> * </span></label>
-                        <input id="username" name="username" type="text"/ placholder="username" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password <span> * </span></label>
-                        <input id="password" name="password" type="password" placholder="password" required />
-                    </div>
+                    <h2>Payment</h2>
                     <div class="form-group">
                         <label for="payment-option">Payment Option <span> * </span> </label>
                         <select id="mop" name="mop" required >
@@ -190,19 +173,7 @@
 
                 </div>
                 <div class="form-section allergies">
-                    <!--basis:
-                    $table->boolean('allergy_wheat')->default(false);
-                    $table->boolean('allergy_milk')->default(false);
-                    $table->boolean('allergy_egg')->default(false);
-                    $table->boolean('allergy_peanut')->default(false);
-                    $table->boolean('allergy_fish')->default(false);
-                    $table->boolean('allergy_soy')->default(false);
-                    $table->boolean('allergy_shellfish')->default(false);
-                    $table->boolean('allergy_treenut')->default(false);
-                    $table->boolean('allergy_sesame')->default(false);
-                    $table->boolean('allergy_corn')->default(false);
-                            
-                    -->
+                    
                     <h2>Allergies</h2>
                     <label>
         <input type="checkbox" name="allergy_wheat" value="1" {{ old('allergy_wheat') ? 'checked' : '' }}>
@@ -278,8 +249,9 @@
         <input type="checkbox" name="allergy_gluten" value="1" {{ old('allergy_gluten') ? 'checked' : '' }}>
         Gluten
     </label>
-                </div>
-                <!--SUBMIT FORM --><button type ="submit" class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
+    
+                </div>-->
+                <!--SUBMIT FORM --><button type ="submit" id="submit-button" class="submit-button">Submit</button>  <!--SUBMIT FORM -->
             </div>
         <!--</form>-->
         </form>
