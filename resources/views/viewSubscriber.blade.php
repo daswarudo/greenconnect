@@ -70,11 +70,13 @@
                     
                 </p>
                 <p>
-                    <b>Sex:</b> 
-                    <select name="sex" id="sex" disabled>
-                        <option value="M" {{ $customer->sex == 'M' ? 'selected' : '' }}>Male</option>
-                        <option value="F" {{ $customer->sex == 'F' ? 'selected' : '' }}>Female</option>
-                    </select>
+                <b>Sex:</b>
+                <select name="sex" id="sex" disabled>
+                    <option value="" {{ !$customer->sex ? 'selected' : '' }}>-- Select Sex --</option>
+                    <option value="M" {{ $customer->sex == 'M' ? 'selected' : '' }}>Male</option>
+                    <option value="F" {{ $customer->sex == 'F' ? 'selected' : '' }}>Female</option>
+                </select>
+
                 </p>
                 <p>
                     <b>Address:</b> 
@@ -88,7 +90,7 @@
                 
                 <p>
                     <b>Diet Recommended:</b> 
-                    <input id="diet_reco" name="diet_reco" type="text" value="{{ $customer->diet_recom  ?? 'No activity level' }}"  disabled/>
+                    <input id="diet_reco" name="diet_reco" type="text" value="{{ $customer->diet_recom  ?? 'No diet recommended' }}"  disabled/>
                 </p>
                 <p>
                     <b>Health Condition:</b> 
@@ -123,14 +125,11 @@
 
                 </p>
    -->
-                <p>
-                    <b>Diet Recommendation:</b> 
-                    <input type="text" name="diet_recom" id="diet_recom" class="form-control" value="{{ old('diet_recom', $customer->diet_recom) }}"  disabled>
-                    
-                </p>
+                
                 <p>
                     <b>Activity Level:</b> 
                     <select name="activity_level" id="activity_level"  disabled>
+                        <option value="" {{ !$customer->activity_level ? 'selected' : '' }}>-- Level --</option>
                         <option value="Sedentary" {{ $customer->activity_level == 'Sedentary' ? 'selected' : '' }}>Sedentary</option>
                         <option value="Low Active" {{ $customer->activity_level == 'Low Active' ? 'selected' : '' }}>Low Active</option>
                         <option value="Active" {{ $customer->activity_level == 'Active' ? 'selected' : '' }}>Active</option>
