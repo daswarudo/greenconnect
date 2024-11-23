@@ -34,7 +34,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('welcome') }}">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="subscription-link" style="cursor: pointer;">SUBSCRIPTION</a>
+                    <a class="nav-link" id="subscription-link" style="cursor: pointer;">SIGN UP</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link ghost" id="login" href="/login">LOGIN</a>
@@ -236,8 +236,12 @@
     
     </div>
     <div class="footer-right">
-        <img src="{{ asset('images/panda.jpg') }}" alt="Image 1">
-        <img src="{{ asset('images/grab.jpg') }}" alt="Image 2">
+        <a href="https://www.foodpanda.ph/restaurant/kxxh/the-green-chef-dumaguete-santa-rosa-street">
+        <img src="{{ asset('images/panda.jpg') }}" alt="foodpanda">
+        </a>
+        <a href="https://food.grab.com/ph/en/restaurant/the-greenchef-mango-avenue-delivery/2-C2LXNJUWVVB2RN?">
+        <img src="{{ asset('images/grab.jpg') }}" alt="grab">
+        </a>
     </div>
 </div>
 

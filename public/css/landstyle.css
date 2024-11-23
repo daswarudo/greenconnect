@@ -216,6 +216,7 @@ h1.title4 {
     padding: 20px;
     background-color: #333;
     color: white;
+    margin-top: 20px;
 }
 
 .footer-left {
@@ -229,11 +230,11 @@ h1.title4 {
     gap: 5px;
 }
 .footer-right img {
-    width: 100px; /* Adjust size as needed */
+    width: 15vw; /* Adjust size as needed */
     height: auto;
 }
 .f-text {
-    font-size: 2vh;
+    font-size: 2.5vh;
     margin: 0px 0px 0px 0px;
 }
 /* Media query for small screens */
