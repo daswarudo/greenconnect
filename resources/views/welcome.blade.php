@@ -34,7 +34,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('welcome') }}">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="subscription-link" style="cursor: pointer;" href="/signUp">SIGN UP</a>
+                    <a class="nav-link" id="signup" style="cursor: pointer;" href="/signUp">SIGN UP</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link ghost" id="login" href="/login">LOGIN</a>
