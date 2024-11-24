@@ -33,32 +33,6 @@ return new class extends Migration
             $table->string('profile_picture')->nullable();
              $table->string('contact_num')->nullable();
 
-             /*
-            $table->boolean('prefer_pork')->default(false);
-            $table->boolean('prefer_beef')->default(false);
-            $table->boolean('prefer_fish')->default(false);
-            $table->boolean('prefer_chicken')->default(false);
-            $table->boolean('prefer_veggie')->default(false);
-
-
-            //$table->string('status')->default('pending')->nullable();//moves to subs
-            $table->boolean('allergy_wheat')->default(false);
-            $table->boolean('allergy_milk')->default(false);
-            $table->boolean('allergy_egg')->default(false);
-            $table->boolean('allergy_peanut')->default(false);
-            $table->boolean('allergy_fish')->default(false);
-            $table->boolean('allergy_soy')->default(false);
-            $table->boolean('allergy_shellfish')->default(false);
-            $table->boolean('allergy_treenut')->default(false);
-            $table->boolean('allergy_sesame')->default(false);
-            $table->boolean('allergy_corn')->default(false);
-            $table->boolean('allergy_chicken')->default(false);//
-            $table->boolean('allergy_beef')->default(false);
-            $table->boolean('allergy_pork')->default(false);
-            $table->boolean('allergy_lamb')->default(false);
-            $table->boolean('allergy_gluten')->default(false);
-            */
-
             $table->boolean('prefer_pork')->nullable();
             $table->boolean('prefer_beef')->nullable();
             $table->boolean('prefer_fish')->nullable();

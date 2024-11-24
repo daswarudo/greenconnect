@@ -109,8 +109,11 @@ Route::patch('/rdnDashboard', [LoginRegisterController::class, 'updateStatus'])
 // Route to view customer details
 Route::get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
 Route::get('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewSubscriber.view');///EDITS
-Route::put('/subscribers/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
 
+///EDIT SUBS SA CUST
+Route::get('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'edit'])->name('editSubscription');
+Route::put('/subscribers/{id}/cust', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
+Route::put('/subscribers/{id}/subs', [LoginRegisterController::class, 'update'])->name('updateSubscription');
 
 //CONSULTATIONSSSSS
 // Show the form to add a new consultation
@@ -139,4 +142,6 @@ Route::delete('/mealplans/{id}', [MealController::class, 'destroy'])->name('meal
 //Route::get('/mealplansEdit', [MealController::class, 'viewSubs2'])->name('mealplansEdit');
 Route::get('/mealplansEdit/edit/{id}', [MealController::class, 'viewSubs2'])->name('meals.edit');
 
-//login customer
+
+
+

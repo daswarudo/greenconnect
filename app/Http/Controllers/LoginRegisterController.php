@@ -287,7 +287,7 @@ public function register(Request $request)
           return back()->with('fail', 'Account does not exist!');
       }
   }
-  public function showCustomerDashboard()
+  public function showCustomerDashboard()//for locking users
     {
         $loginId = session()->get('loginId'); // Retrieve loginId
         $userType = session()->get('userType'); // Retrieve userType
@@ -415,4 +415,50 @@ public function register(Request $request)
         return view($viewName, compact('subscriptions'));*/
     }
     
+    public function edit($id)
+    {
+        // Fetch subscription with its related subscription type and customer
+        $subscription = Subscriptions::with(['subscriptionType', 'customer'])->findOrFail($id);
+
+        // Fetch all available subscription types for the dropdown
+        $subscriptionTypes = SubscriptionType::all();
+
+        // Return the edit view with the subscription and subscription types data
+        return view('viewSubscription', compact('subscription', 'subscriptionTypes'));
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            
+            'sub_status' => 'required|string|in:pending,active,disabled',
+            'mop' => 'required|string|max:255',
+            'ref_number' => 'required|string|max:20',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'subscription_type_id' => 'nullable|exists:subscription_type,subscription_type_id',
+        ]);
+
+        $subscription = Subscriptions::findOrFail($id);
+
+        
+        // Update subscription details
+        
+        $subscription->mop = $request->mop;
+        $subscription->ref_number = $request->ref_number;
+        $subscription->start_date = $request->start_date;
+        $subscription->end_date = $request->end_date;
+        $subscription->subscription_type_id = $request->subscription_type_id;
+
+        // Update subscription status
+        $subscription->sub_status = $request->sub_status;
+
+        $subscription->save();
+
+        return redirect()->route('subscribers')->with('success', 'Subscription updated successfully!');
+    }
+
+    
+
+
 }
