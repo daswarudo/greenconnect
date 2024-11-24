@@ -17,7 +17,9 @@
     
     <div class="container">
         <div class="left-panel">
-            <img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100"/>
+        <a href="/ ">
+		<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />				<!-- LOGIN FORM -->
+		</a>
             <h1>WELCOME TO GREEN CONNECT</h1>
             <p>GREEN CHEF'S PORTAL TO NUTRITION</p>
             <p>Already have an account?</p>

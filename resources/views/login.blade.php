@@ -1,3 +1,4 @@
+<!-- Duplicate Branch(for default)-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,9 +35,9 @@
 
 
 		
-
+		<a href="/ ">
 		<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />				<!-- LOGIN FORM -->
-			
+		</a>
 			
 			<h3><i class="fa fa-user"></i> Username</h3>
 			<input type="username" class="form-control" id="username" placeholder="Username" name="username" required>
