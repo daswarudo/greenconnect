@@ -21,7 +21,7 @@
 
 <div class="sidebar">
 	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
-    <a href="{{ route('rdnDashboard') }}">
+    <a href="/rdnDashboard">
         <i class="fas fa-home">
         </i>
     Home
@@ -41,7 +41,7 @@
     </i>
     Meal Plans
    </a>
-   <a href="{{ route('login') }}"  onclick="return confirm('Logout?')">
+   <a href="{{ route('logout') }}"  onclick="return confirm('Logout?')">
     <i class="fas fa-sign-out-alt">
     </i>
     Log Out

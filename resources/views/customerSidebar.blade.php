@@ -45,7 +45,7 @@
     </i>
     Subscription
    </a>
-   <a href="{{ route('login') }}">
+   <a href="{{ route('logout') }}">
     <i class="fas fa-sign-out-alt">
     </i>
     Log Out

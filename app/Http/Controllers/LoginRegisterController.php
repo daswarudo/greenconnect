@@ -14,6 +14,7 @@ use App\Models\Payments;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ConsultationSched;
 use App\Models\Meals;
+use Illuminate\Support\Facades\Auth; 
 
 
 class LoginRegisterController extends Controller
@@ -23,71 +24,7 @@ class LoginRegisterController extends Controller
         return view('signUp'); // Make sure signUp.blade.php is located in the resources/views folder
     }
 /*
-    public function register(Request $request)
-    {
-        // Validation rules
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'age' => 'nullable|integer',
-            'sex' => 'nullable|string|max:50',
-            'weight' => 'nullable|numeric|between:0,999.99',
-            'height' => 'nullable|numeric|between:0,999.99',
-            'diet_recom' => 'nullable|string|max:255',
-            'health_condition' => 'nullable|string|max:255',
-            'bmi' => 'nullable|numeric|between:0,999.99',
-            'daily_calorie' => 'nullable|integer',
-            'activity_level' => 'nullable|string|max:255',
-            'username' => 'required|string|max:255|unique:customer,username',
-            'password' => 'required|min:7|max:15',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            
-            'mop' => 'required|string|max:255',
-            'ref_number' => 'required|string|max:20',
-            'customer_id' => 'nullable|exists:customer,customer_id', // Added validation for customer_id
-        ]);
-
-        // Return validation errors if any
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        // Use a transaction to ensure atomicity
-        DB::transaction(function () use ($request) {
-            // Create subscription record
-            
-
-            // Create customer record
-            $customer = Customer::create([
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'address' => $request->input('address'),
-                'age' => $request->input('age'),
-                'sex' => $request->input('sex'),
-                'weight' => $request->input('weight'),
-                'height' => $request->input('height'),
-                'diet_recom' => $request->input('diet_recom'),
-                'health_condition' => $request->input('health_condition'),
-                'bmi' => $request->input('bmi'),
-                'daily_calorie' => $request->input('daily_calorie'),
-                'activity_level' => $request->input('activity_level'),
-                'username' => $request->input('username'),
-                'password' => Hash::make($request->input('password')),
-                
-                'profile_picture' => $request->hasFile('profile_picture') ? 
-                    $request->file('profile_picture')->store('profile_pictures', 'public') : null,
-            ]);
-
-            // Create payment record
-            
-        });
-
-        session()->flash('message', 'Registration successful! You can now log in.');
-
-        // Redirect to login page after registration
-        return redirect()->route('login');
-    }
+    
 */
 public function register(Request $request)
 {
@@ -270,13 +207,16 @@ public function register(Request $request)
                   
                   // Redirect to the customer-specific dashboard or welcome page
                   //return redirect()->route('custTest'); 
+                  //$this->middleware('auth:customer');
                   return redirect('/custTest');
               } elseif ($user instanceof Rdn) {
                   $request->session()->put('loginId', $user->rdn_id); // Store RDN ID
                   $request->session()->put('userType', 'rdn');        // Store user type as 'rdn'
                   
                   // Redirect to the Rdn-specific dashboard
-                  return redirect()->route('rdnDashboard'); 
+                  //return redirect()->route('rdnDashboard'); 
+                  //$this->middleware('auth:rdn');
+                  return redirect('/rdnDashboard');
               }
           } else {
               // If the password is incorrect, return with an error
@@ -287,7 +227,19 @@ public function register(Request $request)
           return back()->with('fail', 'Account does not exist!');
       }
   }
-  public function showCustomerDashboard()//for locking users
+  public function logout(Request $request)
+    {
+        // Clear the session data
+        $request->session()->flush();
+
+        // Flash a success message
+        session()->flash('message', 'You have been logged out successfully.');
+
+        // Redirect to the login page
+        return redirect()->route('login');
+    }
+
+    public function showCustomerDashboard()
     {
         $loginId = session()->get('loginId'); // Retrieve loginId
         $userType = session()->get('userType'); // Retrieve userType
@@ -304,6 +256,24 @@ public function register(Request $request)
             return redirect()->route('login')->with('fail', 'Please log in first');
         }
     }
+    /*
+    public function showRdnDashboard()
+    {
+        $loginId = session()->get('loginId'); // Retrieve loginId
+        $userType = session()->get('userType'); // Retrieve userType
+
+        // Fetch the customer data based on the loginId
+        $rdn = Rdn::where('rdn_id', $loginId)->first();  
+
+        // Check if values are set
+        if ($loginId && $userType) {
+            // Pass the data to the view
+            return view('rdnDashboard', compact('userType', 'loginId', 'rdn'));
+        } else {
+            // Redirect to login page if not authenticated
+            return redirect()->route('login')->with('fail', 'Please log in first');
+        }
+    }*/
 
     /*
     public function showSubscriptions()

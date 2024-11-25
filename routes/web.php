@@ -6,6 +6,8 @@ use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\MealController;
 
+use App\Http\Middleware\CheckUserType;
+
 
 //RND
 
@@ -97,13 +99,31 @@ Route::get('/signUp',[LoginRegisterController::class,'viewSubs'])->name('view.su
 Route::post('/signUp',[LoginRegisterController::class,'register'])->name('register.customer');
 
 Route::post('/login', [LoginRegisterController::class, 'loginUser'])->name('login.user');
+Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');//logout
 
-//rdn
+ //for locking pages
+
+
+// For customers
+Route::middleware('auth:customer')->group(function () {
+    // Your protected routes here
+});
+
+// For RDNs
+Route::middleware('auth:rdn')->group(function () {
+    // Your protected routes here
+});
+
+
+
+//rdn //->middleware('auth')
 Route::view('/subscribers', 'subscribers')->name('subscribers');
 Route::get('/rdnDashboard', [LoginRegisterController::class, 'showSubscriptions'])->name('rdnDashboard');
+    //lock rdn??
+    //Route::get('/rdnDashboard', [LoginRegisterController::class, 'showRdnDashboard'])->name('rdnDashboardLock');//lock test
 
 Route::patch('/rdnDashboard', [LoginRegisterController::class, 'updateStatus'])
-    ->name('subscriptions.updateStatus');
+        ->name('subscriptions.updateStatus');
 
 
 // Route to view customer details
@@ -141,6 +161,8 @@ Route::delete('/mealplans/{id}', [MealController::class, 'destroy'])->name('meal
 
 //Route::get('/mealplansEdit', [MealController::class, 'viewSubs2'])->name('mealplansEdit');
 Route::get('/mealplansEdit/edit/{id}', [MealController::class, 'viewSubs2'])->name('meals.edit');
+
+
 
 
 
