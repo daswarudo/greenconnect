@@ -33,8 +33,12 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('welcome') }}">HOME</a>
                 </li>
+                <!--
                 <li class="nav-item">
                     <a class="nav-link" id="subscription-link" style="cursor: pointer;">SUBSCRIPTION</a>
+                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link ghost" id="signUp" href="/signUp">SIGN UP</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link ghost" id="login" href="/login">LOGIN</a>
@@ -65,82 +69,104 @@
     
 </div>
 <!-- 4 boxes-->
-<div class = "div-2" id="flex-container">
-    <div class = "flex-container" >
-        <div class = "flex-item">
-            <div>  <!-- temporary because krazy css-->
-                <div style = "text-align:center;">
-                    <p style = "font-size:35px;"><b>Weight-Loss Plan</b></p>
-                    <p>Low-calorie meals curated for weight loss</p>
-                    <p style = "font-size:30px;"><b>₱3000.00/2 weeks</b></p>
-                </div>
-
-                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> 
+<div class="container">
+    <div class="card">
+      <div class="inner">
+        <div class="front">
+          <h2>Weight Loss</h2>
+          <img src="{{ asset('images/logo.png') }}" alt="logo"  style="height: 30vh">
+          <p>Low-calorie meals for weight loss</p>
+          <h4>₱3000.00/2 weeks</h4>
+        </div>
+        <div class="back">
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
                 <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
                 <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
                 <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
-            </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
-
-        </div>
-        <div class = "flex-item">
-            <div>  <!-- temporary because krazy css-->
-                <div style = "text-align:center;">
-                    <p style = "font-size:35px;"><b>Weight-Gain Plan</b></p>
-                    <p>High-calorie meals designed for healthy weight gain</p>
-                    <p style = "font-size:30px;"><b>₱3300.00/2 weeks</b></p>
+                <div class="payment">
+                  <img src="{{ asset('images/5.png') }}" alt="Maya">
+                  <img src="{{ asset('images/6.png') }}" alt="Gcash">
                 </div>
-
-                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
-                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
-                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
-                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
-                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
-            </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
-
+                <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
         </div>
+      </div>
     </div>
-</div>
-<div class="div-2">
-    <div class="flex-container">
-        <div class = "flex-item">
-            <div>  <!-- temporary because krazy css-->
-                <div style = "text-align:center;">
-                    <p style = "font-size:35px;"><b>Therapeutic Diet</b></p>
-                    <p>Customized for individuals with specific health needs</p><!-- fix align later-->
-                    <p style = "font-size:30px;"><b>₱3500.00/2 weeks</b></p>
-                </div>
-
-                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+    
+    <div class="card">
+      <div class="inner">
+        <div class="front">
+          <h2>Weight Gain</h2>
+          <img src="{{ asset('images/logo.png') }}" alt="logo"  style="height: 30vh">
+          <p>High-calorie meals for weight gain</p>
+          <h4>₱3300.00/2 weeks</h4>
+        </div>
+        <div class="back">
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
                 <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
                 <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
                 <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
-            </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
-
-        </div>
-        <div class = "flex-item">
-            <div>  <!-- temporary because krazy css-->
-                <div style = "text-align:center;">
-                    <p style = "font-size:35px;"><b>Gluten-Free Diet</b></p>
-                    <p>Specially curated gluten-free meals for individuals with celiac disease or gluten sensitivity</p>
-                    <p style = "font-size:30px;"><b>₱3500.00/2 weeks</b></p>
+                <div class="payment">
+                  <img src="{{ asset('images/5.png') }}" alt="Maya">
+                  <img src="{{ asset('images/6.png') }}" alt="Gcash">
                 </div>
-
-                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
-                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
-                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
-                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
-                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
-            </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
-
+                <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
+              
         </div>
+      </div>
     </div>
-</div>
+
+    <div class="card">
+      <div class="inner">
+        <div class="front">
+          <h2>Therapeutic Diet</h2>
+          <img src="{{ asset('images/logo.png') }}" alt="logo"  style="height: 30vh">
+          <p>Customized for specific health needs</p>
+          <h4>₱3500.00/2 weeks</h4>
+        </div>
+        <div class="back">
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
+                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
+                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
+                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
+                <div class="payment">
+                  <img src="{{ asset('images/5.png') }}" alt="Maya">
+                  <img src="{{ asset('images/6.png') }}" alt="Gcash">
+                </div>
+                <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
+              
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="inner">
+        <div class="front">
+          <h2>Gluten-Free Diet</h2>
+          <img src="{{ asset('images/logo.png') }}" alt="logo"  style="height: 30vh">
+          <p>Specially curated gluten-free meals</p>
+          <h4>₱3500.00/2 weeks</h4>
+        </div>
+        <div class="back">
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
+                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
+                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
+                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
+                <div class="payment">
+                  <img src="{{ asset('images/5.png') }}" alt="Maya">
+                  <img src="{{ asset('images/6.png') }}" alt="Gcash">
+                </div>
+                <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
+              
+        </div>
+      </div>
+    </div>
+   
+  </div>
+
 
 
 <div style = "height: 7vh;"></div>
