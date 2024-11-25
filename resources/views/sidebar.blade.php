@@ -20,7 +20,10 @@
 <body>
 
 <div class="sidebar">
-	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
+    <!--<a href="#" style="text-decoration: none !important;">-->
+        <img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
+    <!--</a>-->
+
     <a href="/rdnDashboard">
         <i class="fas fa-home">
         </i>
