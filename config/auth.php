@@ -74,12 +74,13 @@ return [
         ],
         'customers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Customer::class, // Your custom model
+            'model' => App\Models\Customer::class,  // Replace with your Customer model
         ],
         'rdns' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Rdn::class, // Your custom model
+            'model' => App\Models\Rdn::class,  // Replace with your Rdn model
         ],
+        
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

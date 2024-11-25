@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Customer extends Authenticatable
 {
     use HasFactory;
-
+    protected $guard = 'customer';
     // The table associated with the model.
     protected $table = 'customer';
 

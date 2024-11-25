@@ -169,7 +169,6 @@ public function register(Request $request)
         return view('signUp', compact('subscriptionTypes'));
     }
     /*
-   */
   public function loginUser(Request $request)
   {
       // Validate the input
@@ -206,16 +205,14 @@ public function register(Request $request)
                   $request->session()->put('userType', 'customer');       // Store user type as 'customer'
                   
                   // Redirect to the customer-specific dashboard or welcome page
-                  //return redirect()->route('custTest'); 
-                  //$this->middleware('auth:customer');
+                  
                   return redirect('/custTest');
               } elseif ($user instanceof Rdn) {
                   $request->session()->put('loginId', $user->rdn_id); // Store RDN ID
                   $request->session()->put('userType', 'rdn');        // Store user type as 'rdn'
                   
                   // Redirect to the Rdn-specific dashboard
-                  //return redirect()->route('rdnDashboard'); 
-                  //$this->middleware('auth:rdn');
+                  
                   return redirect('/rdnDashboard');
               }
           } else {
@@ -226,7 +223,58 @@ public function register(Request $request)
           // If no user is found in either model, send an error
           return back()->with('fail', 'Account does not exist!');
       }
-  }
+  }*/
+  public function loginUser(Request $request)
+{
+    // Validate the input
+    $request->validate([
+        'username' => 'required',
+        'password' => 'required',
+    ]);
+
+    // Attempt to find the user as a Customer
+    $user = Customer::where('username', '=', $request->username)->first();
+
+    if (!$user) {
+        // If not found as Customer, check if the user is an Rdn
+        $user = Rdn::where('username', '=', $request->username)->first();
+    }
+
+    // If the user exists (either Customer or Rdn)
+    if ($user) {
+        // Verify the password
+        if (Hash::check($request->password, $user->password)) {
+            // Flash a success message
+            session()->flash('message', 'Log In successful!');
+
+            // Store the user ID and type in the session based on the model (Customer or Rdn)
+            if ($user instanceof Customer) {
+                $request->session()->put('loginId', $user->customer_id); // Store customer ID
+                $request->session()->put('userType', 'customer');       // Store user type as 'customer'
+
+                // Authenticate the user
+                Auth::guard('customer')->login($user);
+
+                // Redirect to the customer-specific dashboard
+                return redirect('/custTest');
+            } elseif ($user instanceof Rdn) {
+                $request->session()->put('loginId', $user->rdn_id); // Store RDN ID
+                $request->session()->put('userType', 'rdn');        // Store user type as 'rdn'
+
+                // Authenticate the user
+                Auth::guard('rdn')->login($user);
+
+                // Redirect to the Rdn-specific dashboard
+                return redirect('/rdnDashboard');
+            }
+        } else {
+            return back()->withInput()->with('fail', 'Invalid username or password!');
+        }
+    } else {
+        return back()->with('fail', 'Account does not exist!');
+    }
+}
+
   public function logout(Request $request)
     {
         // Clear the session data
@@ -238,7 +286,7 @@ public function register(Request $request)
         // Redirect to the login page
         return redirect()->route('login');
     }
-
+    /*
     public function showCustomerDashboard()
     {
         $loginId = session()->get('loginId'); // Retrieve loginId
@@ -256,24 +304,31 @@ public function register(Request $request)
             return redirect()->route('login')->with('fail', 'Please log in first');
         }
     }
-    /*
-    public function showRdnDashboard()
-    {
-        $loginId = session()->get('loginId'); // Retrieve loginId
-        $userType = session()->get('userType'); // Retrieve userType
+    */
+    public function showCustomerDashboard()
+{
+    // Retrieve the loginId and userType from the session
+    $loginId = session()->get('loginId');
+    $userType = session()->get('userType');
 
+    // Ensure that userType is 'customer' and loginId is valid
+    if ($loginId && $userType === 'customer') {
         // Fetch the customer data based on the loginId
-        $rdn = Rdn::where('rdn_id', $loginId)->first();  
+        $customer = Customer::where('customer_id', $loginId)->first();
 
-        // Check if values are set
-        if ($loginId && $userType) {
-            // Pass the data to the view
-            return view('rdnDashboard', compact('userType', 'loginId', 'rdn'));
+        if ($customer) {
+            // Pass the data to the view if customer exists
+            return view('custTest', compact('userType', 'loginId', 'customer'));
         } else {
-            // Redirect to login page if not authenticated
-            return redirect()->route('login')->with('fail', 'Please log in first');
+            // Redirect if customer not found
+            return redirect()->route('login')->with('fail', 'Customer not found');
         }
-    }*/
+    } else {
+        // Redirect to login page if not authenticated as a customer
+        return redirect()->route('login')->with('fail', 'Please log in first as customer');
+    }
+}
+
 
     /*
     public function showSubscriptions()

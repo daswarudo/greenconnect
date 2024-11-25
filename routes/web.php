@@ -67,10 +67,17 @@ Route::get('/viewsubscriber', function () {
     return view('viewsubscriber');
 })->name('viewsubscriber');
 
+
+// middlewared customer
+
+Route::get('/custTest', function () {
+    return view('custTest');
+})->name('custTest');
+
+
+
+
 // CUSTOMERS
-
-Route::get('/custTest', [LoginRegisterController::class, 'showCustomerDashboard'])->name('custTest');
-
 Route::get('/customerDashboard', function () {
     return view('customerDashboard');
 })->name('customerDashboard');
@@ -103,64 +110,50 @@ Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout'
 
  //for locking pages
 
-
-// For customers
-Route::middleware('auth:customer')->group(function () {
-    // Your protected routes here
-});
-
-// For RDNs
-Route::middleware('auth:rdn')->group(function () {
-    // Your protected routes here
-});
-
-
-
 //rdn //->middleware('auth')
 Route::view('/subscribers', 'subscribers')->name('subscribers');
-Route::get('/rdnDashboard', [LoginRegisterController::class, 'showSubscriptions'])->name('rdnDashboard');
+Route::middleware('auth:rdn')->get('/rdnDashboard', [LoginRegisterController::class, 'showSubscriptions'])->name('rdnDashboard');
     //lock rdn??
     //Route::get('/rdnDashboard', [LoginRegisterController::class, 'showRdnDashboard'])->name('rdnDashboardLock');//lock test
 
 Route::patch('/rdnDashboard', [LoginRegisterController::class, 'updateStatus'])
         ->name('subscriptions.updateStatus');
 
-
-// Route to view customer details
-Route::get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
-Route::get('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewSubscriber.view');///EDITS
-
-///EDIT SUBS SA CUST
-Route::get('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'edit'])->name('editSubscription');
-Route::put('/subscribers/{id}/cust', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
-Route::put('/subscribers/{id}/subs', [LoginRegisterController::class, 'update'])->name('updateSubscription');
-
-//CONSULTATIONSSSSS
-// Show the form to add a new consultation
-Route::get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
-
+Route::get('/custTest', [LoginRegisterController::class, 'showCustomerDashboard'])->name('custTest');//ERROR
 // Handle form submission
 Route::post('/consultation/store', [ConsultationController::class, 'store'])->name('consultation.store');
+//CONSULTATIONSSSSS
+// Show the form to add a new consultation
+Route::middleware('auth:customer')->get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
 
-Route::get('/appointments', [ConsultationController::class, 'showCalendar'])->name('appointments');
-Route::get('/viewAppointmentsRdn', [ConsultationController::class, 'index'])->name('viewAppointmentsRdn');
-Route::get('/viewAppointmentsRdnEdit/edit/{id}', [ConsultationController::class, 'edit'])->name('viewAppointmentsRdnEdit.edit');
-Route::put('/viewAppointmentsRdn/{id}', [ConsultationController::class, 'update'])->name('consultations.update');//krazy routing bug
+
+//R dee en middlewarez
+// Route to view customer details
+Route::middleware('auth:rdn')->get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
+Route::middleware('auth:rdn')->get('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewSubscriber.view');///EDITS
+
+///EDIT SUBS SA CUST
+Route::middleware('auth:rdn')->get('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'edit'])->name('editSubscription');
+Route::middleware('auth:rdn')->put('/subscribers/{id}/cust', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
+Route::middleware('auth:rdn')->put('/subscribers/{id}/subs', [LoginRegisterController::class, 'update'])->name('updateSubscription');
+
+Route::middleware('auth:rdn')->get('/appointments', [ConsultationController::class, 'showCalendar'])->name('appointments');
+Route::middleware('auth:rdn')->get('/viewAppointmentsRdn', [ConsultationController::class, 'index'])->name('viewAppointmentsRdn');
+Route::middleware('auth:rdn')->get('/viewAppointmentsRdnEdit/edit/{id}', [ConsultationController::class, 'edit'])->name('viewAppointmentsRdnEdit.edit');
+Route::middleware('auth:rdn')->put('/viewAppointmentsRdn/{id}', [ConsultationController::class, 'update'])->name('consultations.update');//krazy routing bug
 
 //MEALSssss
-
-Route::get('/mealplans', [MealController::class, 'index'])->name('mealplans');
-Route::get('/mealplansAdd', [MealController::class, 'viewSubs'])->name('mealplansAdd');
-Route::post('/mealplansAdd',[MealController::class,'addMeals'])->name('mealplans.addition');
+Route::middleware('auth:rdn')->get('/mealplans', [MealController::class, 'index'])->name('mealplans');
+Route::middleware('auth:rdn')->get('/mealplansAdd', [MealController::class, 'viewSubs'])->name('mealplansAdd');
+Route::middleware('auth:rdn')->post('/mealplansAdd',[MealController::class,'addMeals'])->name('mealplans.addition');
 //Route::post('/mealplansAdd',[MealController::class,'add'])->name('mealplans.add');//
 
-
-Route::get('/mealplansEdit/edit/{id}', [MealController::class, 'edit'])->name('meals.edit');
-Route::put('/mealplans/{id}', [MealController::class, 'update'])->name('meals.update');
-Route::delete('/mealplans/{id}', [MealController::class, 'destroy'])->name('meals.destroy');
+Route::middleware('auth:rdn')->get('/mealplansEdit/edit/{id}', [MealController::class, 'edit'])->name('meals.edit');
+Route::middleware('auth:rdn')->put('/mealplans/{id}', [MealController::class, 'update'])->name('meals.update');
+Route::middleware('auth:rdn')->delete('/mealplans/{id}', [MealController::class, 'destroy'])->name('meals.destroy');
 
 //Route::get('/mealplansEdit', [MealController::class, 'viewSubs2'])->name('mealplansEdit');
-Route::get('/mealplansEdit/edit/{id}', [MealController::class, 'viewSubs2'])->name('meals.edit');
+Route::middleware('auth:rdn')->get('/mealplansEdit/edit/{id}', [MealController::class, 'viewSubs2'])->name('meals.edit');
 
 
 
