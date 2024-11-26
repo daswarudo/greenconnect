@@ -21,6 +21,7 @@ Route::get('/test', function () {//dashboard
     return view('test');
 })->name('test');
 
+
 Route::get('/login', function () {
     return view('login');
 })->name('login');
