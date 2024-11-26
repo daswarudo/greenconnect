@@ -483,6 +483,127 @@ public function register(Request $request)
         return redirect()->route('subscribers')->with('success', 'Subscription updated successfully!');
     }
 
+
+
+    ///EDIT CUSTOMER THEM SIDE
+    public function custEdit(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'customer_id' => 'nullable|exists:subscriptions,customer_id',// Ensure customer_id exists in subscriptions
+            'first_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            
+            'age' => 'nullable|date',
+            'sex' => 'nullable|string|max:50',
+            'weight' => 'nullable|numeric|between:0,999.99',
+            'height' => 'nullable|numeric|between:0,999.99',
+            'diet_recom' => 'nullable|string|max:255',
+            'health_condition' => 'nullable|string|max:255',
+            'bmi' => 'nullable|numeric|between:0,999.99',
+            'daily_calorie' => 'nullable|integer',
+            'activity_level' => 'nullable|string|max:255',
+            
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'contact_num' => 'nullable|string|max:20',
+            
+            'prefer_pork' => 'nullable|boolean',
+            'prefer_beef' => 'nullable|boolean',
+            'prefer_fish' => 'nullable|boolean',
+            'prefer_chicken' => 'nullable|boolean',
+            'prefer_veggie' => 'nullable|boolean',
+
+            'allergy_wheat' => 'nullable|boolean',
+            'allergy_milk' => 'nullable|boolean',
+            'allergy_egg' => 'nullable|boolean',
+            'allergy_peanut' => 'nullable|boolean',
+            'allergy_fish' => 'nullable|boolean',
+            'allergy_soy' => 'nullable|boolean',
+            'allergy_shellfish' => 'nullable|boolean',
+            'allergy_treenut' => 'nullable|boolean',
+            'allergy_sesame' => 'nullable|boolean',
+            'allergy_corn' => 'nullable|boolean',
+            
+        ]);
+
+        // Start a transaction to ensure atomicity
+        DB::transaction(function () use ($request, $id) {
+            try {
+                // Find the customer record by ID
+                $customer = Customer::findOrFail($id);
+            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                // If customer not found, return error message
+                return redirect()->route('errorPage')->with('error', 'Customer not found!');
+            }
+            //if ($request->hasFile('profile_picture'))
+            //$pic = $request->file('profile_picture')->getClientOriginalName();
+            //$path = $request->file('profile_picture')->storeAs('public/profile/',$pic);
+            //$relativePath = str_replace('public/', '', $path);
+            /*
+            $imageName = time().'.'.$request->image->extension();
+    $request->image->move(public_path('images'), $imageName);
+    $product = new Product();
+    $product->name = $request->name;
+    $product->description = $request->description;
+    $product->image = 'images/'.$imageName;
+            */
+            
+            // Prepare the data to be updated
+            $updateData = [
+                'first_name' => $request->input('first_name', $customer->first_name),
+                'last_name' => $request->input('last_name', $customer->last_name),
+                'address' => $request->input('address', $customer->address),
+                'age' => $request->input('age', $customer->age),
+                'sex' => $request->input('sex', $customer->sex),
+                'weight' => $request->input('weight', $customer->weight),
+                'height' => $request->input('height', $customer->height),
+                'diet_recom' => $request->input('diet_recom', $customer->diet_recom),
+                'health_condition' => $request->input('health_condition', $customer->health_condition),
+                'bmi' => $request->input('bmi', $customer->bmi),
+                'daily_calorie' => $request->input('daily_calorie', $customer->daily_calorie),
+                'activity_level' => $request->input('activity_level', $customer->activity_level),
+                'contact_num' => $request->input('contact_num', $customer->contact_num),
+
+                'prefer_pork' => $request->input('prefer_pork', $customer->prefer_pork),
+                'prefer_beef' => $request->input('prefer_beef', $customer->prefer_beef),
+                'prefer_fish' => $request->input('prefer_fish', $customer->prefer_fish),
+                'prefer_chicken' => $request->input('prefer_chicken', $customer->prefer_chicken),
+                'prefer_veggie' => $request->input('prefer_veggie', $customer->prefer_veggie),
+
+                'allergy_wheat' => $request->input('allergy_wheat', $customer->allergy_wheat),
+                'allergy_milk' => $request->input('allergy_milk', $customer->allergy_milk),
+                'allergy_egg' => $request->input('allergy_egg', $customer->allergy_egg),
+                'allergy_peanut' => $request->input('allergy_peanut', $customer->allergy_peanut),
+                'allergy_fish' => $request->input('allergy_fish', $customer->allergy_fish),
+                'allergy_soy' => $request->input('allergy_soy', $customer->allergy_soy),
+                'allergy_shellfish' => $request->input('allergy_shellfish', $customer->allergy_shellfish),
+                'allergy_treenut' => $request->input('allergy_treenut', $customer->allergy_treenut),
+                'allergy_sesame' => $request->input('allergy_sesame', $customer->allergy_sesame),
+                'allergy_corn' => $request->input('allergy_corn', $customer->allergy_corn),
+                //'profile_picture' => $pic,
+                
+            ];
+
+            
+
+            // If customer_id is provided in the request, update related subscription (optional)
+            if ($request->has('customer_id')) {
+                $updateData['customer_id'] = $request->customer_id;
+            }
+
+            // Perform the update
+            $customer->update($updateData);
+            //dd('Redirecting to subscribers');
+            
+            
+
+            //return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!');
+            
+        });
+        return redirect()->route('viewCust')->with('status', 'Customer details updated successfully!')->setStatusCode(302);
+    }
+
     
 
 

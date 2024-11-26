@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +18,7 @@
    </h1>
    <div class="subscription-info">
     <p>
-     Active Subscription Plan : <span> Coming soon </span>  <!--Weight Loss DRI GURO I ANG DATA SA Subscription ID= SUBSRIPTION NAME   -->      
+     Active Subscription Plan : <span> </span>  <!--Weight Loss DRI GURO I ANG DATA SA Subscription ID= SUBSRIPTION NAME   -->      
     </p>
     <table>
      <tr>
@@ -33,13 +34,13 @@
      </tr>
      <tr>
       <td>
-        <!--SUBSCRIPTION NAME of PREVIOUS SUBSCRIPTION --> Coming soon 
+        
       </td>
       <td>
-       <!-- START DATE-->                                  Coming soon
+       
       </td>
       <td>
-       <!-- END DATE -->                                   Coming soon
+       
       </td>
      </tr>
     </table>

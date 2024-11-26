@@ -106,4 +106,8 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(ConsultationSched::class, 'customer_id');
     }
+    public function setProfilePictureAttribute($value)
+    {
+        $this->attributes['profile_picture'] = 'images/' . $value;
+    }
 }

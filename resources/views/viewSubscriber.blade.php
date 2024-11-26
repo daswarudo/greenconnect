@@ -66,7 +66,7 @@
                 
                 
                 <p>
-                    <b>Age:</b>   <input id="age" name="age" type="number" min="0" step="1" value="{{ old('age', $customer->age) }}"  disabled/>
+                    <b>Birthdate:</b>   <input id="age" name="age" type="date" min="0" step="1" value="{{ old('age', $customer->age) }}"  disabled/>
                     
                 </p>
                 <p>

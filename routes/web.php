@@ -95,6 +95,9 @@ Route::get('/restoMealInput', function () {
 Route::get('/customerFeedback', function () {
     return view('customerFeedback');
 })->name('customerFeedback');
+Route::get('/customerView', function () {
+    return view('customerView');
+})->name('customerView');
 
 Route::get('/customerSubscription', function () {
     return view('customerSubscription');
@@ -125,8 +128,21 @@ Route::post('/consultation/store', [ConsultationController::class, 'store'])->na
 //CONSULTATIONSSSSS
 // Show the form to add a new consultation
 Route::middleware('auth:customer')->get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
+Route::middleware('auth:customer')->get('/customerView', [ConsultationController::class, 'viewCust'])->name('viewCust');
+Route::middleware('auth:customer')->put('/customerView/{id}/cust', [LoginRegisterController::class, 'custEdit'])->name('custedit');//also test
 
 
+//TEST//customerEdit
+//Route::middleware('auth:customer')->get('/customerEdit', [ConsultationController::class, 'viewCustEdit'])->name('editCust');
+
+
+
+
+
+
+
+
+//
 //R dee en middlewarez
 // Route to view customer details
 Route::middleware('auth:rdn')->get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
