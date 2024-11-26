@@ -46,6 +46,49 @@ return new class extends Migration
             ->onDelete('cascade');
 
             $table->timestamps();
+            /*
+             SELECT 
+                a.first_name, 
+                a.last_name, 
+                b.subscription_id, 
+                d.meal_id, 
+                d.meal_name 
+            FROM 
+                customer a 
+            INNER JOIN subscription b ON a.customer_id = b.customer_id 
+            INNER JOIN subscription_type c ON b.subscription_type_id = c.subscription_type_id 
+            INNER JOIN meal d ON c.subscription_type_id = d.subscription_type_id;
+
+            anotha:
+            
+            select a. first_name, a.last_name, b.subscription_id, d. meal_id, d.meal_name
+            from customer a
+            inner join
+            subscription b
+            on a.customer_id = b.customer_id
+            inner join
+            subscription_type c
+            on b.subscription_type_id = c.subscription_type_id
+            inner join
+            meal d
+            on c.subscription_type_id = d.subscription_type_id
+            where meal_type = 'snack'
+
+
+            select a. first_name, a.last_name, b.subscription_id, d. meal_id, d.meal_name
+from customer a
+inner join
+subscription b
+on a.customer_id = b.customer_id
+inner join
+subscription_plan c
+on b.subscription_plan_id = c.subscription_plan_id
+inner join
+meal d
+on c.subscription_plan_id = d.subscription_plan_id
+where d.meal_type = 'home'
+            */
+            //viewable ra ni sa customer dili add edit delete 
         });
     }
 

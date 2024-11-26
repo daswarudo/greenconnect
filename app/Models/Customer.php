@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Customer extends Model
+class Customer extends Authenticatable
 {
     use HasFactory;
-
+    protected $guard = 'customer';
     // The table associated with the model.
     protected $table = 'customer';
 
@@ -104,5 +105,9 @@ class Customer extends Model
     public function consultations()
     {
         return $this->hasMany(ConsultationSched::class, 'customer_id');
+    }
+    public function setProfilePictureAttribute($value)
+    {
+        $this->attributes['profile_picture'] = 'images/' . $value;
     }
 }

@@ -160,6 +160,48 @@ class ConsultationController extends Controller
 
         return redirect()->route('viewAppointmentsRdn')->with('success', 'Consultation notes updated successfully!');
     }
+    public function viewCust()
+    {
+        // Retrieve the loginId and userType from the session
+        $loginId = session()->get('loginId'); // Logged-in user's ID
+        $userType = session()->get('userType'); // Logged-in user's type
+
+        // Ensure only customers can create consultations
+        if ($userType != 'customer') {
+            return redirect()->route('dashboard')->with('fail', 'Only customers can make consultations.');
+        }
+
+        // Fetch the customer using the loginId
+        $customer = Customer::findOrFail($loginId);
+
+        // Hardcode the RDN ID (assuming only one RDN with ID = 1)
+        $rdnId = 1; // or replace with logic to fetch the only RDN
+
+        // Pass the necessary data to the view
+        return view('customerView', compact('loginId', 'userType', 'customer', 'rdnId'));
+    }
+
+    //misplaced method pero working wew
+    public function viewCustEdit()
+    {
+        // Retrieve the loginId and userType from the session
+        $loginId = session()->get('loginId'); // Logged-in user's ID
+        $userType = session()->get('userType'); // Logged-in user's type
+
+        // Ensure only customers can create consultations
+        if ($userType != 'customer') {
+            return redirect()->route('dashboard')->with('fail', 'Only customers can make consultations.');
+        }
+
+        // Fetch the customer using the loginId
+        $customer = Customer::findOrFail($loginId);
+
+        // Hardcode the RDN ID (assuming only one RDN with ID = 1)
+        $rdnId = 1; // or replace with logic to fetch the only RDN
+
+        // Pass the necessary data to the view
+        return view('customerEdit', compact('loginId', 'userType', 'customer', 'rdnId'));
+    }
 
 
 
