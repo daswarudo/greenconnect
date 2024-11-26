@@ -161,13 +161,7 @@
         }
         .left-panel img {
             width: 100px;
-            margin-bottom: 0px;
-        }
-        #greenconnectlogo{
-            border:0px;
-            margin:0px;
-            background-color:none;
-            padding:0px;
+            margin-bottom: 32px;
         }
         .left-panel h1 {
             font-weight: bold;

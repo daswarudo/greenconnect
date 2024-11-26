@@ -17,13 +17,7 @@
     
     <div class="container">
         <div class="left-panel">
-        <a href="/ " id="greenconnectlogo" 
-        style="border:0px;
-            margin:0px;
-            background:none;
-            padding:0px;">
-		<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />				<!-- LOGIN FORM -->
-		</a>
+            <img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100"/>
             <h1>WELCOME TO GREEN CONNECT</h1>
             <p>GREEN CHEF'S PORTAL TO NUTRITION</p>
             <p>Already have an account?</p>

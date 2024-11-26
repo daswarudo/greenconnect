@@ -1,4 +1,3 @@
-<!-- Duplicate Branch(for default)-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,19 +29,15 @@
             <div class = "alert alert-danger">{{Session::get('fail')}}</div>
         @endif
 <div class="container" id="container">
-	
 	<div class="form-container sign-in-container">
-
-
-		
-		<a href="/ ">
-		<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />				<!-- LOGIN FORM -->
-		</a>
-			
+		<a href="{{route('welcome')}}">
+		<img alt="Green Chef Logo" height="130" src="{{ asset('images/logo.png') }}" width="130" style="margin-top: -50px" />	
+		</a>			<!-- LOGIN FORM -->
+			<h1 id="signInControl"></h1>
 			<h3><i class="fa fa-user"></i> Username</h3>
-			<input type="username" class="form-control" id="username" placeholder="Username" name="username" required>
+			<input type="username" class="form-control" id="username" placeholder="username" name="username" required>
             <h3><i class='fas fa-lock'></i> Password </h3>
-			<input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+			<input type="password" class="form-control" id="password" placeholder="password" name="password" required>
 			<button type="submit">Login</button>
 	</div>
 	<div class="overlay-container mobile-row">
@@ -55,7 +50,7 @@
 			<div class="overlay-panel overlay-right">
 				<h1>WELCOME TO GREEN CONNECT </h1>
 				<p>GREEN CHEF'S PORTAL TO NUTRITION </p>
-                <p>Don't have an account? </p>
+                <p id="space">Don't have an account? </p>
 				<a class="ghost" id="signUp" href="/signUp">Sign Up</a><!-- add later-->
 			</div>
 		</div>

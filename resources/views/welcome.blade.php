@@ -162,14 +162,13 @@
    
   </div>
 
-<!--testimonial-->
+<!--testimonial
 <div style = "height: 7vh;"></div>
 <div class="container">
     <h1 class ="title4"><b>Testimonials</b></h1>
 </div>
 
-<div class="div-2"> <!--di ma align if lahi ang text for each testi, may use 'see more' function or change text-->
-    <div class="flex-container2">
+<div class="div-2">
         <div class="flex-item2">
 
             <div style="height: 500px;overflow: hidden;position: relative;">
@@ -226,7 +225,7 @@
         </div>
     </div>
 </div>
-
+-->
 <div class="footer">
     <div class="footer-left">
         <div><p class = "f-text">The Green Chef Dumaguete</p></div>
