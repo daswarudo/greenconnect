@@ -307,28 +307,52 @@ public function register(Request $request)
     }
     */
     public function showCustomerDashboard()
-{
-    // Retrieve the loginId and userType from the session
-    $loginId = session()->get('loginId');
-    $userType = session()->get('userType');
+    {
+        // Retrieve the loginId and userType from the session
+        $loginId = session()->get('loginId');
+        $userType = session()->get('userType');
 
-    // Ensure that userType is 'customer' and loginId is valid
-    if ($loginId && $userType === 'customer') {
-        // Fetch the customer data based on the loginId
-        $customer = Customer::where('customer_id', $loginId)->first();
+        // Ensure that userType is 'customer' and loginId is valid
+        if ($loginId && $userType === 'customer') {
+            // Fetch the customer data based on the loginId
+            $customer = Customer::where('customer_id', $loginId)->first();
 
-        if ($customer) {
-            // Pass the data to the view if customer exists
-            return view('custTest', compact('userType', 'loginId', 'customer'));
+            if ($customer) {
+                $appointments = DB::table('consultation_sched')
+            ->join('customer', 'consultation_sched.customer_id', '=', 'customer.customer_id') // Join with customer table
+            ->where('consultation_sched.customer_id', $loginId) // Filter by logged-in customer's ID
+            ->select(
+                'consultation_sched.consultation_sched_id',
+                'consultation_sched.customer_id',
+                'consultation_sched.date',
+                'consultation_sched.time',
+                'consultation_sched.notes',
+                'customer.first_name',
+                'customer.last_name'
+            )
+            ->get()
+            ->map(function ($appointment) {
+                // Format the date and time separately, then combine them into a full datetime for FullCalendar
+                $appointment->formatted_date = Carbon::parse($appointment->date)->format('Y-m-d');
+                $appointment->formatted_time = Carbon::parse($appointment->time)->format('H:i');
+
+                // Combine date and time into a full datetime for FullCalendar (ISO 8601 format)
+                $appointment->start = Carbon::parse($appointment->date . ' ' . $appointment->time)->toIso8601String();
+
+                return $appointment;
+            });
+
+                // Pass the data to the view if customer exists
+                return view('custTest', compact('userType', 'loginId', 'customer','appointments'));//
+            } else {
+                // Redirect if customer not found
+                return redirect()->route('login')->with('fail', 'Customer not found');
+            }
         } else {
-            // Redirect if customer not found
-            return redirect()->route('login')->with('fail', 'Customer not found');
+            // Redirect to login page if not authenticated as a customer
+            return redirect()->route('login')->with('fail', 'Please log in first as customer');
         }
-    } else {
-        // Redirect to login page if not authenticated as a customer
-        return redirect()->route('login')->with('fail', 'Please log in first as customer');
     }
-}
 
 
     /*
