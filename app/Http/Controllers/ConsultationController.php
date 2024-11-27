@@ -148,13 +148,23 @@ class ConsultationController extends Controller
         return view('viewAppointmentsRdnEdit', compact('consultation', 'customer'));
     }
     
-    public function update(Request $request, $id)
+    public function update(Request $request, $id)//update consultation as rdn
     {
+        // Validate the incoming data
+        $request->validate([
+            'time' => 'required|date_format:H:i',
+            'date' => 'required|date',
+            
+            'notes' => 'nullable|string|max:500',
+
+        ]);
         
         $consultation = ConsultationSched::findOrFail($id);
 
     // Update only the 'notes' field
         $consultation->update([
+            'time' => $request->input('time'),
+            'date' => $request->input('date'),
             'notes' => $request->input('notes'),
         ]);
 
