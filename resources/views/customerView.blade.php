@@ -251,12 +251,12 @@
                     Gluten
                 </label>
             </div>
-            
+<!--<img alt="Customer ID" height="100" src="{{ asset($customer->profile_picture) }}" width="100" style="border-radius:50%;"/>
             <div class="photo">
-                <!--<img alt="Customer ID" height="100" src="{{ asset($customer->profile_picture) }}" width="100" style="border-radius:50%;"/>
+                <img alt="Customer ID" height="100" src="{{ asset($customer->profile_picture) }}" width="100" style="border-radius:50%;"/>
                 <p>
                  Customer ID
-                </p>-->
+                </p>
                 
                 <img 
                     alt="Customer's Profile Picture" 
@@ -274,7 +274,7 @@
                 >
                 
             </div>
-   
+-->
              <div class="save">
                 
                 <!--<button class = "saveButton" type="submit" onclick="return confirm('Are you sure about that')">
@@ -292,8 +292,8 @@
                        
                 
             </div>
-  
-</div>
+
+</div>  
     
    </div>
 </form>
