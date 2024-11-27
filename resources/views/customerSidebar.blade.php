@@ -23,17 +23,19 @@
 	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
     
     
-    <!--
-    <a href="#">
-        <i class="fas fa-utensils">
-        </i>
-        Meal Plans
-   </a>
-    -->
+    
+    
+    
    <a href="/custTest">            
     <i class="fas fa-calendar-alt">
     </i>
     Appointments
+   </a>
+
+   <a href="#">
+        <i class="fas fa-utensils">
+        </i>
+        Meal Plans
    </a>
    
    <a href="/customerFeedback">

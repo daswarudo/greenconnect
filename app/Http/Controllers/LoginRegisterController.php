@@ -603,6 +603,53 @@ public function register(Request $request)
         });
         return redirect()->route('viewCust')->with('status', 'Customer details updated successfully!')->setStatusCode(302);
     }
+    public function viewCustEdit()
+    {
+        // Retrieve the loginId and userType from the session
+        $loginId = session()->get('loginId'); // Logged-in user's ID
+        $userType = session()->get('userType'); // Logged-in user's type
+
+        // Ensure only customers can create consultations
+        if ($userType != 'customer') {
+            return redirect()->route('dashboard')->with('fail', 'Only customers can make consultations.');
+        }
+
+        // Fetch the customer using the loginId
+        $customer = Customer::findOrFail($loginId);
+
+        // Hardcode the RDN ID (assuming only one RDN with ID = 1)
+        $rdnId = 1; // or replace with logic to fetch the only RDN
+
+        // Pass the necessary data to the view
+        return view('customerEdit', compact('loginId', 'userType', 'customer', 'rdnId'));
+    }
+    public function viewCustSubs()
+    {
+        // Retrieve the loginId and userType from the session
+        $loginId = session()->get('loginId'); // Logged-in user's ID
+        $userType = session()->get('userType'); // Logged-in user's type
+
+        // Ensure only customers can access this page
+        if ($userType != 'customer') {
+            return redirect()->route('dashboard')->with('fail', 'Only customers can access this page.');
+        }
+
+        // Fetch the customer using the loginId
+        $customer = Customer::findOrFail($loginId);
+
+        // Fetch subscriptions for the customer, including related subscription types
+        $subscriptions = DB::table('subscriptions as s')
+            ->join('subscription_type as st', 's.subscription_type_id', '=', 'st.subscription_type_id')
+            ->join('customer as c', 's.customer_id', '=', 'c.customer_id')
+            ->where('c.customer_id', $loginId)
+            ->select('s.subscription_id', 's.start_date', 's.end_date', 's.mop', 's.ref_number', 's.sub_status', 'st.subscription_type_id', 'st.plan_name', 'c.customer_id')
+            ->get();
+
+        // Pass the necessary data to the view
+        return view('customerSubscription', compact('loginId', 'userType', 'customer', 'subscriptions'));
+    }
+
+
 
     
 

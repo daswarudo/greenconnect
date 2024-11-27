@@ -130,7 +130,7 @@ Route::post('/consultation/store', [ConsultationController::class, 'store'])->na
 Route::middleware('auth:customer')->get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
 Route::middleware('auth:customer')->get('/customerView', [ConsultationController::class, 'viewCust'])->name('viewCust');
 Route::middleware('auth:customer')->put('/customerView/{id}/cust', [LoginRegisterController::class, 'custEdit'])->name('custedit');//also test
-
+Route::middleware('auth:customer')->get('/customerSubscription', [LoginRegisterController::class, 'viewCustSubs'])->name('viewCustSubs');
 
 //TEST//customerEdit
 //Route::middleware('auth:customer')->get('/customerEdit', [ConsultationController::class, 'viewCustEdit'])->name('editCust');

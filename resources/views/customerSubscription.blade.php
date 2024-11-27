@@ -13,17 +13,30 @@
         @include('customerSidebar')
 
 <div class="content">
-   <h1>
-    WELCOME, SUBSCRIBER
-   </h1>
-   <div class="subscription-info">
-    <p>
-     Active Subscription Plan : <span> </span>  <!--Weight Loss DRI GURO I ANG DATA SA Subscription ID= SUBSRIPTION NAME   -->      
-    </p>
+   
+   <div class="subscription-info" style="margin-top:5vh;">
+    <h2>Subscriptions</h2>
+   {{--@foreach($subscriptions as $subscription)
+    <div>
+        <p>Subscription ID: {{ $subscription->subscription_id }}</p>
+        <p>Start Date: {{ $subscription->start_date }}</p>
+        <p>End Date: {{ $subscription->end_date }}</p>
+        <p>Payment Method: {{ $subscription->mop }}</p>
+        <p>Reference Number: {{ $subscription->ref_number }}</p>
+        <p>Status: {{ $subscription->sub_status }}</p>
+        <p>Plan Name: {{ $subscription->plan_name }}</p> <!-- Accessing plan_name -->
+    </div>
+@endforeach--}}
+
+
     <table>
+    
      <tr>
       <th>
        Subscription:
+      </th>
+      <th>
+       Status:
       </th>
       <th>
        Start Date: 
@@ -32,42 +45,26 @@
        End Date:
       </th>
      </tr>
+     @foreach($subscriptions as $subscription)
      <tr>
+     
       <td>
-        
+      {{ $subscription->plan_name }}
       </td>
       <td>
-       
+      {{ $subscription->sub_status }}
       </td>
       <td>
-       
+      {{ $subscription->start_date }}
+      </td>
+      <td>
+      {{ $subscription->end_date }}
       </td>
      </tr>
+     @endforeach
     </table>
-    <h2>
-     Subscription History
-    </h2>
-    <table>
-     <tr>
-      <th>
-       Subscription Name
-      </th>
-      <th>
-       Start of Subscription
-      </th>
-      <th>
-       End of Subscription
-      </th>
-     </tr>
-     <tr>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-     </tr>
-    </table>
+    
+    
    </div>
   </div>
 </body>

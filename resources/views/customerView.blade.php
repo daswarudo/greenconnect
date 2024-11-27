@@ -65,7 +65,16 @@
                 
                 
                 <p>
-                    <b>Birthdate:</b>   <input id="age" name="age" type="date" min="0" step="1" value="{{ old('age', $customer->age) }}"/>
+                    <b>Birthdate:</b>   
+                    <input 
+                        id="age" 
+                        name="age" 
+                        type="date" 
+                        min="0" 
+                        step="1" 
+                        value="{{ old('age', optional($customer->age)->format('Y-m-d')) }}" 
+                    />
+
                     
                 </p>
                 <p>
@@ -89,7 +98,7 @@
                 
                 <p>
                     <b>Diet Recommended:</b> 
-                    <input id="diet_reco" name="diet_reco" type="text" value="{{ $customer->diet_recom  ?? 'No diet recommended' }}"  />
+                    <input id="diet_recom" name="diet_recom" type="text" value="{{ $customer->diet_recom  ?? '' }}"  />
                 </p>
                 <p>
                     <b>Health Condition:</b> 
@@ -253,11 +262,8 @@
             </div>
             
             <div class="photo">
-                <!--<img alt="Customer ID" height="100" src="{{ asset($customer->profile_picture) }}" width="100" style="border-radius:50%;"/>
-                <p>
-                 Customer ID
-                </p>-->
                 
+                <!--
                 <img 
                     alt="Customer's Profile Picture" 
                     height="100" 
@@ -272,7 +278,7 @@
                     accept="image/*"
                     style="margin-bottom:5vh"
                 >
-                
+-->
             </div>
    
              <div class="save">
