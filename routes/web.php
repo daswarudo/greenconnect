@@ -131,11 +131,13 @@ Route::post('/consultation/store', [ConsultationController::class, 'store'])->na
 Route::middleware('auth:customer')->get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
 Route::middleware('auth:customer')->get('/customerView', [ConsultationController::class, 'viewCust'])->name('viewCust');
 Route::middleware('auth:customer')->put('/customerView/{id}/cust', [LoginRegisterController::class, 'custEdit'])->name('custedit');//also test
+Route::middleware('auth:customer')->get('/customerSubscription', [LoginRegisterController::class, 'viewCustSubs'])->name('viewCustSubs');
+Route::middleware('auth:customer')->get('/customerSubscriptionAdd', [LoginRegisterController::class, 'viewSubsCreate'])->name('viewSubsCreate');
 
-
+Route::middleware('auth:customer')->post('/customerSubscriptionAdd', [LoginRegisterController::class, 'addSubscription'])->name('subscription.add');
 //TEST//customerEdit
 //Route::middleware('auth:customer')->get('/customerEdit', [ConsultationController::class, 'viewCustEdit'])->name('editCust');
-
+//Route::middleware('auth:customer')->get('/custTest/a', [ConsultationController::class, 'showCalendarCust'])->name('appointments');
 
 
 

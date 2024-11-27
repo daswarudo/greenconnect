@@ -66,7 +66,15 @@
                 
                 
                 <p>
-                    <b>Birthdate:</b>   <input id="age" name="age" type="date" min="0" step="1" value="{{ old('age', $customer->age) }}"  disabled/>
+                    <b>Birthdate:</b>   <input 
+                        id="age" 
+                        name="age" 
+                        type="date" 
+                        min="0" 
+                        step="1" 
+                        value="{{ old('age', optional($customer->age)->format('Y-m-d')) }}" 
+                        disabled
+                    />
                     
                 </p>
                 <p>
@@ -172,10 +180,10 @@
             </div>
             
             <div class="photo">
-                <img alt="Customer ID" height="100" src="{{ asset($customer->profile_picture) }}" width="100" style="border-radius:50%;"/>
+                <!--<img alt="Customer ID" height="100" src="{{ asset($customer->profile_picture) }}" width="100" style="border-radius:50%;"/>
                 <p>
                  Customer ID
-                </p>
+                </p>-->
             </div>
    
              <div class="save">

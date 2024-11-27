@@ -13,17 +13,18 @@
         @include('customerSidebar')
 
 <div class="content">
-   <h1>
-    WELCOME, SUBSCRIBER
-   </h1>
-   <div class="subscription-info">
-    <p>
-     Active Subscription Plan : <span> </span>  <!--Weight Loss DRI GURO I ANG DATA SA Subscription ID= SUBSRIPTION NAME   -->      
-    </p>
+   
+   <div class="subscription-info" style="margin-top:5vh;">
+    <h2>Subscriptions</h2>
+   
     <table>
+    
      <tr>
       <th>
        Subscription:
+      </th>
+      <th>
+       Status:
       </th>
       <th>
        Start Date: 
@@ -32,42 +33,31 @@
        End Date:
       </th>
      </tr>
+     @foreach($subscriptions as $subscription)
      <tr>
+     
       <td>
-        
+      {{ $subscription->plan_name }}
       </td>
       <td>
-       
+      {{ $subscription->sub_status }}
       </td>
       <td>
-       
+      {{ $subscription->start_date }}
+      </td>
+      <td>
+      {{ $subscription->end_date }}
       </td>
      </tr>
+     @endforeach
     </table>
-    <h2>
-     Subscription History
-    </h2>
-    <table>
-     <tr>
-      <th>
-       Subscription Name
-      </th>
-      <th>
-       Start of Subscription
-      </th>
-      <th>
-       End of Subscription
-      </th>
-     </tr>
-     <tr>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-     </tr>
-    </table>
+
+    <a href="/customerSubscriptionAdd">
+        <button type="submit">
+            ADD
+        </button>
+    </a>
+    
    </div>
   </div>
 </body>

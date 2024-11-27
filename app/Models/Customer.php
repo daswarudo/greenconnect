@@ -87,7 +87,7 @@ class Customer extends Authenticatable
         'weight' => 'decimal:2',
         'height' => 'decimal:2',
         'daily_calorie' => 'integer',
-        'age' => 'integer',
+        'age' => 'date',
     ];
 
     // Define the relationship with the Subscription model
