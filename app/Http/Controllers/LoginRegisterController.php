@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\ConsultationSched;
 use App\Models\Meals;
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Carbon;
 
 
 class LoginRegisterController extends Controller
@@ -648,7 +649,48 @@ public function register(Request $request)
         // Pass the necessary data to the view
         return view('customerSubscription', compact('loginId', 'userType', 'customer', 'subscriptions'));
     }
+    public function viewSubsCreate()
+    {
+        // Retrieve the loginId and userType from the session
+        $loginId = session()->get('loginId'); // Logged-in user's ID
+        $userType = session()->get('userType'); // Logged-in user's type
 
+        // Ensure only customers can access this page
+        if ($userType != 'customer') {
+            return redirect()->route('dashboard')->with('fail', 'Only customers can access this page.');
+        }
+
+        // Fetch the customer using the loginId
+        $customer = Customer::findOrFail($loginId);
+
+        $subscriptionTypes = SubscriptionType::all(); // Fetch all subscription types
+        return view('customerSubscriptionAdd', compact('subscriptionTypes','customer'));
+    }
+    public function addSubscription(Request $request)
+    {
+        // Validate the form inputs
+        $validatedData = $request->validate([
+            'customer_id' => 'required|exists:customer,customer_id',
+            'subscription_type_id' => 'required|exists:subscription_type,subscription_type_id',
+            'mop' => 'required|in:GCash,Maya,BPI',
+            'ref_number' => 'required|string|max:255',
+        ]);
+
+        // Save the subscription data
+        $subscription = new Subscriptions();
+        $subscription->customer_id = $validatedData['customer_id'];
+        $subscription->subscription_type_id = $validatedData['subscription_type_id'];
+        $subscription->mop = $validatedData['mop'];
+        $subscription->ref_number = $validatedData['ref_number'];
+        $subscription->start_date = now(); // Set the current date as the start date
+        $subscription->sub_status = 'pending'; // Default status
+        $subscription->save();
+
+        // Redirect with a success message
+        //return redirect()->route('customerSubscriptionAdd')->with('success', 'Subscription added successfully!');
+        return redirect()->back()->with('success', 'Customer details updated successfully!');
+
+    }
 
 
     

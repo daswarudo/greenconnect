@@ -131,7 +131,9 @@ Route::middleware('auth:customer')->get('/consultation/create', [ConsultationCon
 Route::middleware('auth:customer')->get('/customerView', [ConsultationController::class, 'viewCust'])->name('viewCust');
 Route::middleware('auth:customer')->put('/customerView/{id}/cust', [LoginRegisterController::class, 'custEdit'])->name('custedit');//also test
 Route::middleware('auth:customer')->get('/customerSubscription', [LoginRegisterController::class, 'viewCustSubs'])->name('viewCustSubs');
+Route::middleware('auth:customer')->get('/customerSubscriptionAdd', [LoginRegisterController::class, 'viewSubsCreate'])->name('viewSubsCreate');
 
+Route::middleware('auth:customer')->post('/customerSubscription', [LoginRegisterController::class, 'addSubscription'])->name('subscription.add');
 //TEST//customerEdit
 //Route::middleware('auth:customer')->get('/customerEdit', [ConsultationController::class, 'viewCustEdit'])->name('editCust');
 

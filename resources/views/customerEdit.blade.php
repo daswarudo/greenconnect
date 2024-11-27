@@ -57,7 +57,7 @@ only use this if customer ray mu change password
                 
                 
                 <p>
-                    <b>Age:</b>   <input id="age" name="age" type="date" min="0" step="1" value="{{ old('age', $customer->age) }}"/>
+                    <b>Birthdate:</b>   <input id="age" name="age" type="date" min="0" step="1" value="{{ old('age', $customer->age) }}"/>
                     
                 </p>
                 <p>
@@ -256,7 +256,7 @@ only use this if customer ray mu change password
                 <!--<button class = "saveButton" type="submit" onclick="return confirm('Are you sure about that')">
                     APPLY CHANGES
                 </button>-->
-                <button type="submit">
+                <button type="submit" onclick="return confirm('Are you sure about that')">
                     EDIT DETAILS
                 </button>
                 <button type="submit">

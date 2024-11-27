@@ -16,19 +16,7 @@
    
    <div class="subscription-info" style="margin-top:5vh;">
     <h2>Subscriptions</h2>
-   {{--@foreach($subscriptions as $subscription)
-    <div>
-        <p>Subscription ID: {{ $subscription->subscription_id }}</p>
-        <p>Start Date: {{ $subscription->start_date }}</p>
-        <p>End Date: {{ $subscription->end_date }}</p>
-        <p>Payment Method: {{ $subscription->mop }}</p>
-        <p>Reference Number: {{ $subscription->ref_number }}</p>
-        <p>Status: {{ $subscription->sub_status }}</p>
-        <p>Plan Name: {{ $subscription->plan_name }}</p> <!-- Accessing plan_name -->
-    </div>
-@endforeach--}}
-
-
+   
     <table>
     
      <tr>
@@ -63,7 +51,12 @@
      </tr>
      @endforeach
     </table>
-    
+
+    <a href="/customerSubscriptionAdd">
+        <button type="submit">
+            ADD
+        </button>
+    </a>
     
    </div>
   </div>
