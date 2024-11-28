@@ -31,7 +31,7 @@
     @csrf
       <div class="feedback-box">
         <textarea placeholder="Do you like what you have experienced so far, do you mind sharing it to the public?" name="feedback" id="feedback" class="form-control" ></textarea>
-        <button>
+        <button onclick="return confirm('Are you sure about that?')">
         Post
         </button>
       </div>

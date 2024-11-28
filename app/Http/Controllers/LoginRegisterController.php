@@ -752,6 +752,14 @@ public function register(Request $request)
 
         return view('customerFeedback', compact('feedbacks'));
     }
+    public function destroyFeedback($id)
+    {
+        $feedback = Feedback::findOrFail($id);
+        $feedback->delete();
+
+        return back()->with('success', 'Feedback deleted successfully');
+    }
+
 
 
 

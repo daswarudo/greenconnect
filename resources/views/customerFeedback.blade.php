@@ -36,7 +36,7 @@
                 <tr>
                     <th>#</th>
                     <th>Feedback</th>
-                    
+                    <th>Actions</th> <!-- Add a column for actions -->
                 </tr>
             </thead>
             <tbody>
@@ -44,7 +44,14 @@
                     <tr>
                         <td>{{ $index + 1 }}</td> <!-- Display row number -->
                         <td>{{ $feedback->feedback }}</td>
-                        
+                        <!-- Delete Button -->
+                         <td>
+                          <form action="{{ route('feedback.delete', $feedback->feedback_id) }}" method="POST" style="display:inline;">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-danger"  onclick="return confirm('Are you sure about that?')">Delete</button>
+                          </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
