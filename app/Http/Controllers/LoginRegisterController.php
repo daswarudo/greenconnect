@@ -759,6 +759,30 @@ public function register(Request $request)
 
         return back()->with('success', 'Feedback deleted successfully');
     }
+    public function getLoggedInCustomerMealDetails()
+    {
+        // Retrieve the loginId and userType from the session
+        $loginId = session()->get('loginId'); // Logged-in user's ID
+        $userType = session()->get('userType'); // Logged-in user's type
+
+        // Ensure only customers can access this page
+        if ($userType !== 'customer') {
+            return redirect()->route('dashboard')->with('fail', 'Only customers can view meal details.');
+        }
+
+        // Get the customer based on the loginId
+        $customer = Customer::where('customer_id', $loginId)->first();
+
+        if (!$customer) {
+            return redirect()->route('dashboard')->with('fail', 'Customer not found.');
+        }
+
+        // Eager load relationships and query required data for the logged-in customer
+        $customerMealDetails = $customer->load(['subscriptions.subscriptionType.meals']);
+
+        // Return the data to the view
+        return view('your-view-name', compact('customerMealDetails'));
+    }
 
 
 

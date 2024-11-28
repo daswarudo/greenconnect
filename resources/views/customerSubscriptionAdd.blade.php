@@ -16,12 +16,22 @@
     <form action="{{ route('subscription.add') }}" method="POST">
     @csrf
     
-    @if(session('message'))
-			<div class="alert alert-success">
-				{{ session('message') }}
-			</div>
-	@endif
-    @if(Session::has('fail'))
+    
+   <div class="subscription-info" style="margin-top:5vh;">
+    <form action="{{ route('subscription.add') }}" method="POST">
+    @csrf
+                    <div class="form-group">
+                    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+                    @if(session('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                    @endif
+                    @if(Session::has('fail'))
                         <div class="alert alert-danger">{{ Session::get('fail') }}</div>
                     @endif
                     @if ($errors->any())
@@ -33,10 +43,6 @@
                         </ul>
                     </div>
                      @endif
-   <div class="subscription-info" style="margin-top:5vh;">
-                    <div class="form-group">
-                         
-                       
                        
                         <input name="customer_id" value="{{ $customer->customer_id }}" type="hidden">
                         <br>
@@ -67,7 +73,7 @@
         <button type="submit" onclick="return confirm('Are you sure about that')">
             ADD
         </button>
-    
+        </form>
     </div>
     </form>
 </div>

@@ -104,6 +104,10 @@ Route::get('/customerView', function () {
     return view('customerView');
 })->name('customerView');
 
+Route::get('/customerMeals', function () {
+    return view('customerMeals');
+})->name('customerMeals');
+
 Route::get('/customerSubscription', function () {
     return view('customerSubscription');
 })->name('customerSubscription');
@@ -141,7 +145,6 @@ Route::middleware('auth:customer')->get('/customerSubscriptionAdd', [LoginRegist
 Route::middleware('auth:customer')->post('/customerSubscriptionAdd', [LoginRegisterController::class, 'addSubscription'])->name('subscription.add');
 Route::middleware('auth:customer')->post('/customerFeedbackAdd', [LoginRegisterController::class, 'storeFeedback'])->name('addFeedback');
 Route::middleware('auth:customer')->get('/customerFeedback', [LoginRegisterController::class, 'showMyFeedback'])->name('customerFeedback');
-// web.php (routes file)
 Route::delete('/customerFeedback/{id}', [LoginRegisterController::class, 'destroyFeedback'])->name('feedback.delete');
 
 //TEST//customerEdit

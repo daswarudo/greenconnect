@@ -32,7 +32,7 @@
     Appointments
    </a>
 
-   <a href="#">
+   <a href="/customerMeals">
         <i class="fas fa-utensils">
         </i>
         Meal Plans
@@ -54,7 +54,7 @@
     
    Account Info
    </a>
-   <a href="{{ route('logout') }}">
+   <a href="{{ route('logout') }}"  onclick="confirm('Are you sure about that?')">
     <i class="fas fa-sign-out-alt">
     </i>
     Log Out

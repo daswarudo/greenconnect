@@ -59,6 +59,22 @@ return new class extends Migration
             INNER JOIN subscription_type c ON b.subscription_type_id = c.subscription_type_id 
             INNER JOIN meal d ON c.subscription_type_id = d.subscription_type_id;
 
+            alt may use this or not: 
+            SELECT 
+                a.first_name, 
+                a.last_name, 
+                b.subscription_id, 
+                d.meal_id, 
+                d.meal_name 
+            FROM 
+                customer a 
+            INNER JOIN subscription b ON a.customer_id = b.customer_id 
+            INNER JOIN subscription_type c ON b.subscription_type_id = c.subscription_type_id 
+            INNER JOIN meal_subscription_type mst ON c.subscription_type_id = mst.subscription_type_id
+            INNER JOIN meal d ON mst.meal_id = d.meal_id;
+
+
+
             anotha:
             
             select a. first_name, a.last_name, b.subscription_id, d. meal_id, d.meal_name
