@@ -13,20 +13,43 @@
         <div class="content">
    <div class="header">
     <h1>
-     WELCOME, SUBSCRIBER
+     
     </h1>
    
    </div>
    <h2>
-    Do you have any feedback for Green Chef?
-    <br/>
-    Mind sharing them?
+    Enjoying our services?<br>Your feedback is greatly appreciated! &#x2661;&#x2661;&#x2661;
+    
    </h2>
    <div class="feedback-box">
-    <textarea placeholder="Do you like what you have experienced so far, do you mind sharing it to the public?"></textarea>
-    <button>
-     Post
-    </button>
+   <a href="/customerFeedbackAdd">
+      <button>
+        Add Feedback
+      </button>
+    </a>
+    <div style="margin-bottom:3vh;"></div>
+    @if ($feedbacks->isEmpty())
+        <p>You have not submitted any feedback yet.</p>
+    @else
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Feedback</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($feedbacks as $index => $feedback)
+                    <tr>
+                        <td>{{ $index + 1 }}</td> <!-- Display row number -->
+                        <td>{{ $feedback->feedback }}</td>
+                        
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
    </div>
   </div>
 </body>

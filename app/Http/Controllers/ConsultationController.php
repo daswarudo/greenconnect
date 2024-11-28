@@ -16,6 +16,7 @@ use App\Models\Payments;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ConsultationSched;
 use App\Models\Meals;
+use App\Models\Feedback;
 
 class ConsultationController extends Controller
 {
@@ -252,5 +253,6 @@ class ConsultationController extends Controller
         // Return the data to a view (appointments.blade.php)
         return view('custTest', compact('appointments'));
     }
+    
 
 }

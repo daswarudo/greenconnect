@@ -16,6 +16,7 @@ use App\Models\Payments;
 use App\Models\Meals;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ConsultationSched;
+use App\Models\Feedback;
 use Illuminate\Validation\ValidationException;
 
 
