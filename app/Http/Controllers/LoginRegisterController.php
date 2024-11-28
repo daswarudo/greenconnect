@@ -773,15 +773,31 @@ public function register(Request $request)
         // Get the customer based on the loginId
         $customer = Customer::where('customer_id', $loginId)->first();
 
-        if (!$customer) {
-            return redirect()->route('dashboard')->with('fail', 'Customer not found.');
-        }
+        /*$customerMealDetails = Customer::with(['subscriptions.subscriptionType.meals'])
+        ->join('subscriptions', 'customer.customer_id', '=', 'subscriptions.customer_id')
+        ->join('subscription_type', 'subscriptions.subscription_type_id', '=', 'subscription_type.subscription_type_id')
+        ->join('meals', 'subscription_type.subscription_type_id', '=', 'meals.subscription_type_id')
+        ->select('customer.first_name', 'customer.last_name', 'subscriptions.subscription_id', 'meals.meal_id', 'meals.meal_name', 'subscription_type.plan_name')
+        ->get();*/
 
-        // Eager load relationships and query required data for the logged-in customer
-        $customerMealDetails = $customer->load(['subscriptions.subscriptionType.meals']);
+        $details = DB::table('customer as a')
+        ->join('subscriptions as b', 'a.customer_id', '=', 'b.customer_id')
+        ->join('subscription_type as c', 'b.subscription_type_id', '=', 'c.subscription_type_id')
+        ->join('meals as d', 'c.subscription_type_id', '=', 'd.subscription_type_id')
+        ->select(
+            'a.first_name',
+            'a.last_name',
+            'b.subscription_id',
+            'c.plan_name',
+            'd.meal_id',
+            'd.meal_name'
+        )
+        ->where('a.customer_id', $loginId)
+        ->where('b.sub_status', 'active') // Add condition to filter active subscriptions
+        ->get();
 
-        // Return the data to the view
-        return view('your-view-name', compact('customerMealDetails'));
+
+        return view('customerMeals', compact('details'));
     }
 
 

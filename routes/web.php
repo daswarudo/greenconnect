@@ -145,8 +145,9 @@ Route::middleware('auth:customer')->get('/customerSubscriptionAdd', [LoginRegist
 Route::middleware('auth:customer')->post('/customerSubscriptionAdd', [LoginRegisterController::class, 'addSubscription'])->name('subscription.add');
 Route::middleware('auth:customer')->post('/customerFeedbackAdd', [LoginRegisterController::class, 'storeFeedback'])->name('addFeedback');
 Route::middleware('auth:customer')->get('/customerFeedback', [LoginRegisterController::class, 'showMyFeedback'])->name('customerFeedback');
-Route::delete('/customerFeedback/{id}', [LoginRegisterController::class, 'destroyFeedback'])->name('feedback.delete');
 
+Route::delete('/customerFeedback/{id}', [LoginRegisterController::class, 'destroyFeedback'])->name('feedback.delete');
+Route::middleware('auth:customer')->get('/customerMeals', [LoginRegisterController::class, 'getLoggedInCustomerMealDetails'])->name('customerMeals');
 //TEST//customerEdit
 //Route::middleware('auth:customer')->get('/customerEdit', [ConsultationController::class, 'viewCustEdit'])->name('editCust');
 //Route::middleware('auth:customer')->get('/custTest/a', [ConsultationController::class, 'showCalendarCust'])->name('appointments');
