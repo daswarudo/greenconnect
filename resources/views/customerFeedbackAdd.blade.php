@@ -13,7 +13,7 @@
         <div class="content">
    <div class="header">
     <h1>
-     WELCOME, SUBSCRIBER
+     WELCOME, 
     </h1>
    
    </div>

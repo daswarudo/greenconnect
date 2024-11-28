@@ -43,7 +43,7 @@
                         </ul>
                     </div>
                      @endif
-                       
+                       <h1>Add Subscription</h1>
                         <input name="customer_id" value="{{ $customer->customer_id }}" type="hidden">
                         <br>
                         <label for="subscription_type_id">Diet Plan <span> * </span> </label>
