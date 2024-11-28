@@ -14,6 +14,7 @@ use App\Models\Payments;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ConsultationSched;
 use App\Models\Meals;
+use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Carbon;
 
@@ -690,6 +691,7 @@ public function register(Request $request)
         $subscriptionTypes = SubscriptionType::all(); // Fetch all subscription types
         return view('customerSubscriptionAdd', compact('subscriptionTypes','customer'));
     }
+
     public function addSubscription(Request $request)
     {
         // Validate the form inputs
@@ -716,8 +718,89 @@ public function register(Request $request)
 
     }
 
+    //KAPOY NA HIMO BAG O CONTROLLER JAJAJAJAJAJA
+    public function storeFeedback(Request $request)
+    {
+        // Retrieve the loginId and userType from the session
+        $loginId = session()->get('loginId'); // Logged-in user's ID
+        $userType = session()->get('userType'); // Logged-in user's type
 
-    
+        // Ensure only customers can submit feedback
+        if ($userType !== 'customer') {
+            return redirect()->route('dashboard')->with('fail', 'Only customers can submit feedback.');
+        }
+
+        $request->validate([
+            'feedback' => 'required|string|max:510',
+        ]);
+
+        // Use the loginId from the session as the customer_id
+        Feedback::create([
+            'feedback' => $request->feedback,
+            'customer_id' => $loginId, // Assuming loginId corresponds to customer_id
+        ]);
+
+        return back()->with('success', 'Thank you for your feedback!');
+    }
+    public function showMyFeedback()
+    {
+        // Retrieve the loginId from the session
+        $loginId = session()->get('loginId');
+
+        // Fetch all feedback for the logged-in customer
+        $feedbacks = Feedback::where('customer_id', $loginId)->latest()->get();
+
+        return view('customerFeedback', compact('feedbacks'));
+    }
+    public function destroyFeedback($id)
+    {
+        $feedback = Feedback::findOrFail($id);
+        $feedback->delete();
+
+        return back()->with('success', 'Feedback deleted successfully');
+    }
+    public function getLoggedInCustomerMealDetails()
+    {
+        // Retrieve the loginId and userType from the session
+        $loginId = session()->get('loginId'); // Logged-in user's ID
+        $userType = session()->get('userType'); // Logged-in user's type
+
+        // Ensure only customers can access this page
+        if ($userType !== 'customer') {
+            return redirect()->route('dashboard')->with('fail', 'Only customers can view meal details.');
+        }
+
+        // Get the customer based on the loginId
+        $customer = Customer::where('customer_id', $loginId)->first();
+
+        /*$customerMealDetails = Customer::with(['subscriptions.subscriptionType.meals'])
+        ->join('subscriptions', 'customer.customer_id', '=', 'subscriptions.customer_id')
+        ->join('subscription_type', 'subscriptions.subscription_type_id', '=', 'subscription_type.subscription_type_id')
+        ->join('meals', 'subscription_type.subscription_type_id', '=', 'meals.subscription_type_id')
+        ->select('customer.first_name', 'customer.last_name', 'subscriptions.subscription_id', 'meals.meal_id', 'meals.meal_name', 'subscription_type.plan_name')
+        ->get();*/
+
+        $details = DB::table('customer as a')
+        ->join('subscriptions as b', 'a.customer_id', '=', 'b.customer_id')
+        ->join('subscription_type as c', 'b.subscription_type_id', '=', 'c.subscription_type_id')
+        ->join('meals as d', 'c.subscription_type_id', '=', 'd.subscription_type_id')
+        ->select(
+            'a.first_name',
+            'a.last_name',
+            'b.subscription_id',
+            'c.plan_name',
+            'd.meal_id',
+            'd.meal_name'
+        )
+        ->where('a.customer_id', $loginId)
+        ->where('b.sub_status', 'active') // Add condition to filter active subscriptions
+        ->get();
+
+
+        return view('customerMeals', compact('details'));
+    }
+
+
 
 
 }

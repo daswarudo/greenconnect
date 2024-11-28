@@ -13,15 +13,16 @@
     <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
 
     <!-- temporary-->
-	<script> 
-        
-    </script>
+	
 
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('css/viewsubscriber.css') }}">
 <!-- naa sa public/css folder ang css, ignore css sa resources sdfasfda-->
     
 </head>
+<style> 
+        
+    </style>
 <body>
     @include('sidebar')
 
@@ -144,6 +145,134 @@
                         <option value="Very Active" {{ $customer->activity_level == 'Very Active' ? 'selected' : '' }}>Very Active</option>
                     </select>
                 </p>
+                <div style="margin: 0; padding: 0; display: inline-block;" class="checked">
+                <b>Food Preference:</b><br>
+                <label>
+                    <input type="checkbox" name="prefer_pork" value="1" 
+                    {{ old('prefer_pork', $customer->prefer_pork) ? 'checked' : '' }} disabled>
+                Pork
+                </label>
+              
+                <label>
+                    <input type="checkbox" name="prefer_beef" value="1" 
+                        {{ old('prefer_beef', $customer->prefer_beef) ? 'checked' : '' }} disabled>
+                    Beef
+                </label>
+
+                <label>
+                    <input type="checkbox" name="prefer_beef" value="1" 
+                        {{ old('prefer_beef', $customer->prefer_beef) ? 'checked' : '' }} disabled>
+                    Beef
+                </label>
+
+                <label>
+                    <input type="checkbox" name="prefer_fish" value="1" 
+                        {{ old('prefer_fish', $customer->prefer_fish) ? 'checked' : '' }} disabled>
+                    Fish
+                </label>
+                <label>
+                    <input type="checkbox" name="prefer_chicken" value="1" 
+                        {{ old('prefer_chicken', $customer->prefer_chicken) ? 'checked' : '' }} disabled>
+                        Chicken
+                </label>
+                <label>
+                    <input type="checkbox" name="prefer_veggie" value="1" 
+                        {{ old('prefer_veggie', $customer->prefer_veggie) ? 'checked' : '' }} disabled>
+                        Veggie
+                </label>
+                <br>
+                <b>Is Allegic To:</b><br>
+                <label>
+                    <input type="checkbox" name="allergy_wheat" value="1" 
+                    {{ old('allergy_wheat', $customer->allergy_wheat) ? 'checked' : '' }} disabled>
+                Wheat
+                </label>
+              
+                <label>
+                    <input type="checkbox" name="allergy_milk" value="1" 
+                        {{ old('allergy_milk', $customer->allergy_milk) ? 'checked' : '' }} disabled>
+                    Milk
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_egg" value="1" 
+                        {{ old('allergy_egg', $customer->allergy_egg) ? 'checked' : '' }} disabled>
+                    Egg
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_peanut" value="1" 
+                        {{ old('allergy_peanut', $customer->allergy_peanut) ? 'checked' : '' }} disabled>
+                    Peanut
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_fish" value="1" 
+                        {{ old('allergy_fish', $customer->allergy_fish) ? 'checked' : '' }} disabled>
+                    Fish
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_soy" value="1" 
+                        {{ old('allergy_soy', $customer->allergy_soy) ? 'checked' : '' }} disabled>
+                    Soy
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_shellfish" value="1" 
+                        {{ old('allergy_shellfish', $customer->allergy_shellfish) ? 'checked' : '' }} disabled>
+                    Shellfish
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_treenut" value="1" 
+                        {{ old('allergy_treenut', $customer->allergy_treenut) ? 'checked' : '' }} disabled>
+                    Tree Nut
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_sesame" value="1" 
+                        {{ old('allergy_sesame', $customer->allergy_sesame) ? 'checked' : '' }} disabled>
+                    Sesame
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_corn" value="1" 
+                        {{ old('allergy_corn', $customer->allergy_corn) ? 'checked' : '' }} disabled>
+                    Corn
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_chicken" value="1" 
+                        {{ old('allergy_chicken', $customer->allergy_chicken) ? 'checked' : '' }} disabled>
+                    Chicken
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_beef" value="1" 
+                        {{ old('allergy_beef', $customer->allergy_beef) ? 'checked' : '' }} disabled>
+                    Beef
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_pork" value="1" 
+                        {{ old('allergy_pork', $customer->allergy_pork) ? 'checked' : '' }} disabled>
+                    Pork
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_lamb" value="1" 
+                        {{ old('allergy_lamb', $customer->allergy_lamb) ? 'checked' : '' }} disabled>
+                    Lamb
+                </label>
+
+                <label>
+                    <input type="checkbox" name="allergy_gluten" value="1" 
+                        {{ old('allergy_gluten', $customer->allergy_gluten) ? 'checked' : '' }} disabled>
+                    Gluten
+                </label>
+                </div>
+            </div>
             <!--
              <p>
                 <b>Plan name:</b> 

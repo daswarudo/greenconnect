@@ -91,14 +91,23 @@ Route::get('/restoMealInput', function () {
     return view('restoMealInput');
 })->name('restoMealInput');
 
-// LACKING ROUTE IN CUSTOMER APPOINTMENT SINCE IT IS UNKNOWN 
+// LACKING ROUTE IN CUSTOMER APPOINTMENT SINCE IT IS UNKNOWN -> not anymore
 
 Route::get('/customerFeedback', function () {
     return view('customerFeedback');
 })->name('customerFeedback');
+
+Route::get('/customerFeedbackAdd', function () {
+    return view('customerFeedbackAdd');
+})->name('customerFeedbackAdd');
+
 Route::get('/customerView', function () {
     return view('customerView');
 })->name('customerView');
+
+Route::get('/customerMeals', function () {
+    return view('customerMeals');
+})->name('customerMeals');
 
 Route::get('/customerSubscription', function () {
     return view('customerSubscription');
@@ -135,6 +144,11 @@ Route::middleware('auth:customer')->get('/customerSubscription', [LoginRegisterC
 Route::middleware('auth:customer')->get('/customerSubscriptionAdd', [LoginRegisterController::class, 'viewSubsCreate'])->name('viewSubsCreate');
 
 Route::middleware('auth:customer')->post('/customerSubscriptionAdd', [LoginRegisterController::class, 'addSubscription'])->name('subscription.add');
+Route::middleware('auth:customer')->post('/customerFeedbackAdd', [LoginRegisterController::class, 'storeFeedback'])->name('addFeedback');
+Route::middleware('auth:customer')->get('/customerFeedback', [LoginRegisterController::class, 'showMyFeedback'])->name('customerFeedback');
+
+Route::delete('/customerFeedback/{id}', [LoginRegisterController::class, 'destroyFeedback'])->name('feedback.delete');
+Route::middleware('auth:customer')->get('/customerMeals', [LoginRegisterController::class, 'getLoggedInCustomerMealDetails'])->name('customerMeals');
 //TEST//customerEdit
 //Route::middleware('auth:customer')->get('/customerEdit', [ConsultationController::class, 'viewCustEdit'])->name('editCust');
 //Route::middleware('auth:customer')->get('/custTest/a', [ConsultationController::class, 'showCalendarCust'])->name('appointments');

@@ -141,11 +141,7 @@
                 Pork
                 </label><br>
               
-                <label>
-                    <input type="checkbox" name="prefer_beef" value="1" 
-                        {{ old('prefer_beef', $customer->prefer_beef) ? 'checked' : '' }}>
-                    Beef
-                </label><br>
+                
 
                 <label>
                     <input type="checkbox" name="prefer_beef" value="1" 
