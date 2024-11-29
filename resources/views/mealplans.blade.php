@@ -63,7 +63,7 @@
                     {{ number_format($meal->calories, 2) }} cal ({{ $calorieLevel }})
                 </td>
                 <td>{{ $mealPurpose }}</td>
-                <td><a href="{{ route('meals.edit', $meal->meal_id) }}">Edit Meal</a></td>
+                <td><a href="{{ route('meals.edit', $meal->meal_id) }}">View Meal</a></td>
             </tr>
         @endforeach
     </tbody>
