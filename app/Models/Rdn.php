@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Rdn extends Model
+//class Rdn extends Authenticatable
+class Rdn extends Authenticatable
 {
     use HasFactory;
-
+    protected $guard = 'rdn';
     // The table associated with the model.
     protected $table = 'rdn';
 

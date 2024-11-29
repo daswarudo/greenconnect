@@ -22,30 +22,42 @@
 <div class="sidebar">
 	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
     
-    <!--<a href="{{ route('customerDashboard') }}">-->
-    <a href="#">
-    <i class="fas fa-utensils">
-    </i>
-    Meal Plans
+    
+    
+    
+   <a href="/customerSubscription">
+   <i class="fa fa-info" ></i>
+    
+    Subscription
    </a>
-   <a href="#">             <!-- WALA pako kabalo aning sa appointments CUSTOMER SIDE --> 
+    
+   <a href="/customerView">
+   <i class="fa fa-user"></i>
+    
+   Account Info
+   </a>
+
+   <a href="/custTest">            
     <i class="fas fa-calendar-alt">
     </i>
     Appointments
    </a>
-   <!--<a href="{{ route('customerFeedback') }}">-->
-   <a href="#">
+
+   <a href="/customerMeals">
+        <i class="fas fa-utensils">
+        </i>
+        Meal Plans
+   </a>
+   
+   <a href="/customerFeedback">
    <i class="fa fa-comment" ></i>
-    </i>
+    
     Feedback
    </a>
-   <!--<a href="{{ route('customerSubscription') }}">-->
-   <a href="#">
-   <i class="fa fa-info" ></i>
-    </i>
-    Subscription
-   </a>
-   <a href="{{ route('login') }}">
+   
+   
+   
+   <a href="{{ route('logout') }}"  onclick="confirm('Are you sure about that?')">
     <i class="fas fa-sign-out-alt">
     </i>
     Log Out

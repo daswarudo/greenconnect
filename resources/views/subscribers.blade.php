@@ -159,15 +159,15 @@ function filterByStatus(status) {
                         <!--<a href="{{ route('viewsubscriber', $subscription->customer_id) }}" style="text-decoration: none;">
                             <button class="crudButtons">View Details</button>
                         </a>-->
-                        <!-- Correct Usage for View Details -->
+                        <!-- Correct Usage for View Details (cust only) -->
                         <a href="{{ route('viewSubscriber.view', $subscription->customer_id) }}" style="text-decoration: none;">
-                            <button class="crudButtons">View Details</button>
+                            <button class="crudButtons">View Customer</button>
                         </a>
                         
-                        <td>
-                            
+                        <a href="{{ route('editSubscription', $subscription->subscription_id) }}" style="text-decoration: none;">
+                            <button class="crudButtons" style="margin-top:2vh;">View Subscription</button>
+                        </a>
                         
-
                     </td>
                 </tr>
             @endforeach

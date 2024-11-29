@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customers',
+        ],
+        'rdn' => [
+            'driver' => 'session',
+            'provider' => 'rdns',
+        ],
     ],
 
     /*
@@ -64,7 +72,15 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
-
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Customer::class,  // Replace with your Customer model
+        ],
+        'rdns' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Rdn::class,  // Replace with your Rdn model
+        ],
+        
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
