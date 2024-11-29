@@ -16,7 +16,7 @@
  </head>
  <body>
  @include('sidebar')
-  <!--
+  <!-- get out
 -->
 
 <div class="content">
