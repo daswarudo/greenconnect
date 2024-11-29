@@ -25,7 +25,18 @@
     
     
     
+   <a href="/customerSubscription">
+   <i class="fa fa-info" ></i>
     
+    Subscription
+   </a>
+    
+   <a href="/customerView">
+   <i class="fa fa-user"></i>
+    
+   Account Info
+   </a>
+
    <a href="/custTest">            
     <i class="fas fa-calendar-alt">
     </i>
@@ -44,16 +55,8 @@
     Feedback
    </a>
    
-   <a href="/customerSubscription">
-   <i class="fa fa-info" ></i>
-    
-    Subscription
-   </a>
-   <a href="/customerView">
-   <i class="fa fa-user"></i>
-    
-   Account Info
-   </a>
+   
+   
    <a href="{{ route('logout') }}"  onclick="confirm('Are you sure about that?')">
     <i class="fas fa-sign-out-alt">
     </i>

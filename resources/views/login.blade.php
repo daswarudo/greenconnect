@@ -33,7 +33,7 @@
 		<a href="{{route('welcome')}}">
 		<img alt="Green Chef Logo" height="130" src="{{ asset('images/logo.png') }}" width="130" style="margin-top: -50px" />	
 		</a>			<!-- LOGIN FORM -->
-			<h1 id="signInControl"></h1>
+			<h1 id="signInControl">Sign In</h1>
 			<h3><i class="fa fa-user"></i> Username</h3>
 			<input type="username" class="form-control" id="username" placeholder="username" name="username" required>
             <h3><i class='fas fa-lock'></i> Password </h3>

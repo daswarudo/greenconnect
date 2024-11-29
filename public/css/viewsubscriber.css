@@ -141,7 +141,7 @@ body {
 }
 .saveButton{
     margin-left: auto; /* Moves Div 4 to the rightmost position */
-    display: flex;
+    /*display: flex;*/
     justify-content: flex-end; /* Ensures content is aligned to the right within Div 4 */
     flex-grow: 1;
     padding: 10px;

@@ -160,7 +160,7 @@ public function register(Request $request)
         ]);
     });
 
-    session()->flash('message', 'Registration successful! You can now log in.');
+    session()->flash('message', 'Registration successful! Please wait for dietician confirmation.');
     return redirect()->route('login');
 }
 
@@ -227,55 +227,56 @@ public function register(Request $request)
       }
   }*/
   public function loginUser(Request $request)
-{
-    // Validate the input
-    $request->validate([
-        'username' => 'required',
-        'password' => 'required',
-    ]);
+    {
+        // Validate the input
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
 
-    // Attempt to find the user as a Customer
-    $user = Customer::where('username', '=', $request->username)->first();
+        // Attempt to find the user as a Customer
+        $user = Customer::where('username', '=', $request->username)->first();
 
-    if (!$user) {
-        // If not found as Customer, check if the user is an Rdn
-        $user = Rdn::where('username', '=', $request->username)->first();
-    }
+        if (!$user) {
+            // If not found as Customer, check if the user is an Rdn
+            $user = Rdn::where('username', '=', $request->username)->first();
+        }
 
-    // If the user exists (either Customer or Rdn)
-    if ($user) {
-        // Verify the password
-        if (Hash::check($request->password, $user->password)) {
-            // Flash a success message
-            session()->flash('message', 'Log In successful!');
+        // If the user exists (either Customer or Rdn)
+        if ($user) {
+            // Verify the password
+            if (Hash::check($request->password, $user->password)) {
+                // Flash a success message
+                session()->flash('message', 'Log In successful!');
 
-            // Store the user ID and type in the session based on the model (Customer or Rdn)
-            if ($user instanceof Customer) {
-                $request->session()->put('loginId', $user->customer_id); // Store customer ID
-                $request->session()->put('userType', 'customer');       // Store user type as 'customer'
+                // Store the user ID and type in the session based on the model (Customer or Rdn)
+                if ($user instanceof Customer) {
+                    $request->session()->put('loginId', $user->customer_id); // Store customer ID
+                    $request->session()->put('userType', 'customer');       // Store user type as 'customer'
 
-                // Authenticate the user
-                Auth::guard('customer')->login($user);
+                    // Authenticate the user
+                    Auth::guard('customer')->login($user);
 
-                // Redirect to the customer-specific dashboard
-                return redirect('/custTest');
-            } elseif ($user instanceof Rdn) {
-                $request->session()->put('loginId', $user->rdn_id); // Store RDN ID
-                $request->session()->put('userType', 'rdn');        // Store user type as 'rdn'
+                    // Redirect to the customer-specific dashboard
+                    return redirect('/customerSubscription');
+                    //return redirect('/custTest');
+                } elseif ($user instanceof Rdn) {
+                    $request->session()->put('loginId', $user->rdn_id); // Store RDN ID
+                    $request->session()->put('userType', 'rdn');        // Store user type as 'rdn'
 
-                // Authenticate the user
-                Auth::guard('rdn')->login($user);
+                    // Authenticate the user
+                    Auth::guard('rdn')->login($user);
 
-                // Redirect to the Rdn-specific dashboard
-                return redirect('/rdnDashboard');
+                    // Redirect to the Rdn-specific dashboard
+                    return redirect('/rdnDashboard');
+                }
+            } else {
+                return back()->withInput()->with('fail', 'Invalid username or password!');
             }
         } else {
-            return back()->withInput()->with('fail', 'Invalid username or password!');
+            return back()->with('fail', 'Account does not exist!');
         }
-    } else {
-        return back()->with('fail', 'Account does not exist!');
     }
-}
 
   public function logout(Request $request)
     {
@@ -798,6 +799,47 @@ public function register(Request $request)
 
 
         return view('customerMeals', compact('details'));
+    }
+    
+    public function custPass(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'customer_id' => 'nullable|exists:subscriptions,customer_id',// Ensure customer_id exists in subscriptions
+            
+            'new_password' => 'required|min:7|max:15',
+        ]);
+
+        // Start a transaction to ensure atomicity
+        DB::transaction(function () use ($request, $id) {
+            try {
+                // Find the customer record by ID
+                $customer = Customer::findOrFail($id);
+            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                // If customer not found, return error message
+                return redirect()->route('errorPage')->with('error', 'Customer not found!');
+            }
+
+            // Prepare the password to be updated
+            $updateData = [
+                'password' => Hash::make($request->new_password),
+            ];
+
+            // If customer_id is provided in the request, update related subscription (optional)
+            if ($request->has('customer_id')) {
+                $updateData['customer_id'] = $request->customer_id;
+            }
+
+            // Perform the update
+            $customer->update($updateData);
+            //dd('Redirecting to subscribers');
+            
+            
+
+            //return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!');
+            
+        });
+        return redirect()->route('subscribers')->with('status', 'Customer password updated successfully!')->setStatusCode(302);
     }
 
 

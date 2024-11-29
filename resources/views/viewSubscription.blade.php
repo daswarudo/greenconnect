@@ -84,12 +84,12 @@
                 <p>
                     <b>Start Date</b>
                     <input type="date" name="start_date" id="start_date" class="form-control" 
-                        value="{{ old('start_date', $subscription->start_date) }}"   style="width: 50vh;">
+                        value="{{ old('start_date', $subscription->start_date) }}" style="width: 50vh;" onchange="setEndDateMin()">
                 </p>
                 <p>
                     <b>End Date</b>
                     <input type="date" name="end_date" id="end_date" class="form-control" 
-                        value="{{ old('end_date', $subscription->end_date) }}"   style="width: 50vh;">
+                        value="{{ old('end_date', $subscription->end_date) }}" style="width: 50vh;">
                 </p>
                 <p>
                     <b>Payment Method</b>
@@ -139,6 +139,24 @@
                 document.getElementById('bmi').value = bmi.toFixed(2);
             }
         }
+
+        function setEndDateMin() {
+        const startDateInput = document.getElementById('start_date');
+        const endDateInput = document.getElementById('end_date');
+
+        if (startDateInput.value) {
+            const startDate = new Date(startDateInput.value);
+            const minEndDate = new Date(startDate);
+            minEndDate.setDate(minEndDate.getDate() + 14); // Add 14 days
+
+            // Format the date to YYYY-MM-DD
+            const formattedDate = minEndDate.toISOString().split('T')[0];
+            endDateInput.min = formattedDate;
+        }
+    }
+
+    // Set the minimum end date on page load if start date is already set
+    window.onload = setEndDateMin;
 </script>
 <!-- Bootstrap JS and dependencies (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
