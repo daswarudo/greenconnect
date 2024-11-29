@@ -209,7 +209,7 @@
             
             
     </div>
-    <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;"  onclick="return confirm('Are you sure you want to edit this meal?')">Edit Meal</button>
+    <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;"  onclick="return confirm('Are you sure you want to edit this meal?')">Update Meal</button>
     </form> 
     
     <form action="{{ route('meals.destroy', $meal->meal_id) }}" method="POST" style="margin-top: 10px;">
