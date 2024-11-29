@@ -34,7 +34,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('welcome') }}">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="subscription-link" style="cursor: pointer;">SIGN UP</a>
+                    <a class="nav-link ghost" id="signUp" style="cursor: pointer;" href="{{route('view.subscriptions')}}">SIGN UP</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link ghost" id="login" href="/login">LOGIN</a>

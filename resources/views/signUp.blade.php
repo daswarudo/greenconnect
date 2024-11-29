@@ -40,10 +40,8 @@
                      @endif
             <div class="form-container">
                 <div class="form-section diet-program">
-
-                    <h2>Diet Program</h2>
+                    <h2>SIGN UP</h2>
                     <label for="diet-program">Diet Program</label>
-
                     <select id="subscription_type_id" name="subscription_type_id" required><!-- query subs type-->
                         <option value="">Select Diet Program</option>
                         @foreach ($subscriptionTypes as $subscriptionType)
@@ -58,13 +56,13 @@
                         <label for="first-name">First Name <span> * </span></label>
                         <input id="first_name" name="first_name" type="text" required />
                     </div>
-                
                     <div class="form-group">
                         <label for="last-name">Last Name <span> * </span> </label>
                         <input id="last_name" name="last_name" type="text" required />
                     </div>
                 </div>
 
+                <div class="form-container2">
                     <div class="form-group">
                         <label for="username">Username <span> * </span></label>
                         <input id="username" name="username" type="text"/ placholder="username" required />
@@ -73,13 +71,13 @@
                         <label for="password">Password <span> * </span></label>
                         <input id="password" name="password" type="password" placholder="password" required />
                     </div>
-                   
+                </div>  
 
                 </div>
                 
             </div>
         <!--</form>-->
-        <!--SUBMIT FORM --><button type ="submit" class="submit-button">Proceed</button>  <!--SUBMIT FORM -->
+        <!--SUBMIT FORM --><button type ="submit" class="submit-button" id="button-signUp">SIGN UP</button>  <!--SUBMIT FORM -->
         </form>
     </div>
 </body>
