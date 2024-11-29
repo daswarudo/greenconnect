@@ -138,7 +138,10 @@ Route::post('/consultation/store', [ConsultationController::class, 'store'])->na
 // Show the form to add a new consultation
 Route::middleware('auth:customer')->get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
 Route::middleware('auth:customer')->get('/customerView', [ConsultationController::class, 'viewCust'])->name('viewCust');
-Route::middleware('auth:customer')->put('/customerView/{id}/cust', [LoginRegisterController::class, 'custEdit'])->name('custedit');//also test
+Route::middleware('auth:customer')->put('/customerView/{id}/cust', [LoginRegisterController::class, 'custEdit'])->name('custedit');
+
+
+//also test
 Route::middleware('auth:customer')->get('/customerSubscription', [LoginRegisterController::class, 'viewCustSubs'])->name('viewCustSubs');
 Route::middleware('auth:customer')->get('/customerSubscriptionAdd', [LoginRegisterController::class, 'viewSubsCreate'])->name('viewSubsCreate');
 
@@ -188,7 +191,7 @@ Route::middleware('auth:rdn')->delete('/mealplans/{id}', [MealController::class,
 Route::middleware('auth:rdn')->get('/mealplansEdit/edit/{id}', [MealController::class, 'viewSubs2'])->name('meals.edit');
 
 
-
-
+Route::middleware('auth:rdn')->put('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'custPass'])->name('custpass');
+//Route::middleware('auth:rdn')->get('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'edit'])->name('editSubscription');
 
 

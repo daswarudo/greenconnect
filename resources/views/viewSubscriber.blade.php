@@ -306,6 +306,16 @@
                 <input id="ref_number" name="ref_number" type="text" placeholder="" value="{{ $subscription->ref_number  ?? 'No activity level given' }}"  disabled/> 
             </p>
             -->
+                <div class="save">
+                    
+                    <button class = "saveButton" type="submit" onclick="return confirm('Are you sure about that')">
+                        APPLY CHANGES
+                    </button>
+                        
+                    
+                </div>
+
+
             </div>
             
             <div class="photo">
@@ -315,16 +325,33 @@
                 </p>-->
             </div>
    
-             <div class="save">
-                
-                <button class = "saveButton" type="submit" onclick="return confirm('Are you sure about that')">
-                    APPLY CHANGES
-                </button>
-                       
-                
-            </div>
-  </div>
+             
+  
    </form>
+        <div style ="background-color:#e0e0e0;padding:2vh 2vh 2vh 2vh;">
+            <form action="{{ route('custpass', $customer->customer_id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div>
+                    <label for="new_password">New Password</label>
+                    <input type="password" id="new_password" name="new_password" required>
+                </div>
+                <div>
+                    <label for="new_password_confirmation">Confirm Password</label>
+                    <input type="password" id="new_password_confirmation" name="new_password_confirmation" required>
+                </div>
+                <div>
+                    <button type="submit" style="padding: 10px;
+    border: none;
+    background-color: #0fbb7c;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    ">Change Password</button>
+                </div>
+            </div>
+        </form>
+    </div>
 <script>
     //bmi calculator
     function calculateBMI() {
