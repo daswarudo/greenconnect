@@ -39,7 +39,7 @@
 <body>
 
 <div class="sidebar">
-    <a href="#" class="logo-link">
+    <a href="/rdnDashboard" class="logo-link">
         <img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
     </a>
 
