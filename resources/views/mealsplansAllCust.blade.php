@@ -22,7 +22,7 @@
 <div class="content">
     <h1>Customer Meal Plans</h1>
     <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
-    <div class="container" style="overflow: scroll;height: 70vh;">
+    <div class="container" style="overflow: scroll;height: 70vh;margin-top:2vh;">
     
 
 <table class="table table-striped">
