@@ -17,12 +17,31 @@
 <!-- naa sa public/css folder ang css, ignore css sa resources sdfasfda-->
     
 </head>
+<style>
+    /* More specific selector to override the sidebar link styles */
+    .sidebar .logo-link {
+        text-decoration: none !important;
+        display: block !important;
+        color: inherit !important;  /* Inherit the color to prevent other styles */
+        margin: 0 !important;  /* Remove any margin */
+        background-color: transparent !important;  /* Remove background color */
+        border-radius: 0 !important;  /* Remove border radius */
+        padding: 0 !important;  /* Remove padding */
+        box-shadow: none !important;  /* Remove box-shadow */
+    }
+
+    .sidebar .logo-link:hover {
+        color: inherit !important;  /* Remove hover color change */
+        background-color: transparent !important;  /* Remove hover background color */
+        border: none !important;  /* Remove hover border */
+    }
+</style>
 <body>
 
 <div class="sidebar">
-    <!--<a href="#" style="text-decoration: none !important;">-->
+    <a href="#" class="logo-link">
         <img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
-    <!--</a>-->
+    </a>
 
     <a href="/rdnDashboard">
         <i class="fas fa-home">
