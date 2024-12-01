@@ -88,7 +88,10 @@
                   <img src="{{ asset('images/5.png') }}" alt="Maya">
                   <img src="{{ asset('images/6.png') }}" alt="Gcash">
                 </div>
-                <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
+                <a href="/signUp" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f; text-decoration: none; color: white;">
+                    Subscribe Now
+                </a>
+                
         </div>
       </div>
     </div>
@@ -111,7 +114,9 @@
                   <img src="{{ asset('images/5.png') }}" alt="Maya">
                   <img src="{{ asset('images/6.png') }}" alt="Gcash">
                 </div>
-                <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
+                <a href="/signUp" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f; text-decoration: none; color: white;">
+                    Subscribe Now
+                </a>
               
         </div>
       </div>
@@ -135,7 +140,9 @@
                   <img src="{{ asset('images/5.png') }}" alt="Maya">
                   <img src="{{ asset('images/6.png') }}" alt="Gcash">
                 </div>
-                <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
+                <a href="/signUp" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f; text-decoration: none; color: white;">
+                    Subscribe Now
+                </a>
               
         </div>
       </div>
@@ -159,7 +166,9 @@
                   <img src="{{ asset('images/5.png') }}" alt="Maya">
                   <img src="{{ asset('images/6.png') }}" alt="Gcash">
                 </div>
-                <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Subscribe Now</button>
+                <a href="/signUp" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f; text-decoration: none; color: white;">
+                    Subscribe Now
+                </a>
               
         </div>
       </div>
