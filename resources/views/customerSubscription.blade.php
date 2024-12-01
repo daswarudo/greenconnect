@@ -15,8 +15,8 @@
 <div class="content">
    
    <div class="subscription-info" style="margin-top:5vh;">
+    <h2>Welcome, {{$customer->first_name}} {{$customer->last_name}}</h2>
     <h2>Subscriptions</h2>
-   
     <div class="mb-3">
             <input id="searchInput" type="text" class="form-control" placeholder="Search subscriptions...">
         </div>

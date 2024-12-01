@@ -58,6 +58,11 @@ Route::post('/events', [EventController::class, 'createEvent']);
 Route::get('/mealplans', function () {
     return view('mealplans');
 })->name('mealplans');
+
+Route::get('/mealplansAllCust', function () {
+    return view('mealplansAllCust');
+})->name('mealplansAllCust');
+
 Route::get('/mealplansEdit', function () {
     return view('mealplansEdit');
 })->name('mealplansEdit');
@@ -192,6 +197,9 @@ Route::middleware('auth:rdn')->get('/mealplansEdit/edit/{id}', [MealController::
 
 
 Route::middleware('auth:rdn')->put('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'custPass'])->name('custpass');
+
+Route::middleware('auth:rdn')->get('/mealsplansAllCust', [LoginRegisterController::class, 'showCustomerMealsDetails'])->name('mealsplansAllCust');
+
 //Route::middleware('auth:rdn')->get('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'edit'])->name('editSubscription');
 
 

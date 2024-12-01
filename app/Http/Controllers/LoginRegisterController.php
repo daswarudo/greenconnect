@@ -800,6 +800,27 @@ public function register(Request $request)
 
         return view('customerMeals', compact('details'));
     }
+    public function showCustomerMealsDetails()
+    {
+        // Fetch the required data with Eloquent relationships
+        
+        $customers = Customer::join('subscriptions', 'customer.customer_id', '=', 'subscriptions.customer_id')
+            ->join('subscription_type', 'subscriptions.subscription_type_id', '=', 'subscription_type.subscription_type_id')
+            ->join('meals', 'subscription_type.subscription_type_id', '=', 'meals.subscription_type_id')
+            ->select(
+                'customer.first_name',
+                'customer.last_name',
+                'subscriptions.subscription_id',
+                'subscription_type.plan_name as subscription_type',
+                'meals.meal_id',
+                'meals.meal_name'
+            )
+            ->get();
+           
+
+        // Return the data to the view
+        return view('mealsplansAllCust', compact('customers'));
+    }
     
     public function custPass(Request $request, $id)
     {

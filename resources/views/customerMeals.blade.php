@@ -21,32 +21,39 @@
    
    </h2>
    <div class="feedback-box">
-   <table class="table table-bordered">
-            <thead>
+   <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Meal ID</th>
+                <th>Meal Name</th>
+                <th>Plan Name</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            @foreach ($details as $detail)
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Subscription ID</th>
-                    <th>Plan Name</th>
-                    <th>Meal ID</th>
-                    <th>Meal Name</th>
+                    <td>{{ $detail->meal_id }}</td>
+                    <td>{{ $detail->meal_name }}</td>
+                    <td>{{ $detail->plan_name }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($details as $detail)
-                    <tr>
-                        <td>{{ $detail->first_name }}</td>
-                        <td>{{ $detail->last_name }}</td>
-                        <td>{{ $detail->subscription_id }}</td>
-                        <td>{{ $detail->plan_name }}</td>
-                        <td>{{ $detail->meal_id }}</td>
-                        <td>{{ $detail->meal_name }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
 
    </div>
   </div>
 </body>
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll('#tableBody tr');
+
+        rows.forEach(row => {
+            let text = row.textContent.toLowerCase();
+            row.style.display = text.includes(filter) ? '' : 'none';
+        });
+    });
+</script>
 </html>
