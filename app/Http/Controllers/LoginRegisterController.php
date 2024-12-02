@@ -808,7 +808,25 @@ public function register(Request $request)
             'b.subscription_id',
             'c.plan_name',
             'd.meal_id',
-            'd.meal_name'
+            'd.meal_name',
+            'd.description',
+                'd.calories',
+                'd.meal_type',
+                'd.allergy_wheat',
+                'd.allergy_milk',
+                'd.allergy_egg',
+                'd.allergy_peanut',
+                'd.allergy_fish',
+                'd.allergy_soy',
+                'd.allergy_shellfish',
+                'd.allergy_treenut',
+                'd.allergy_sesame',
+                'd.allergy_corn',
+                'd.allergy_chicken',
+                'd.allergy_beef',
+                'd.allergy_pork',
+                'd.allergy_lamb',
+                'd.allergy_gluten',
         )
         ->where('a.customer_id', $loginId)
         ->where('b.sub_status', 'active') // Add condition to filter active subscriptions
@@ -830,11 +848,38 @@ public function register(Request $request)
                 'subscriptions.subscription_id',
                 'subscription_type.plan_name as subscription_type',
                 'meals.meal_id',
-                'meals.meal_name'
+                'meals.meal_name',
+
+                
             )
             ->get();
            
+        /* 
+                $table->string('meal_name', 50)->nullable();
+            $table->decimal('calories', 8, 2);
+            $table->string('description', 250)->nullable();
 
+            $table->string('meal_type', 50)->nullable();
+            $table->time('time')->nullable();
+            $table->date('date')->nullable();
+
+            //$table->string('status')->default('pending')->nullable();//moves to subs
+            $table->boolean('allergy_wheat')->default(false);
+            $table->boolean('allergy_milk')->default(false);
+            $table->boolean('allergy_egg')->default(false);
+            $table->boolean('allergy_peanut')->default(false);
+            $table->boolean('allergy_fish')->default(false);
+            $table->boolean('allergy_soy')->default(false);
+            $table->boolean('allergy_shellfish')->default(false);
+            $table->boolean('allergy_treenut')->default(false);
+            $table->boolean('allergy_sesame')->default(false);
+            $table->boolean('allergy_corn')->default(false);
+            $table->boolean('allergy_chicken')->default(false);//
+            $table->boolean('allergy_beef')->default(false);
+            $table->boolean('allergy_pork')->default(false);
+            $table->boolean('allergy_lamb')->default(false);
+            $table->boolean('allergy_gluten')->default(false);
+        */
         // Return the data to the view
         return view('mealsplansAllCust', compact('customers'));
     }

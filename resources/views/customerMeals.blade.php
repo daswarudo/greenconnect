@@ -21,6 +21,8 @@
    
    </h2>
    <div class="feedback-box">
+   
+
     <div style="margin-bottom:2vh;">
         <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
     </div>
@@ -30,6 +32,7 @@
                 <th>Meal ID</th>
                 <th>Meal Name</th>
                 <th>Plan Name</th>
+                <th></th>
             </tr>
         </thead>
         <tbody id="tableBody">
@@ -38,6 +41,95 @@
                     <td>{{ $detail->meal_id }}</td>
                     <td>{{ $detail->meal_name }}</td>
                     <td>{{ $detail->plan_name }}</td>
+                    <td>
+                    
+                        <button id="toggleButton">See More</button>
+                        <div id="content">
+  
+                            <span id="moreText" style="display: none;">
+                            Description:{{ $detail->description }}  <br><br>
+                            Calories: {{ $detail->calories }} cal <br><br>
+                            Meal type: {{ $detail->meal_type }}    <br><br>
+                            Allergies:<br>
+                            @if ($detail->allergy_wheat)
+                                Wheat
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_milk)
+                                Milk
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_egg)
+                                Egg
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_peanut)
+                                Peanut
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_fish)
+                                Fish
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_soy)
+                                Soy
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_shellfish)
+                                Shellfish
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_treenut)
+                                Treenut
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_sesame)
+                                Sesame
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_corn)
+                                Corn
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_chicken)
+                                Chicken
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_beef)
+                                Beef
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_pork)
+                                Pork
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_lamb)
+                                Lamb
+                            @else
+                                
+                            @endif
+                            @if ($detail->allergy_gluten)
+                                Gluten
+                            @else
+                                
+                            @endif
+                            
+                            </span>
+                        </div>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -46,6 +138,8 @@
    </div>
   </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     document.getElementById('searchInput').addEventListener('keyup', function () {
         let filter = this.value.toLowerCase();
@@ -56,5 +150,20 @@
             row.style.display = text.includes(filter) ? '' : 'none';
         });
     });
+    $(document).ready(function(){
+        $("#toggleButton").click(function(){
+            var moreText = $("#moreText");
+            var btnText = $("#toggleButton");
+
+            if (moreText.is(":visible")) {
+            moreText.hide(); // Hide the extra text
+            btnText.text("See More"); // Change button text to "See More"
+            } else {
+            moreText.show(); // Show the extra text
+            btnText.text("See Less"); // Change button text to "See Less"
+            }
+        });
+        });
+
 </script>
 </html>
