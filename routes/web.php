@@ -124,6 +124,7 @@ Route::post('/signUp',[LoginRegisterController::class,'register'])->name('regist
 
 Route::post('/login', [LoginRegisterController::class, 'loginUser'])->name('login.user');
 Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');//logout
+Route::get('/welcome', [LoginRegisterController::class, 'showWelcomeLogged'])->name('welcome');
 
  //for locking pages
 

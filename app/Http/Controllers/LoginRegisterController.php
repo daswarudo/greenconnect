@@ -278,7 +278,7 @@ public function register(Request $request)
         }
     }
 
-  public function logout(Request $request)
+    public function logout(Request $request)
     {
         // Clear the session data
         $request->session()->flush();
@@ -356,14 +356,27 @@ public function register(Request $request)
         }
     }
 
+    public function showWelcomeLogged()//welcome if logged in
+    {
+       // Retrieve the loginId and userType from the session (if available)
+        $loginId = session()->get('loginId');
+        $userType = session()->get('userType');
+        $user = null;
+
+        // Fetch user data based on loginId and userType if available
+        if ($loginId && $userType === 'customer') {
+            $user = Customer::where('customer_id', $loginId)->first();
+        } elseif ($loginId && $userType === 'rdn') {
+            $user = Rdn::where('customer_id', $loginId)->first();
+        }
+
+        // Return the view regardless of whether the user is logged in
+        return view('welcome', compact('userType', 'loginId', 'user'));
+        
+    }
 
     /*
-    public function showSubscriptions()
-    {
-        $subscriptions = Subscriptions::with(['customer', 'subscriptionType'])
-            ->get();
-
-        return view('rdnDashboard', compact('subscriptions'));
+    
     }*/
     public function showSubscriptions()
     {
@@ -457,7 +470,7 @@ public function register(Request $request)
         return redirect()->route('subscribers')->with('status', 'Customer details updated successfully!')->setStatusCode(302);
     }
 
-    public function showAppointTable()//ADD LATERS PROBS AFTER 50 PERCENT DEF
+    public function showAppointTable()//ADD LATERS PROBS AFTER 50 PERCENT DEF//ASA???
     {
         /*$subscriptions = Subscriptions::with(['customer', 'subscriptionType'])->get();
 

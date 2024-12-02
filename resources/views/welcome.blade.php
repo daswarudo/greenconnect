@@ -27,26 +27,54 @@
         </button>
 
         <!-- Navbar Links -->
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <!--<div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <!-- Links -->
+                
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('welcome') }}">HOME</a>
                 </li>
-                <!--
-                <li class="nav-item">
-                    <a class="nav-link" id="subscription-link" style="cursor: pointer;">SUBSCRIPTION</a>
-                </li>-->
+                
                 <li class="nav-item">
                     <a class="nav-link ghost" id="signUp" href="/signUp">SIGN UP</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link ghost" id="login" href="/login">LOGIN</a>
-                    <!--<a class="nav-link" href="{{ route('login') }}">LOGIN</a>-->
+                    
                 </li>
                 
             </ul>
-        </div>
+        </div>-->
+        <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+        <!-- Links -->
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/welcome">HOME</a>
+        </li>
+
+        @if(session()->has('loginId') && session()->has('userType'))
+            @if(session('userType') === 'customer')
+                <li class="nav-item">
+                    <a class="nav-link" href="/customerSubscription">DASHBOARD</a>
+                </li>
+            @elseif(session('userType') === 'rdn')
+                <li class="nav-item">
+                    <a class="nav-link" href="/rdnDashboard">DASHBOARD</a>
+                </li>
+            @endif
+            <li class="nav-item">
+                <a class="nav-link ghost" id="logout" href="/logout">LOGOUT</a>
+            </li>
+        @else
+            <li class="nav-item">
+                <a class="nav-link ghost" id="signUp" href="/signUp">SIGN UP</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ghost" id="login" href="/login">LOGIN</a>
+            </li>
+        @endif
+    </ul>
+</div>
+
     </div>
 </nav>
 @if(session('message'))
