@@ -19,7 +19,7 @@
 </head>
 
 <style>
-    /* More specific selector to override the sidebar link styles */
+    /* More specific selector to override the sidebar link stylesa */
     .sidebar .logo-link {
         text-decoration: none !important;
         display: block !important;
