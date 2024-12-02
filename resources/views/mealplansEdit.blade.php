@@ -77,19 +77,19 @@
                 
                 <label for="meal_type"><br><b>Meal Type</b></label>
                 <div class="radio-group">
-                    <input id="breakfast" name="meal_type" type="radio" value="breakfast" 
+                    <input id="meal_type" name="meal_type" type="radio" value="breakfast" 
                         {{ old('meal_type', $meal->meal_type) == 'breakfast' ? 'checked' : '' }} />
                     <label for="breakfast">Breakfast</label>
 
-                    <input id="lunch" name="meal_type" type="radio" value="lunch" 
+                    <input id="meal_type" name="meal_type" type="radio" value="lunch" 
                         {{ old('meal_type', $meal->meal_type) == 'lunch' ? 'checked' : '' }} />
                     <label for="lunch">Lunch</label>
 
-                    <input id="dinner" name="meal_type" type="radio" value="dinner" 
+                    <input id="meal_type" name="meal_type" type="radio" value="dinner" 
                         {{ old('meal_type', $meal->meal_type) == 'dinner' ? 'checked' : '' }} />
                     <label for="dinner">Dinner</label>
 
-                    <input id="snacks" name="meal_type" type="radio" value="snacks" 
+                    <input id="meal_type" name="meal_type" type="radio" value="snacks" 
                         {{ old('meal_type', $meal->meal_type) == 'snacks' ? 'checked' : '' }} />
                     <label for="snacks">Snacks</label>
                 </div>

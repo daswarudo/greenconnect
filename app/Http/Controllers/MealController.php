@@ -136,6 +136,7 @@ class MealController extends Controller
     {
         $request->validate([
             'meal_name' => 'required|string',
+            'meal_type' => 'required|string',
             'description' => 'required|string',
             'calories' => 'required|numeric',
             'time' => 'nullable|date_format:H:i',
@@ -164,11 +165,12 @@ class MealController extends Controller
 
         // Update basic details
         $meal->meal_name = $request->meal_name;
+        $meal->meal_type = $request->meal_type;
         $meal->description = $request->description;
         $meal->calories = $request->calories;
         $meal->time = $request->time;
         $meal->date = $request->date;
-
+        
         $meal->allergy_wheat = $request->boolean('allergy_wheat');
         $meal->allergy_milk = $request->boolean('allergy_milk');
         $meal->allergy_egg = $request->boolean('allergy_egg');
