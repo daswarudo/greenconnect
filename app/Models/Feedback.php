@@ -24,8 +24,10 @@ class Feedback extends Model
     /**
      * Define a relationship to the Customer model
      */
+    
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
     }
+
 }

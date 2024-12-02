@@ -370,9 +370,13 @@ public function register(Request $request)
             $user = Rdn::where('customer_id', $loginId)->first();
         }
 
+        //$testimonials = Feedback::with('customer:customer_id,first_name,last_name')->get();//not working
+
         // Return the view regardless of whether the user is logged in
-        return view('welcome', compact('userType', 'loginId', 'user'));
         
+        //return view('welcome', compact('userType', 'loginId', 'user', 'testimonials'));
+
+        return view('welcome', compact('userType', 'loginId', 'user'));
     }
 
     /*
@@ -874,6 +878,15 @@ public function register(Request $request)
             
         });
         return redirect()->route('subscribers')->with('status', 'Customer password updated successfully!')->setStatusCode(302);
+    }
+    
+    public function indexTesti()
+    {
+        // Retrieve feedback with related customer data
+        
+        $testimonials = Feedback::with('customer:customer_id,first_name,last_name')->get();
+
+        return view('testimonials', compact('testimonials'));
     }
 
 

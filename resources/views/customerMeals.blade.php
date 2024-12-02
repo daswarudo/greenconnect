@@ -21,8 +21,9 @@
    
    </h2>
    <div class="feedback-box">
-   <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
-
+    <div style="margin-bottom:2vh;">
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
+    </div>
     <table class="table table-bordered">
         <thead>
             <tr>

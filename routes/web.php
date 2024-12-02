@@ -19,6 +19,13 @@ Route::get('/welcome', function () {//dashboard
     return view('welcome');
 })->name('welcome');
 
+Route::get('/sandbox', function () {//dashboard
+    return view('sandbox');
+})->name('sandbox');
+
+Route::get('/sandbox',[LoginRegisterController::class,'indexTesti'])->name('sand');
+//indexTesti
+
 Route::get('/test', function () {//dashboard
     return view('test');
 })->name('test');
@@ -125,6 +132,7 @@ Route::post('/signUp',[LoginRegisterController::class,'register'])->name('regist
 Route::post('/login', [LoginRegisterController::class, 'loginUser'])->name('login.user');
 Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');//logout
 Route::get('/welcome', [LoginRegisterController::class, 'showWelcomeLogged'])->name('welcome');
+//Route::get('/welcome/test', [LoginRegisterController::class, 'indexTesti'])->name('testimonials.index');
 
  //for locking pages
 

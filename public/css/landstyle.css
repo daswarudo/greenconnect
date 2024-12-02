@@ -121,7 +121,7 @@ body {
 .flex-item2 {
     margin: 4vh;
     width: 40vh;
-    height: 70vh;
+    height: auto;
     background-color: #f9f5e7;
     justify-content: center;
     align-items: left;
