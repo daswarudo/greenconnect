@@ -26,10 +26,12 @@
     <div style="margin-bottom:2vh;">
         <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
     </div>
+
+    <div style="overflow: scroll;height: 70vh;margin-top:2vh;">
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Meal ID</th>
+                <th hidden>Meal ID</th>
                 <th>Meal Name</th>
                 <th>Plan Name</th>
                 <th></th>
@@ -38,7 +40,7 @@
         <tbody id="tableBody">
             @foreach ($details as $detail)
                 <tr>
-                    <td>{{ $detail->meal_id }}</td>
+                    <td hidden>{{ $detail->meal_id }}</td>
                     <td>{{ $detail->meal_name }}</td>
                     <td>{{ $detail->plan_name }}</td>
                     <td>
@@ -133,6 +135,7 @@
             @endforeach
         </tbody>
     </table>
+    </div>
 
    </div>
   </div>
