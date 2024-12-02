@@ -570,6 +570,12 @@ public function register(Request $request)
             'allergy_treenut' => 'nullable|boolean',
             'allergy_sesame' => 'nullable|boolean',
             'allergy_corn' => 'nullable|boolean',
+
+            'allergy_chicken' => 'nullable|boolean',
+            'allergy_beef' => 'nullable|boolean',
+            'allergy_pork' => 'nullable|boolean',
+            'allergy_lamb' => 'nullable|boolean',
+            'allergy_gluten'=> 'nullable|boolean',
             
         ]);
 
@@ -628,7 +634,11 @@ public function register(Request $request)
                 'allergy_sesame' => $request->input('allergy_sesame', $customer->allergy_sesame),
                 'allergy_corn' => $request->input('allergy_corn', $customer->allergy_corn),
                 //'profile_picture' => $pic,
-                
+                'allergy_chicken' => $request->boolean('allergy_chicken'),
+                'allergy_beef' => $request->boolean('allergy_beef'),
+                'allergy_pork' => $request->boolean('allergy_pork'),
+                'allergy_lamb' => $request->boolean('allergy_lamb'),
+                'allergy_gluten' => $request->boolean('allergy_gluten'),
             ];
 
             
