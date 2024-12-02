@@ -437,6 +437,7 @@ public function register(Request $request)
             'height' => 'nullable|numeric|between:0,999.99',
             'weight' => 'nullable|numeric|between:0,999.99',
             'bmi' => 'nullable|numeric|between:0,999.99',
+            'diet_recom' => 'nullable|string|max:255',
         ]);
 
         // Start a transaction to ensure atomicity
@@ -455,6 +456,7 @@ public function register(Request $request)
                 'height' => $request->input('height', $customer->height),
                 'weight' => $request->input('weight', $customer->weight),
                 'bmi' => $request->input('bmi', $customer->bmi),
+                'diet_recom' => $request->input('diet_recom', $customer->diet_recom),
             ];
 
             // If customer_id is provided in the request, update related subscription (optional)

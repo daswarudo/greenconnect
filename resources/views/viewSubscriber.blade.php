@@ -99,7 +99,7 @@
                 
                 <p>
                     <b>Diet Recommended:</b> 
-                    <input id="diet_reco" name="diet_reco" type="text" value="{{ $customer->diet_recom  ?? 'No diet recommended' }}"  disabled/>
+                    <input id="diet_recom" name="diet_recom" type="text" value="{{ $customer->diet_recom  ?? 'No diet recommended' }}"/>
                 </p>
                 <p>
                     <b>Health Condition:</b> 

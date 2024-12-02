@@ -43,81 +43,80 @@
                     <td>{{ $detail->plan_name }}</td>
                     <td>
                     
-                        <button id="toggleButton">See More</button>
-                        <div id="content">
-  
-                            <span id="moreText" style="display: none;">
-                            Description:{{ $detail->description }}  <br><br>
-                            Calories: {{ $detail->calories }} cal <br><br>
-                            Meal type: {{ $detail->meal_type }}    <br><br>
-                            Allergies:<br>
+                    <button class="toggleButton" data-target="#content{{ $detail->meal_id }}">See More</button>
+                    <div id="content{{ $detail->meal_id }}" style="display: none;">
+                        <span id="moreText">
+                            <b>Description:</b>{{ $detail->description }}  <br>
+                            <b>Calories: </b>{{ $detail->calories }} cal <br>
+                            <b>Meal type: </b>{{ $detail->meal_type }}    <br>
+                            <b>Allergies:</b><br>
                             @if ($detail->allergy_wheat)
-                                Wheat
+                                Wheat,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_milk)
-                                Milk
+                                Milk,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_egg)
-                                Egg
+                                Egg,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_peanut)
-                                Peanut
+                                Peanut,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_fish)
-                                Fish
+                                Fish,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_soy)
-                                Soy
+                                Soy,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_shellfish)
-                                Shellfish
+                                Shellfish,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_treenut)
-                                Treenut
+                                Treenut,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_sesame)
-                                Sesame
+                                Sesame,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_corn)
-                                Corn
+                                Corn,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_chicken)
-                                Chicken
+                                Chicken,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_beef)
-                                Beef
+                                Beef,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_pork)
-                                Pork
+                                Pork,
                             @else
                                 
                             @endif
                             @if ($detail->allergy_lamb)
-                                Lamb
+                                Lamb,
                             @else
                                 
                             @endif
@@ -150,20 +149,20 @@
             row.style.display = text.includes(filter) ? '' : 'none';
         });
     });
-    $(document).ready(function(){
-        $("#toggleButton").click(function(){
-            var moreText = $("#moreText");
-            var btnText = $("#toggleButton");
-
-            if (moreText.is(":visible")) {
-            moreText.hide(); // Hide the extra text
-            btnText.text("See More"); // Change button text to "See More"
+    const buttons = document.querySelectorAll('.toggleButton');
+    
+    document.querySelectorAll('.toggleButton').forEach(button => {
+        button.addEventListener('click', () => {
+            const target = document.querySelector(button.getAttribute('data-target'));
+            if (target.style.display === 'none') {
+                target.style.display = 'block';
+                button.textContent = 'See Less';
             } else {
-            moreText.show(); // Show the extra text
-            btnText.text("See Less"); // Change button text to "See Less"
+                target.style.display = 'none';
+                button.textContent = 'See More';
             }
         });
-        });
+    });
 
 </script>
 </html>
