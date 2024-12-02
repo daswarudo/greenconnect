@@ -847,9 +847,66 @@ public function register(Request $request)
 
         return view('customerMeals', compact('details'));
     }
-    public function showCustomerMealsDetails()
+    public function showCustomerMealsDetails()//not buggy(?) //add later //abomination code //add blade later
     {
         // Fetch the required data with Eloquent relationships
+        
+        /*$customers = Customer::join('subscriptions', 'customer.customer_id', '=', 'subscriptions.customer_id')
+            ->join('subscription_type', 'subscriptions.subscription_type_id', '=', 'subscription_type.subscription_type_id')
+            ->join('meals', 'subscription_type.subscription_type_id', '=', 'meals.subscription_type_id')
+            ->select(
+                'customer.first_name',
+                'customer.last_name',
+
+                
+                'customer.prefer_pork',
+                'customer.prefer_beef',
+                'customer.prefer_fish',
+                'customer.prefer_chicken',
+                'customer.prefer_veggie',
+
+                'customer.allergy_wheat',
+                'customer.allergy_milk',
+                'customer.allergy_egg',
+                'customer.allergy_peanut',
+                'customer.allergy_fish',
+                'customer.allergy_soy',
+                'customer.allergy_shellfish',
+                'customer.allergy_treenut',
+                'customer.allergy_sesame',
+                'customer.allergy_corn',
+                'customer.allergy_chicken',
+                'customer.allergy_beef',
+                'customer.allergy_pork',
+                'customer.allergy_lamb',
+                'customer.allergy_gluten',
+                'subscriptions.subscription_id',
+                'subscriptions.sub_status',
+                'subscription_type.plan_name as subscription_type',
+                'meals.meal_id',
+                'meals.meal_name',
+                
+                'meals.allergy_wheat',
+                'meals.allergy_milk',
+                'meals.allergy_egg',
+                'meals.allergy_peanut',
+                'meals.allergy_fish',
+                'meals.allergy_soy',
+                'meals.allergy_shellfish',
+                'meals.allergy_treenut',
+                'meals.allergy_sesame',
+                'meals.allergy_corn',
+                'meals.allergy_chicken',
+                'meals.allergy_beef',
+                'meals.allergy_pork',
+                'meals.allergy_lamb',
+                'meals.allergy_gluten',
+                 //conflict sa customer naming lmao
+            )
+            ->distinct() // Remove duplicate rows
+            ->get();
+        */
+        // Return the data to the view
         
         $customers = Customer::join('subscriptions', 'customer.customer_id', '=', 'subscriptions.customer_id')
             ->join('subscription_type', 'subscriptions.subscription_type_id', '=', 'subscription_type.subscription_type_id')
@@ -857,42 +914,56 @@ public function register(Request $request)
             ->select(
                 'customer.first_name',
                 'customer.last_name',
+
+                'customer.prefer_pork',
+                'customer.prefer_beef',
+                'customer.prefer_fish',
+                'customer.prefer_chicken',
+                'customer.prefer_veggie',
+
+                'customer.allergy_wheat as customer_allergy_wheat',
+                'customer.allergy_milk as customer_allergy_milk',
+                'customer.allergy_egg as customer_allergy_egg',
+                'customer.allergy_peanut as customer_allergy_peanut',
+                'customer.allergy_fish as customer_allergy_fish',
+                'customer.allergy_soy as customer_allergy_soy',
+                'customer.allergy_shellfish as customer_allergy_shellfish',
+                'customer.allergy_treenut as customer_allergy_treenut',
+                'customer.allergy_sesame as customer_allergy_sesame',
+                'customer.allergy_corn as customer_allergy_corn',
+                'customer.allergy_chicken as customer_allergy_chicken',
+                'customer.allergy_beef as customer_allergy_beef',
+                'customer.allergy_pork as customer_allergy_pork',
+                'customer.allergy_lamb as customer_allergy_lamb',
+                'customer.allergy_gluten as customer_allergy_gluten',
+
                 'subscriptions.subscription_id',
+                'subscriptions.sub_status',
                 'subscription_type.plan_name as subscription_type',
+
                 'meals.meal_id',
                 'meals.meal_name',
 
-                
+                'meals.allergy_wheat as meal_allergy_wheat',
+                'meals.allergy_milk as meal_allergy_milk',
+                'meals.allergy_egg as meal_allergy_egg',
+                'meals.allergy_peanut as meal_allergy_peanut',
+                'meals.allergy_fish as meal_allergy_fish',
+                'meals.allergy_soy as meal_allergy_soy',
+                'meals.allergy_shellfish as meal_allergy_shellfish',
+                'meals.allergy_treenut as meal_allergy_treenut',
+                'meals.allergy_sesame as meal_allergy_sesame',
+                'meals.allergy_corn as meal_allergy_corn',
+                'meals.allergy_chicken as meal_allergy_chicken',
+                'meals.allergy_beef as meal_allergy_beef',
+                'meals.allergy_pork as meal_allergy_pork',
+                'meals.allergy_lamb as meal_allergy_lamb',
+                'meals.allergy_gluten as meal_allergy_gluten'
             )
+            ->distinct() // Remove duplicate rows
             ->get();
-           
-        /* 
-                $table->string('meal_name', 50)->nullable();
-            $table->decimal('calories', 8, 2);
-            $table->string('description', 250)->nullable();
 
-            $table->string('meal_type', 50)->nullable();
-            $table->time('time')->nullable();
-            $table->date('date')->nullable();
-
-            //$table->string('status')->default('pending')->nullable();//moves to subs
-            $table->boolean('allergy_wheat')->default(false);
-            $table->boolean('allergy_milk')->default(false);
-            $table->boolean('allergy_egg')->default(false);
-            $table->boolean('allergy_peanut')->default(false);
-            $table->boolean('allergy_fish')->default(false);
-            $table->boolean('allergy_soy')->default(false);
-            $table->boolean('allergy_shellfish')->default(false);
-            $table->boolean('allergy_treenut')->default(false);
-            $table->boolean('allergy_sesame')->default(false);
-            $table->boolean('allergy_corn')->default(false);
-            $table->boolean('allergy_chicken')->default(false);//
-            $table->boolean('allergy_beef')->default(false);
-            $table->boolean('allergy_pork')->default(false);
-            $table->boolean('allergy_lamb')->default(false);
-            $table->boolean('allergy_gluten')->default(false);
-        */
-        // Return the data to the view
+        
         return view('mealsplansAllCust', compact('customers'));
     }
     

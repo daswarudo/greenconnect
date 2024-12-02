@@ -45,7 +45,28 @@
         @endforeach
     </tbody>
 </table>
+{{--
+                'customer.prefer_pork',
+                'customer.prefer_beef',
+                'customer.prefer_fish',
+                'customer.prefer_chicken',
+                'customer.prefer_veggie',
 
+                'customer.allergy_wheat',
+                'customer.allergy_milk',
+                'customer.allergy_egg',
+                'customer.allergy_peanut',
+                'customer.allergy_fish',
+                'customer.allergy_soy',
+                'customer.allergy_shellfish',
+                'customer.allergy_treenut',
+                'customer.allergy_sesame',
+                'customer.allergy_corn',
+                'customer.allergy_chicken',
+                'customer.allergy_beef',
+                'customer.allergy_pork',
+                'customer.allergy_lamb',
+                'customer.allergy_gluten',--}}
             
     </div>
 </div>
