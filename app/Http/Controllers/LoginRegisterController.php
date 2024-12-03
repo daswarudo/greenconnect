@@ -914,6 +914,10 @@ public function register(Request $request)
             ->select(
                 'customer.first_name',
                 'customer.last_name',
+                'customer.daily_calorie',
+                'customer.diet_recom',
+                'customer.health_condition',
+                'customer.activity_level',
 
                 'customer.prefer_pork',
                 'customer.prefer_beef',
@@ -943,6 +947,8 @@ public function register(Request $request)
 
                 'meals.meal_id',
                 'meals.meal_name',
+                'meals.calories',
+                'meals.meal_type',
 
                 'meals.allergy_wheat as meal_allergy_wheat',
                 'meals.allergy_milk as meal_allergy_milk',
