@@ -41,7 +41,6 @@
 
         $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         $weeks = [];  // Array to store meals grouped by week and day
-        $currentWeek = null;
 
         // Group meals by week and day of the week
         foreach ($sortedDetails as $detail) {
@@ -71,46 +70,79 @@
 
     @foreach ($weeks as $week)
         <tr class="week-label">
-            <td colspan="7"><strong>{{ $week['week'] }}</strong></td>
+            <td colspan="7">
+                <strong>{{ $week['week'] }}</strong><br>
+                <button class="toggle-week" onclick="toggleWeek('{{ $week['week'] }}')">Show {{ $week['week'] }}</button>
+            </td>
         </tr>
 
-        <tr>
-            @foreach ($daysOfWeek as $day)
-                <th>{{ $day }}</th>
-            @endforeach
-        </tr>
+        <tr class="week-contents" id="week-{{ $week['week'] }}" style="display:none;">
+            <td colspan="7">
+                <table>
+                    <tr>
+                        @foreach ($daysOfWeek as $day)
+                            <th>{{ $day }}</th>
+                        @endforeach
+                    </tr>
 
-        <tr>
-            @foreach ($daysOfWeek as $day)
-                <td>
-                    @foreach ($week['days'][$day] as $meal)
-                        <div>
-                            <strong>{{ $meal->meal_name }}</strong><br>
-                            <em>{{ $meal->plan_name }}</em><br>
-                            <button class="toggleButton" data-target="#content{{ $meal->meal_id }}">See More</button>
-                            <div id="content{{ $meal->meal_id }}" style="display: none;">
-                                <span id="moreText">
-                                    <b>Description:</b>{{ $meal->description }} <br>
-                                    <b>Calories: </b>{{ $meal->calories }} cal <br>
-                                    <b>Meal type: </b>{{ $meal->meal_type }} <br>
-                                    <b>Meal date: </b>{{ $meal->date }} <br>
-                                    <b>Meal time: </b>{{ $meal->time }} <br>
-                                    <b>Allergies:</b><br>
-                                    @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                        @if ($meal->{"allergy_{$allergy}"})
-                                            {{ ucfirst($allergy) }},
-                                        @endif
-                                    @endforeach
-                                </span>
-                            </div>
-                        </div>
-                    @endforeach
-                </td>
-            @endforeach
+                    <tr>
+                        @foreach ($daysOfWeek as $day)
+                            <td>
+                                @foreach ($week['days'][$day] as $meal)
+                                    <div>
+                                        <strong>{{ $meal->meal_name }}</strong><br>
+                                        <em>{{ $meal->plan_name }}</em><br>
+                                        <button class="toggleButton" data-target="#content{{ $meal->meal_id }}">See More</button>
+                                        <div id="content{{ $meal->meal_id }}" style="display: none;">
+                                            <span id="moreText">
+                                                <b>Description:</b>{{ $meal->description }} <br>
+                                                <b>Calories: </b>{{ $meal->calories }} cal <br>
+                                                <b>Meal type: </b>{{ $meal->meal_type }} <br>
+                                                <b>Meal date: </b>{{ $meal->date }} <br>
+                                                <b>Meal time: </b>{{ $meal->time }} <br>
+                                                <b>Meal Allergies:</b><br>
+                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                    @if ($meal->{"meal_allergy_{$allergy}"})
+                                                        {{ ucfirst($allergy) }},
+                                                    @endif
+                                                @endforeach
+                                                <br><b>Customer Allergies:</b><br>
+                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                    @if ($meal->{"customer_allergy_{$allergy}"})
+                                                        {{ ucfirst($allergy) }},
+                                                    @endif
+                                                @endforeach
+                                                <br><b>Recommended:</b><br>
+                                                @php
+                                                $foodNotRecommended = false;
+                                                @endphp
+
+                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                    @if ($meal->{"meal_allergy_{$allergy}"} && $meal->{"customer_allergy_{$allergy}"})
+                                                        @php
+                                                            $foodNotRecommended = true;
+                                                        @endphp
+                                                    @endif
+                                                @endforeach
+
+                                                @if ($foodNotRecommended)
+                                                    <p>Food Not Recommended: Contains Allergens the Customer is Allergic To.</p>
+                                                @else
+                                                    <p>Food Recommended.</p>
+                                                @endif
+
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </td>
+                        @endforeach
+                    </tr>
+                </table>
+            </td>
         </tr>
     @endforeach
 </tbody>
-
 
 
 
@@ -146,6 +178,17 @@
             }
         });
     });
+    function toggleWeek(weekName) {
+        var weekContent = document.getElementById('week-' + weekName);
+        var toggleButton = weekContent.previousElementSibling.querySelector('.toggle-week');
 
+        if (weekContent.style.display === 'none') {
+            weekContent.style.display = 'table-row';  // Show the content
+            toggleButton.textContent = 'Hide ' + weekName;  // Change button text to 'Hide'
+        } else {
+            weekContent.style.display = 'none';  // Hide the content
+            toggleButton.textContent = 'Show ' + weekName;  // Change button text to 'Show'
+        }
+    }
 </script>
 </html>

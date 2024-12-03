@@ -824,40 +824,56 @@ public function register(Request $request)
         ->get();*/
 
         $details = DB::table('customer as a')
-        ->join('subscriptions as b', 'a.customer_id', '=', 'b.customer_id')
-        ->join('subscription_type as c', 'b.subscription_type_id', '=', 'c.subscription_type_id')
-        ->join('meals as d', 'c.subscription_type_id', '=', 'd.subscription_type_id')
-        ->select(
-            'a.first_name',
-            'a.last_name',
-            'b.subscription_id',
-            'c.plan_name',
-            'd.meal_id',
-            'd.meal_name',
-            'd.date',
-            'd.time',
-            'd.description',
-                'd.calories',
-                'd.meal_type',
-                'd.allergy_wheat',
-                'd.allergy_milk',
-                'd.allergy_egg',
-                'd.allergy_peanut',
-                'd.allergy_fish',
-                'd.allergy_soy',
-                'd.allergy_shellfish',
-                'd.allergy_treenut',
-                'd.allergy_sesame',
-                'd.allergy_corn',
-                'd.allergy_chicken',
-                'd.allergy_beef',
-                'd.allergy_pork',
-                'd.allergy_lamb',
-                'd.allergy_gluten',
-        )
-        ->where('a.customer_id', $loginId)
-        ->where('b.sub_status', 'active') // Add condition to filter active subscriptions
-        ->get();
+    ->join('subscriptions as b', 'a.customer_id', '=', 'b.customer_id')
+    ->join('subscription_type as c', 'b.subscription_type_id', '=', 'c.subscription_type_id')
+    ->join('meals as d', 'c.subscription_type_id', '=', 'd.subscription_type_id')
+    ->select(
+        'a.first_name',
+        'a.last_name',
+        'b.subscription_id',
+        'c.plan_name',
+        'd.meal_id',
+        'd.meal_name',
+        'd.date',
+        'd.time',
+        'd.description',
+        'd.calories',
+        'd.meal_type',
+        'd.allergy_wheat as meal_allergy_wheat',
+        'd.allergy_milk as meal_allergy_milk',
+        'd.allergy_egg as meal_allergy_egg',
+        'd.allergy_peanut as meal_allergy_peanut',
+        'd.allergy_fish as meal_allergy_fish',
+        'd.allergy_soy as meal_allergy_soy',
+        'd.allergy_shellfish as meal_allergy_shellfish',
+        'd.allergy_treenut as meal_allergy_treenut',
+        'd.allergy_sesame as meal_allergy_sesame',
+        'd.allergy_corn as meal_allergy_corn',
+        'd.allergy_chicken as meal_allergy_chicken',
+        'd.allergy_beef as meal_allergy_beef',
+        'd.allergy_pork as meal_allergy_pork',
+        'd.allergy_lamb as meal_allergy_lamb',
+        'd.allergy_gluten as meal_allergy_gluten',
+        'a.allergy_wheat as customer_allergy_wheat',  // Alias for customer allergy
+        'a.allergy_milk as customer_allergy_milk',  // Alias for customer allergy
+        'a.allergy_egg as customer_allergy_egg',  // Alias for customer allergy
+        'a.allergy_peanut as customer_allergy_peanut',  // Alias for customer allergy
+        'a.allergy_fish as customer_allergy_fish',  // Alias for customer allergy
+        'a.allergy_soy as customer_allergy_soy',  // Alias for customer allergy
+        'a.allergy_shellfish as customer_allergy_shellfish',  // Alias for customer allergy
+        'a.allergy_treenut as customer_allergy_treenut',  // Alias for customer allergy
+        'a.allergy_sesame as customer_allergy_sesame',  // Alias for customer allergy
+        'a.allergy_corn as customer_allergy_corn',  // Alias for customer allergy
+        'a.allergy_chicken as customer_allergy_chicken',  // Alias for customer allergy
+        'a.allergy_beef as customer_allergy_beef',  // Alias for customer allergy
+        'a.allergy_pork as customer_allergy_pork',  // Alias for customer allergy
+        'a.allergy_lamb as customer_allergy_lamb',  // Alias for customer allergy
+        'a.allergy_gluten as customer_allergy_gluten'  // Alias for customer allergy
+    )
+    ->where('a.customer_id', $loginId)
+    ->where('b.sub_status', 'active') // Add condition to filter active subscriptions
+    ->get();
+
 
 
         return view('customerMeals', compact('details'));
