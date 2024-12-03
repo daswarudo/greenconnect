@@ -834,6 +834,8 @@ public function register(Request $request)
             'c.plan_name',
             'd.meal_id',
             'd.meal_name',
+            'd.date',
+            'd.time',
             'd.description',
                 'd.calories',
                 'd.meal_type',

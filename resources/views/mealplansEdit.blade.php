@@ -98,18 +98,18 @@
                 
                 
                 <!-- Date Input -->
-<div class="form-group">
-     <!--<label for="date"><br><b>Date</b></label><br>-->
-    <input name="date" id="date" class="form-control" 
-        value="{{ old('date', $meal->date) }}"  type="hidden" style="width: 50vh;"  type="hidden">
-</div>
+                <div class="form-group">
+                    <label for="date"><br><b>Date</b></label><br>
+                    <input name="date" id="date" class="form-control" 
+                        value="{{ old('date', $meal->date) }}" style="width: 50vh;"  type="date">
+                </div>
 
-<!-- Time Input -->
-<div class="form-group">
-    <!--<label for="time"><br><b>Time</b></label><br>-->
-    <input name="time" id="time" class="form-control" 
-        value="{{ old('time', \Carbon\Carbon::parse($meal->time)->format('H:i')) }}"  style="width: 50vh;"  type="hidden">
-</div>
+                <!-- Time Input -->
+                <div class="form-group">
+                    <label for="time"><br><b>Time</b></label><br>
+                    <input name="time" id="time" class="form-control" 
+                        value="{{ old('time', \Carbon\Carbon::parse($meal->time)->format('H:i')) }}"  style="width: 50vh;"  type="time">
+                </div>
 
                 
                 <label for="description"><br><b>Allergens</b></label>

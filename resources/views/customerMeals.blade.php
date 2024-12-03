@@ -29,111 +29,91 @@
 
     <div style="overflow: scroll;height: 70vh;margin-top:2vh;">
     <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th hidden>Meal ID</th>
-                <th>Meal Name</th>
-                <th>Plan Name</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            @foreach ($details as $detail)
-                <tr>
-                    <td hidden>{{ $detail->meal_id }}</td>
-                    <td>{{ $detail->meal_name }}</td>
-                    <td>{{ $detail->plan_name }}</td>
-                    <td>
-                    
-                    <button class="toggleButton" data-target="#content{{ $detail->meal_id }}">See More</button>
-                    <div id="content{{ $detail->meal_id }}" style="display: none;">
-                        <span id="moreText">
-                            <b>Description:</b>{{ $detail->description }}  <br>
-                            <b>Calories: </b>{{ $detail->calories }} cal <br>
-                            <b>Meal type: </b>{{ $detail->meal_type }}    <br>
-                            <b>Allergies:</b><br>
-                            @if ($detail->allergy_wheat)
-                                Wheat,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_milk)
-                                Milk,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_egg)
-                                Egg,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_peanut)
-                                Peanut,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_fish)
-                                Fish,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_soy)
-                                Soy,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_shellfish)
-                                Shellfish,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_treenut)
-                                Treenut,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_sesame)
-                                Sesame,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_corn)
-                                Corn,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_chicken)
-                                Chicken,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_beef)
-                                Beef,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_pork)
-                                Pork,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_lamb)
-                                Lamb,
-                            @else
-                                
-                            @endif
-                            @if ($detail->allergy_gluten)
-                                Gluten
-                            @else
-                                
-                            @endif
-                            
-                            </span>
-                        </div>
-                    </td>
-                </tr>
+        
+    </table>
+    
+    <table>
+    <tbody id="tableBody">
+    @php
+        $sortedDetails = $details->sortBy(function($detail) {
+            return \Carbon\Carbon::parse($detail->date)->dayOfWeek;
+        });
+
+        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        $weeks = [];  // Array to store meals grouped by week and day
+        $currentWeek = null;
+
+        // Group meals by week and day of the week
+        foreach ($sortedDetails as $detail) {
+            $mealDay = \Carbon\Carbon::parse($detail->date)->format('l'); // Get full day name
+            $weekNumber = \Carbon\Carbon::parse($detail->date)->weekOfMonth; // Get the week number of the month
+
+            // Create week entry if it doesn't exist
+            if (!isset($weeks[$weekNumber])) {
+                $weeks[$weekNumber] = [
+                    'week' => 'Week ' . $weekNumber,
+                    'days' => [
+                        'Monday' => [],
+                        'Tuesday' => [],
+                        'Wednesday' => [],
+                        'Thursday' => [],
+                        'Friday' => [],
+                        'Saturday' => [],
+                        'Sunday' => []
+                    ]
+                ];
+            }
+
+            // Group meals by the corresponding week and day
+            $weeks[$weekNumber]['days'][$mealDay][] = $detail;
+        }
+    @endphp
+
+    @foreach ($weeks as $week)
+        <tr class="week-label">
+            <td colspan="7"><strong>{{ $week['week'] }}</strong></td>
+        </tr>
+
+        <tr>
+            @foreach ($daysOfWeek as $day)
+                <th>{{ $day }}</th>
             @endforeach
-        </tbody>
+        </tr>
+
+        <tr>
+            @foreach ($daysOfWeek as $day)
+                <td>
+                    @foreach ($week['days'][$day] as $meal)
+                        <div>
+                            <strong>{{ $meal->meal_name }}</strong><br>
+                            <em>{{ $meal->plan_name }}</em><br>
+                            <button class="toggleButton" data-target="#content{{ $meal->meal_id }}">See More</button>
+                            <div id="content{{ $meal->meal_id }}" style="display: none;">
+                                <span id="moreText">
+                                    <b>Description:</b>{{ $meal->description }} <br>
+                                    <b>Calories: </b>{{ $meal->calories }} cal <br>
+                                    <b>Meal type: </b>{{ $meal->meal_type }} <br>
+                                    <b>Meal date: </b>{{ $meal->date }} <br>
+                                    <b>Meal time: </b>{{ $meal->time }} <br>
+                                    <b>Allergies:</b><br>
+                                    @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                        @if ($meal->{"allergy_{$allergy}"})
+                                            {{ ucfirst($allergy) }},
+                                        @endif
+                                    @endforeach
+                                </span>
+                            </div>
+                        </div>
+                    @endforeach
+                </td>
+            @endforeach
+        </tr>
+    @endforeach
+</tbody>
+
+
+
+
     </table>
     </div>
 

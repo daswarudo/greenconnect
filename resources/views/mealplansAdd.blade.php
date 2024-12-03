@@ -86,14 +86,14 @@
                 
                 <!-- Date Input -->
                 <div class="form-group">
-                    <!--<label for="date"><br><b>Date</b></label><br>-->
-                    <input name="date" id="date" class="form-control" style="width: 50vh;"  type="hidden">
+                    <label for="date"><br><b>Date</b></label><br>
+                    <input name="date" id="date" class="form-control" style="width: 50vh;"  type="date">
                 </div>
 
                 <!-- Time Input -->
                 <div class="form-group">
-                    <!--<label for="time"><br><b>Time</b></label><br>-->
-                    <input name="time" id="time" class="form-control"  style="width: 50vh;"  type="hidden">
+                    <label for="time"><br><b>Time</b></label><br>
+                    <input name="time" id="time" class="form-control"  style="width: 50vh;"  type="time">
                 </div>
                 
                 <label for="description"><br><b>Allergens</b></label>
