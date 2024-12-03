@@ -94,6 +94,36 @@
                                                 <b>Customer Activity Level: </b>{{ $customer->activity_level }}<br>
                                                 <b>Meal Calories: </b>{{ $customer->calories }} cal<br>
                                                 <b>Meal Type: </b>{{ $customer->meal_type }}<br>
+                                                <b>Meal Allergies:</b><br>
+                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                    @if ($customer->{"meal_allergy_{$allergy}"})
+                                                        {{ ucfirst($allergy) }},
+                                                    @endif
+                                                @endforeach
+                                                <br><b>Customer Allergies:</b><br>
+                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                    @if ($customer->{"customer_allergy_{$allergy}"})
+                                                        {{ ucfirst($allergy) }},
+                                                    @endif
+                                                @endforeach
+                                                <br><b>Recommended:</b>
+                                                @php
+                                                $foodNotRecommended = false;
+                                                @endphp
+
+                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                    @if ($customer->{"meal_allergy_{$allergy}"} && $customer->{"customer_allergy_{$allergy}"})
+                                                        @php
+                                                            $foodNotRecommended = true;
+                                                        @endphp
+                                                    @endif
+                                                @endforeach
+
+                                                @if ($foodNotRecommended)
+                                                    <p>Food Not Recommended: Contains Allergens the Customer is Allergic To.</p>
+                                                @else
+                                                    <p>Food Recommended.</p>
+                                                @endif
                                             </div>
                                             <button type="button" class="toggle-details btn btn-sm btn-primary">Show Details</button>
                                         </td>
