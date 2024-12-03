@@ -46,6 +46,9 @@
             <tr>
                 <td colspan="6" style="font-weight: bold; text-align: center; background-color: #e0e0e0;">
                     Week {{ $weekNumber }}
+                    <button type="button" class="toggle-week btn btn-sm btn-link" data-target="week-{{ $weekNumber }}">
+                        Show Days
+                    </button>
                 </td>
             </tr>
 
@@ -56,84 +59,93 @@
                 });
             @endphp
 
-            @foreach($groupedByDay as $day => $customersByDay)
-                <tr>
-                    <td colspan="6" style="font-weight: bold; text-align: center; background-color: #f9f9f9;">
-                        {{ $day }}<br>
-                        <button type="button" class="toggle-day btn btn-sm btn-link" data-target="day-{{ $weekNumber }}-{{ $day }}">
-                            Show/Hide
-                        </button>
-                    </td>
-                </tr>
-                <tr class="day-container" id="day-{{ $weekNumber }}-{{ $day }}" style="display: none;">
-                    <td colspan="6">
-                        <table class="table">
-                            <thead>
+            <tr id="week-{{ $weekNumber }}" class="week-container" style="display: none;">
+                <td colspan="6">
+                    <table class="table">
+                        
+                        <tbody>
+                            @foreach($groupedByDay as $day => $customersByDay)
                                 <tr>
-                                    <th></th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Subscription Type</th>
-                                    <th>Meal Name</th>
+                                    <td colspan="6" style="font-weight: bold; text-align: center; background-color: #f9f9f9;">
+                                        {{ $day }}<br>
+                                        <button type="button" class="toggle-day btn btn-sm btn-link" data-target="day-{{ $weekNumber }}-{{ $day }}">
+                                            Show/Hide
+                                        </button>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($customersByDay as $customer)
-                                    <tr>
-                                        <td></td>
-                                        <td>{{ $customer->first_name }}</td>
-                                        <td>{{ $customer->last_name }}</td>
-                                        <td>{{ $customer->subscription_type }}</td>
-                                        <td>{{ $customer->meal_name }}</td>
-                                        <td>
-                                            <div class="details" style="display: none;">
-                                                <b>Date: </b>{{ $customer->date }}<br>
-                                                <b>Customer Daily Calorie: </b>{{ $customer->daily_calorie }} cal<br>
-                                                <b>Customer Diet Recommended: </b>{{ $customer->diet_recom }}<br>
-                                                <b>Customer Health Condition: </b>{{ $customer->health_condition }}<br>
-                                                <b>Customer Activity Level: </b>{{ $customer->activity_level }}<br>
-                                                <b>Meal Calories: </b>{{ $customer->calories }} cal<br>
-                                                <b>Meal Type: </b>{{ $customer->meal_type }}<br>
-                                                <b>Meal Allergies:</b><br>
-                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                    @if ($customer->{"meal_allergy_{$allergy}"})
-                                                        {{ ucfirst($allergy) }},
-                                                    @endif
-                                                @endforeach
-                                                <br><b>Customer Allergies:</b><br>
-                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                    @if ($customer->{"customer_allergy_{$allergy}"})
-                                                        {{ ucfirst($allergy) }},
-                                                    @endif
-                                                @endforeach
-                                                <br><b>Recommended:</b>
-                                                @php
-                                                $foodNotRecommended = false;
-                                                @endphp
+                                <tr class="day-container" id="day-{{ $weekNumber }}-{{ $day }}" style="display: none;">
+                                    <td colspan="6">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Subscription Type</th>
+                                                    <th>Meal Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($customersByDay as $customer)
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>{{ $customer->first_name }}</td>
+                                                        <td>{{ $customer->last_name }}</td>
+                                                        <td>{{ $customer->subscription_type }}</td>
+                                                        <td>{{ $customer->meal_name }}</td>
+                                                        <td>
+                                                            <div class="details" style="display: none;">
+                                                                <b>Date: </b>{{ $customer->date }}<br>
+                                                                <b>Customer Daily Calorie: </b>{{ $customer->daily_calorie }} cal<br>
+                                                                <b>Customer Diet Recommended: </b>{{ $customer->diet_recom }}<br>
+                                                                <b>Customer Health Condition: </b>{{ $customer->health_condition }}<br>
+                                                                <b>Customer Activity Level: </b>{{ $customer->activity_level }}<br>
+                                                                <b>Meal Calories: </b>{{ $customer->calories }} cal<br>
+                                                                <b>Meal Type: </b>{{ $customer->meal_type }}<br>
+                                                                <b>Meal Allergies:</b><br>
+                                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                                    @if ($customer->{"meal_allergy_{$allergy}"})
+                                                                        {{ ucfirst($allergy) }},
+                                                                    @endif
+                                                                @endforeach
+                                                                <br><b>Customer Allergies:</b><br>
+                                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                                    @if ($customer->{"customer_allergy_{$allergy}"})
+                                                                        {{ ucfirst($allergy) }},
+                                                                    @endif
+                                                                @endforeach
+                                                                <br><b>Recommended:</b>
+                                                                @php
+                                                                $foodNotRecommended = false;
+                                                                @endphp
 
-                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                    @if ($customer->{"meal_allergy_{$allergy}"} && $customer->{"customer_allergy_{$allergy}"})
-                                                        @php
-                                                            $foodNotRecommended = true;
-                                                        @endphp
-                                                    @endif
-                                                @endforeach
+                                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                                    @if ($customer->{"meal_allergy_{$allergy}"} && $customer->{"customer_allergy_{$allergy}"})
+                                                                        @php
+                                                                            $foodNotRecommended = true;
+                                                                        @endphp
+                                                                    @endif
+                                                                @endforeach
 
-                                                @if ($foodNotRecommended)
-                                                    <p>Food Not Recommended: Contains Allergens the Customer is Allergic To.</p>
-                                                @else
-                                                    <p>Food Recommended.</p>
-                                                @endif
-                                            </div>
-                                            <button type="button" class="toggle-details btn btn-sm btn-primary">Show Details</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            @endforeach
+                                                                @if ($foodNotRecommended)
+                                                                    <p>Food Not Recommended: Contains Allergens the Customer is Allergic To.</p>
+                                                                @else
+                                                                    <p>Food Recommended.</p>
+                                                                @endif
+                                                            </div>
+                                                            <button type="button" class="toggle-details btn btn-sm btn-primary">Show Details</button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
         @endforeach
     </tbody>
 </table>
@@ -159,29 +171,47 @@
             });
         });
     });
-    document.addEventListener('DOMContentLoaded', function () {
-        // Toggle visibility for days
-        document.querySelectorAll('.toggle-day').forEach(function (button) {
-            button.addEventListener('click', function () {
-                const targetId = button.getAttribute('data-target');
-                const target = document.getElementById(targetId);
-                if (target.style.display === 'none') {
-                    target.style.display = 'table-row';
+    document.addEventListener("DOMContentLoaded", function() {
+        // Add event listener to toggle the visibility of the week days
+        let toggleWeekButtons = document.querySelectorAll('.toggle-week');
+        toggleWeekButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                let targetId = button.getAttribute('data-target');
+                let weekContainer = document.getElementById(targetId);
+                if (weekContainer.style.display === 'none') {
+                    weekContainer.style.display = 'table-row'; // Show the days for that week
+                    button.textContent = 'Hide Days'; // Change button text to "Hide Days"
                 } else {
-                    target.style.display = 'none';
+                    weekContainer.style.display = 'none'; // Hide the days for that week
+                    button.textContent = 'Show Days'; // Change button text to "Show Days"
                 }
             });
         });
 
-        // Toggle visibility for customer details
-        document.querySelectorAll('.toggle-details').forEach(function (button) {
-            button.addEventListener('click', function () {
-                const details = button.previousElementSibling;
-                if (details.style.display === 'none') {
-                    details.style.display = 'block';
+        // Add event listeners to toggle the visibility of each day
+        let toggleDayButtons = document.querySelectorAll('.toggle-day');
+        toggleDayButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                let targetId = button.getAttribute('data-target');
+                let dayRow = document.getElementById(targetId);
+                if (dayRow.style.display === 'none') {
+                    dayRow.style.display = 'table-row'; // Show the day row
+                } else {
+                    dayRow.style.display = 'none'; // Hide the day row
+                }
+            });
+        });
+
+        // Add event listeners to toggle the visibility of customer details
+        let detailsButtons = document.querySelectorAll('.toggle-details');
+        detailsButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                let detailsDiv = button.closest('td').querySelector('.details');
+                if (detailsDiv.style.display === 'none') {
+                    detailsDiv.style.display = 'block';
                     button.textContent = 'Hide Details';
                 } else {
-                    details.style.display = 'none';
+                    detailsDiv.style.display = 'none';
                     button.textContent = 'Show Details';
                 }
             });
