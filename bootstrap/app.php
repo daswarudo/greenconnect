@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-//use App\Http\Middleware\CheckUserType;
+use App\Http\Middleware\NoCacheHeaders;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,7 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\ValidatePostSize::class,
             \Illuminate\Foundation\Http\Middleware\TrimStrings::class,
             \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+            
         ]);
+        $middleware->append(NoCacheHeaders::class);
    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
