@@ -35,68 +35,73 @@
     <table>
     <tbody id="tableBody">
     @php
-        $sortedDetails = $details->sortBy(function($detail) {
-            return \Carbon\Carbon::parse($detail->date)->dayOfWeek;
-        });
+    // Step 1: Sort the details by date
+    $sortedDetails = $details->sortBy(function($detail) {
+        return \Carbon\Carbon::parse($detail->date)->dayOfWeek;
+    });
 
-        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        $weeks = [];  // Array to store meals grouped by week and day
+    $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $weeks = []; // Array to store meals grouped by week and day
 
-        // Group meals by week and day of the week
-        foreach ($sortedDetails as $detail) {
-            $mealDay = \Carbon\Carbon::parse($detail->date)->format('l'); // Get full day name
-            $weekNumber = \Carbon\Carbon::parse($detail->date)->weekOfMonth; // Get the week number of the month
+    // Step 2: Group meals by week and day of the week
+    foreach ($sortedDetails as $detail) {
+        $mealDay = \Carbon\Carbon::parse($detail->date)->format('l'); // Get full day name
+        $weekNumber = \Carbon\Carbon::parse($detail->date)->weekOfMonth; // Get the week number of the month
 
-            // Create week entry if it doesn't exist
-            if (!isset($weeks[$weekNumber])) {
-                $weeks[$weekNumber] = [
-                    'week' => 'Week ' . $weekNumber,
-                    'days' => [
-                        'Monday' => [],
-                        'Tuesday' => [],
-                        'Wednesday' => [],
-                        'Thursday' => [],
-                        'Friday' => [],
-                        'Saturday' => [],
-                        'Sunday' => []
-                    ]
-                ];
-            }
-
-            // Group meals by the corresponding week and day
-            $weeks[$weekNumber]['days'][$mealDay][] = $detail;
+        // Create week entry if it doesn't exist
+        if (!isset($weeks[$weekNumber])) {
+            $weeks[$weekNumber] = [
+                'week' => 'Week ' . $weekNumber,
+                'days' => [
+                    'Monday' => [],
+                    'Tuesday' => [],
+                    'Wednesday' => [],
+                    'Thursday' => [],
+                    'Friday' => [],
+                    'Saturday' => [],
+                    'Sunday' => []
+                ]
+            ];
         }
-    @endphp
 
-    @foreach ($weeks as $week)
-        <tr class="week-label">
-            <td colspan="7">
-                <strong>{{ $week['week'] }}</strong><br>
-                <button class="toggle-week" onclick="toggleWeek('{{ $week['week'] }}')">Show {{ $week['week'] }}</button>
-            </td>
-        </tr>
+        // Group meals by the corresponding week and day
+        $weeks[$weekNumber]['days'][$mealDay][] = $detail;
+    }
 
-        <tr class="week-contents" id="week-{{ $week['week'] }}" style="display:none;">
-            <td colspan="7">
-                <table>
-                    <tr>
-                        @foreach ($daysOfWeek as $day)
-                            <th>{{ $day }}</th>
-                        @endforeach
-                    </tr>
+    // Step 3: Sort the weeks array by week number
+    ksort($weeks); // Sorts the weeks by their keys (week numbers) in ascending order
+@endphp
 
-                    <tr>
-                        @foreach ($daysOfWeek as $day)
-                            <td>
-                                @foreach ($week['days'][$day] as $meal)
-                                    <div>
-                                        <strong>{{ $meal->meal_name }}</strong><br>
-                                        
-                                        <button class="toggleButton" data-target="#content{{ $meal->meal_id }}">See More</button>
-                                        <div id="content{{ $meal->meal_id }}" style="display: none;">
-                                            <span id="moreText">
+<!-- Rest of the code remains unchanged -->
+@foreach ($weeks as $week)
+    <tr class="week-label">
+        <td colspan="7">
+            <strong>{{ $week['week'] }}</strong><br>
+            <button class="toggle-week" onclick="toggleWeek('{{ $week['week'] }}')">Show {{ $week['week'] }}</button>
+        </td>
+    </tr>
+
+    <tr class="week-contents" id="week-{{ $week['week'] }}" style="display:none;">
+        <td colspan="7">
+            <table>
+                <tr>
+                    @foreach ($daysOfWeek as $day)
+                        <th>{{ $day }}</th>
+                    @endforeach
+                </tr>
+
+                <tr>
+                    @foreach ($daysOfWeek as $day)
+                        <td>
+                            @foreach ($week['days'][$day] as $meal)
+                                <div>
+                                    <strong>{{ $meal->meal_name }}</strong><br>
+                                    
+                                    <button class="toggleButton" data-target="#content{{ $meal->meal_id }}">See More</button>
+                                    <div id="content{{ $meal->meal_id }}" style="display: none;">
+                                        <span id="moreText">
                                             <em>{{ $meal->plan_name }}</em><br>
-                                                <b>Description:</b>{{ $meal->description }} <br>
+                                            <b>Description:</b>{{ $meal->description }} <br>
                                                 <b>Calories: </b>{{ $meal->calories }} cal <br>
                                                 <b>Meal type: </b>{{ $meal->meal_type }} <br>
                                                 <b>Meal date: </b>{{ $meal->date }} <br>
@@ -132,19 +137,17 @@
                                                     <p>Food Recommended.</p>
                                                 @endif
 
-                                            </span>
-                                        </div>
+                                        </span>
                                     </div>
-                                @endforeach
-                            </td>
-                        @endforeach
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    @endforeach
-</tbody>
-
+                                </div>
+                            @endforeach
+                        </td>
+                    @endforeach
+                </tr>
+            </table>
+        </td>
+    </tr>
+@endforeach
 
 
     </table>

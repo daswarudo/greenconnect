@@ -25,215 +25,94 @@
     <div class="container" style="overflow: scroll;height: 70vh;margin-top:2vh;">
     
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Subscription Type</th>
-            <th>Meal Name</th>
-            <th></th>
-        </tr>
-    </thead>
+    <table class="table table-striped">
     <tbody>
-        @foreach($customers as $customer)
+        @php
+            // Determine the earliest date to establish "Week 1"
+            $earliestDate = $customers->min('date');
+            $startOfWeek = \Carbon\Carbon::parse($earliestDate)->startOfWeek();
+
+            // Group customers by relative week (starting from the first detected week)
+            $groupedByWeek = $customers->groupBy(function ($customer) use ($startOfWeek) {
+                $currentDate = \Carbon\Carbon::parse($customer->date);
+                return $startOfWeek->diffInWeeks($currentDate) + 1; // Calculate relative week number
+            });
+
+            // Sort weeks numerically
+            $sortedWeeks = $groupedByWeek->sortKeys();
+        @endphp
+
+        @foreach($sortedWeeks as $weekNumber => $customersInWeek)
             <tr>
-                <td>{{ $customer->first_name }}</td>
-                <td>{{ $customer->last_name }}</td>
-                <td>{{ $customer->subscription_type }}</td>
-                <td>{{ $customer->meal_name }}</td>
-                <td>
-                    
-                    <div class="details" style="display: none;">
-                            <b>Customer Daily Calorie: </b>{{ $customer->daily_calorie }} cal <br>
-                            <b>Customer Diet Recommended: </b>{{ $customer->diet_recom }}<br>
-                            <b>Customer Health Condition: </b>{{ $customer->health_condition }}<br>
-                            <b>Customer Activity Level: </b>{{ $customer->activity_level }}<br>
-                            
-                            <b>Customer Food Preference:</b><br>
-                            @if ($customer->prefer_pork)
-                                Pork,
-                            @else
-                            @endif
-                            @if ($customer->prefer_beef)
-                                Beef,
-                            @else
-                            @endif
-                            @if ($customer->prefer_fish)
-                                Fish,
-                            @else
-                            @endif
-                            @if ($customer->prefer_chicken)
-                                Chicken,
-                            @else
-                            @endif
-                            @if ($customer->prefer_veggie)
-                                Veggie,
-                            @else
-                            @endif
-                            <br>
-                            <b>Customer Allergies:</b><br>
-                            @if ($customer->customer_allergy_wheat)
-                                Wheat,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_milk)
-                                Milk,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_egg)
-                                Egg,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_peanut)
-                                Peanut,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_fish)
-                                Fish,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_soy)
-                                Soy,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_shellfish)
-                                Shellfish,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_treenut)
-                                Treenut,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_sesame)
-                                Sesame,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_corn)
-                                Corn,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_chicken)
-                                Chicken,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_beef)
-                                Beef,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_pork)
-                                Pork,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_lamb)
-                                Lamb,
-                            @else
-                                
-                            @endif
-                            @if ($customer->customer_allergy_gluten)
-                                Gluten
-                            @else
-                                
-                            @endif
-                            <br>
-                            <b>Meal Calories: </b>{{ $customer->calories }} cal <br>
-                            <b>Meal type: </b>{{ $customer->meal_type }}    <br>
-                            <b>Meals Allergies:</b><br>
-                            @if ($customer->meal_allergy_wheat)
-                                Wheat,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_milk)
-                                Milk,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_egg)
-                                Egg,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_peanut)
-                                Peanut,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_fish)
-                                Fish,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_soy)
-                                Soy,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_shellfish)
-                                Shellfish,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_treenut)
-                                Treenut,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_sesame)
-                                Sesame,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_corn)
-                                Corn,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_chicken)
-                                Chicken,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_beef)
-                                Beef,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_pork)
-                                Pork,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_lamb)
-                                Lamb,
-                            @else
-                                
-                            @endif
-                            @if ($customer->meal_allergy_gluten)
-                                Gluten
-                            @else
-                                
-                            @endif
-                    </div>
-                    <button type="button" class="toggle-details btn btn-sm btn-primary">Show Details</button>
+                <td colspan="6" style="font-weight: bold; text-align: center; background-color: #e0e0e0;">
+                    Week {{ $weekNumber }}
                 </td>
             </tr>
+
+            @php
+                // Further group customers in the week by weekday
+                $groupedByDay = $customersInWeek->groupBy(function ($customer) {
+                    return \Carbon\Carbon::parse($customer->date)->format('l'); // Full weekday name
+                });
+            @endphp
+
+            @foreach($groupedByDay as $day => $customersByDay)
+                <tr>
+                    <td colspan="6" style="font-weight: bold; text-align: center; background-color: #f9f9f9;">
+                        {{ $day }}<br>
+                        <button type="button" class="toggle-day btn btn-sm btn-link" data-target="day-{{ $weekNumber }}-{{ $day }}">
+                            Show/Hide
+                        </button>
+                    </td>
+                </tr>
+                <tr class="day-container" id="day-{{ $weekNumber }}-{{ $day }}" style="display: none;">
+                    <td colspan="6">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Subscription Type</th>
+                                    <th>Meal Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($customersByDay as $customer)
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $customer->first_name }}</td>
+                                        <td>{{ $customer->last_name }}</td>
+                                        <td>{{ $customer->subscription_type }}</td>
+                                        <td>{{ $customer->meal_name }}</td>
+                                        <td>
+                                            <div class="details" style="display: none;">
+                                                <b>Date: </b>{{ $customer->date }}<br>
+                                                <b>Customer Daily Calorie: </b>{{ $customer->daily_calorie }} cal<br>
+                                                <b>Customer Diet Recommended: </b>{{ $customer->diet_recom }}<br>
+                                                <b>Customer Health Condition: </b>{{ $customer->health_condition }}<br>
+                                                <b>Customer Activity Level: </b>{{ $customer->activity_level }}<br>
+                                                <b>Meal Calories: </b>{{ $customer->calories }} cal<br>
+                                                <b>Meal Type: </b>{{ $customer->meal_type }}<br>
+                                            </div>
+                                            <button type="button" class="toggle-details btn btn-sm btn-primary">Show Details</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            @endforeach
         @endforeach
     </tbody>
 </table>
+
+
+
+
+
+
 
             
     </div>
@@ -251,17 +130,30 @@
         });
     });
     document.addEventListener('DOMContentLoaded', function () {
-        // Add click event to all toggle buttons
-        document.querySelectorAll('.toggle-details').forEach(button => {
+        // Toggle visibility for days
+        document.querySelectorAll('.toggle-day').forEach(function (button) {
             button.addEventListener('click', function () {
-                const detailsDiv = this.previousElementSibling;
-                const isVisible = detailsDiv.style.display === 'block';
+                const targetId = button.getAttribute('data-target');
+                const target = document.getElementById(targetId);
+                if (target.style.display === 'none') {
+                    target.style.display = 'table-row';
+                } else {
+                    target.style.display = 'none';
+                }
+            });
+        });
 
-                // Toggle visibility
-                detailsDiv.style.display = isVisible ? 'none' : 'block';
-
-                // Update button text
-                this.textContent = isVisible ? 'Show Details' : 'Hide Details';
+        // Toggle visibility for customer details
+        document.querySelectorAll('.toggle-details').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const details = button.previousElementSibling;
+                if (details.style.display === 'none') {
+                    details.style.display = 'block';
+                    button.textContent = 'Hide Details';
+                } else {
+                    details.style.display = 'none';
+                    button.textContent = 'Show Details';
+                }
             });
         });
     });
