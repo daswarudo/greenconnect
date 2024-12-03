@@ -980,6 +980,8 @@ public function register(Request $request)
                 'meals.meal_name',
                 'meals.calories',
                 'meals.meal_type',
+                'meals.time',
+                'meals.date',
 
                 'meals.allergy_wheat as meal_allergy_wheat',
                 'meals.allergy_milk as meal_allergy_milk',

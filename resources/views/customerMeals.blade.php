@@ -91,10 +91,11 @@
                                 @foreach ($week['days'][$day] as $meal)
                                     <div>
                                         <strong>{{ $meal->meal_name }}</strong><br>
-                                        <em>{{ $meal->plan_name }}</em><br>
+                                        
                                         <button class="toggleButton" data-target="#content{{ $meal->meal_id }}">See More</button>
                                         <div id="content{{ $meal->meal_id }}" style="display: none;">
                                             <span id="moreText">
+                                            <em>{{ $meal->plan_name }}</em><br>
                                                 <b>Description:</b>{{ $meal->description }} <br>
                                                 <b>Calories: </b>{{ $meal->calories }} cal <br>
                                                 <b>Meal type: </b>{{ $meal->meal_type }} <br>
