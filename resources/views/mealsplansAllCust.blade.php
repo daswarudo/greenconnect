@@ -45,7 +45,7 @@
         @foreach($sortedWeeks as $weekNumber => $customersInWeek)
             <tr>
                 <td colspan="6" style="font-weight: bold; text-align: center; background-color: #e0e0e0;">
-                    Week {{ $weekNumber }}
+                    Week {{ $weekNumber }}<br>
                     <button type="button" class="toggle-week btn btn-sm btn-link" data-target="week-{{ $weekNumber }}">
                         Show Days
                     </button>
@@ -69,7 +69,7 @@
                                     <td colspan="6" style="font-weight: bold; text-align: center; background-color: #f9f9f9;">
                                         {{ $day }}<br>
                                         <button type="button" class="toggle-day btn btn-sm btn-link" data-target="day-{{ $weekNumber }}-{{ $day }}">
-                                            Show/Hide
+                                            View Details
                                         </button>
                                     </td>
                                 </tr>
