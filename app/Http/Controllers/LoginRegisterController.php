@@ -280,6 +280,7 @@ public function register(Request $request)
 
     public function logout(Request $request)
     {
+        /*
         // Clear the session data
         $request->session()->flush();
 
@@ -287,7 +288,19 @@ public function register(Request $request)
         session()->flash('message', 'You have been logged out successfully.');
 
         // Redirect to the login page
-        return redirect()->route('login');
+        return redirect()->route('login');*/
+        // Clear the session data
+        $request->session()->flush();
+
+        // Flash a success message
+        session()->flash('message', 'You have been logged out successfully.');
+
+        // Prevent caching of the previous page
+        return redirect()->route('login')->withHeaders([
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            'Pragma' => 'no-cache',
+            'Expires' => '0',
+    ]);
     }
     /*
     public function showCustomerDashboard()
