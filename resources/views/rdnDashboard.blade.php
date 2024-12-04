@@ -116,7 +116,7 @@
         <tr>
             <th onclick="sortTable(0, 'subscriptionsTable1')">Customer Name</th>
             <th onclick="sortTable(1, 'subscriptionsTable1')">Plan Name</th>
-            <th onclick="sortTable(2, 'subscriptionsTable1')">Payment Method</th>
+            <th onclick="sortTable(2, 'subscriptionsTable1')">Status</th>
             <!--<th onclick="sortTable(3, 'subscriptionsTable1')">Reference Number</th>
             <th onclick="sortTable(4, 'subscriptionsTable1')">Status</th>-->
         </tr>
