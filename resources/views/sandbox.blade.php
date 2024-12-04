@@ -27,7 +27,7 @@
           <ul class="navbar-nav ms-auto">
               <!-- Links -->
               <li class="nav-item">
-                    <a class="nav-link"  href="/welcome">HOME</a>
+                    <a class="nav-link"  href="{{ url('/') }}">HOME</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/sandbox">TESTIMONIALS</a>

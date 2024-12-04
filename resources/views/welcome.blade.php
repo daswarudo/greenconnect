@@ -48,7 +48,8 @@
           <ul class="navbar-nav ms-auto">
               <!-- Links -->
               <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/welcome">HOME</a>
+                  <a class="nav-link active" aria-current="page" href="{{ url('/') }}">HOME</a>
+<!--http://127.0.0.1:8000/-->
               </li>
               <li class="nav-item">
                   <a class="nav-link"   href="/sandbox">TESTIMONIALS</a>
