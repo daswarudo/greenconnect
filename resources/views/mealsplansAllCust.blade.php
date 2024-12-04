@@ -27,22 +27,35 @@
 
     <table class="table table-striped">
     <tbody>
+    @php
+        // Determine the earliest date to establish "Week 1"
+        $earliestDate = $customers->min('date');
+        $startOfWeek = \Carbon\Carbon::parse($earliestDate)->startOfWeek();
+
+        // Group customers by relative week (starting from the first detected week)
+        $groupedByWeek = $customers->groupBy(function ($customer) use ($startOfWeek) {
+            $currentDate = \Carbon\Carbon::parse($customer->date);
+            return $startOfWeek->diffInWeeks($currentDate) + 1; // Calculate relative week number
+        });
+
+        // Sort weeks numerically
+        $sortedWeeks = $groupedByWeek->sortKeys();
+    @endphp
+
+    @foreach($sortedWeeks as $weekNumber => $customersInWeek)
         @php
-            // Determine the earliest date to establish "Week 1"
-            $earliestDate = $customers->min('date');
-            $startOfWeek = \Carbon\Carbon::parse($earliestDate)->startOfWeek();
-
-            // Group customers by relative week (starting from the first detected week)
-            $groupedByWeek = $customers->groupBy(function ($customer) use ($startOfWeek) {
-                $currentDate = \Carbon\Carbon::parse($customer->date);
-                return $startOfWeek->diffInWeeks($currentDate) + 1; // Calculate relative week number
+            // Filter out rows where the food is not recommended
+            $customersInWeek = $customersInWeek->filter(function ($customer) {
+                foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy) {
+                    if ($customer->{"meal_allergy_{$allergy}"} && $customer->{"customer_allergy_{$allergy}"}) {
+                        return false; // Exclude if the food contains an allergen the customer is allergic to
+                    }
+                }
+                return true; // Include if no allergens conflict
             });
-
-            // Sort weeks numerically
-            $sortedWeeks = $groupedByWeek->sortKeys();
         @endphp
 
-        @foreach($sortedWeeks as $weekNumber => $customersInWeek)
+        @if($customersInWeek->isNotEmpty())
             <tr>
                 <td colspan="6" style="font-weight: bold; text-align: center; background-color: #e0e0e0;">
                     Week {{ $weekNumber }}<br>
@@ -53,7 +66,7 @@
             </tr>
 
             @php
-                // Further group customers in the week by weekday
+                // Further group filtered customers in the week by weekday
                 $groupedByDay = $customersInWeek->groupBy(function ($customer) {
                     return \Carbon\Carbon::parse($customer->date)->format('l'); // Full weekday name
                 });
@@ -62,7 +75,6 @@
             <tr id="week-{{ $weekNumber }}" class="week-container" style="display: none;">
                 <td colspan="6">
                     <table class="table">
-                        
                         <tbody>
                             @foreach($groupedByDay as $day => $customersByDay)
                                 <tr>
@@ -102,36 +114,6 @@
                                                                 <b>Customer Activity Level: </b>{{ $customer->activity_level }}<br>
                                                                 <b>Meal Calories: </b>{{ $customer->calories }} cal<br>
                                                                 <b>Meal Type: </b>{{ $customer->meal_type }}<br>
-                                                                <b>Meal Allergies:</b><br>
-                                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                                    @if ($customer->{"meal_allergy_{$allergy}"})
-                                                                        {{ ucfirst($allergy) }},
-                                                                    @endif
-                                                                @endforeach
-                                                                <br><b>Customer Allergies:</b><br>
-                                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                                    @if ($customer->{"customer_allergy_{$allergy}"})
-                                                                        {{ ucfirst($allergy) }},
-                                                                    @endif
-                                                                @endforeach
-                                                                <br><b>Recommended:</b>
-                                                                @php
-                                                                $foodNotRecommended = false;
-                                                                @endphp
-
-                                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                                    @if ($customer->{"meal_allergy_{$allergy}"} && $customer->{"customer_allergy_{$allergy}"})
-                                                                        @php
-                                                                            $foodNotRecommended = true;
-                                                                        @endphp
-                                                                    @endif
-                                                                @endforeach
-
-                                                                @if ($foodNotRecommended)
-                                                                    <p>Food Not Recommended: Contains Allergens the Customer is Allergic To.</p>
-                                                                @else
-                                                                    <p>Food Recommended.</p>
-                                                                @endif
                                                             </div>
                                                             <button type="button" class="toggle-details btn btn-sm btn-primary">Show Details</button>
                                                         </td>
@@ -146,8 +128,10 @@
                     </table>
                 </td>
             </tr>
-        @endforeach
-    </tbody>
+        @endif
+    @endforeach
+</tbody>
+
 </table>
 
 

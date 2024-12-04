@@ -72,7 +72,6 @@
     ksort($weeks); // Sorts the weeks by their keys (week numbers) in ascending order
 @endphp
 
-<!-- Rest of the code remains unchanged -->
 @foreach ($weeks as $week)
     <tr class="week-label">
         <td colspan="7">
@@ -94,14 +93,28 @@
                     @foreach ($daysOfWeek as $day)
                         <td>
                             @foreach ($week['days'][$day] as $meal)
-                                <div>
-                                    <strong>{{ $meal->meal_name }}</strong><br>
-                                    
-                                    <button class="toggleButton" data-target="#content{{ $meal->meal_id }}">See More</button>
-                                    <div id="content{{ $meal->meal_id }}" style="display: none;">
-                                        <span id="moreText">
-                                            <em>{{ $meal->plan_name }}</em><br>
-                                            <b>Description:</b>{{ $meal->description }} <br>
+                                @php
+                                $foodNotRecommended = false;
+                                @endphp
+
+                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                    @if ($meal->{"meal_allergy_{$allergy}"} && $meal->{"customer_allergy_{$allergy}"})
+                                        @php
+                                            $foodNotRecommended = true;
+                                        @endphp
+                                        @break
+                                    @endif
+                                @endforeach
+
+                                @if (!$foodNotRecommended)
+                                    <div>
+                                        <strong>{{ $meal->meal_name }}</strong><br>
+                                        
+                                        <button class="toggleButton" data-target="#content{{ $meal->meal_id }}">See More</button>
+                                        <div id="content{{ $meal->meal_id }}" style="display: none;">
+                                            <span id="moreText">
+                                                <em>{{ $meal->plan_name }}</em><br>
+                                                <b>Description:</b>{{ $meal->description }} <br>
                                                 <b>Calories: </b>{{ $meal->calories }} cal <br>
                                                 <b>Meal type: </b>{{ $meal->meal_type }} <br>
                                                 <b>Meal date: </b>{{ $meal->date }} <br>
@@ -118,28 +131,12 @@
                                                         {{ ucfirst($allergy) }},
                                                     @endif
                                                 @endforeach
-                                                <br><b>Recommended:</b><br>
-                                                @php
-                                                $foodNotRecommended = false;
-                                                @endphp
-
-                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                    @if ($meal->{"meal_allergy_{$allergy}"} && $meal->{"customer_allergy_{$allergy}"})
-                                                        @php
-                                                            $foodNotRecommended = true;
-                                                        @endphp
-                                                    @endif
-                                                @endforeach
-
-                                                @if ($foodNotRecommended)
-                                                    <p>Food Not Recommended: Contains Allergens the Customer is Allergic To.</p>
-                                                @else
-                                                    <p>Food Recommended.</p>
-                                                @endif
-
-                                        </span>
+                                                <br><b>Recommended:</b>
+                                                <p>Food Recommended.</p>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             @endforeach
                         </td>
                     @endforeach
@@ -149,7 +146,7 @@
     </tr>
 @endforeach
 
-
+        </tbody>
     </table>
     </div>
 
