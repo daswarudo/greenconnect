@@ -117,8 +117,8 @@
             <th onclick="sortTable(0, 'subscriptionsTable1')">Customer Name</th>
             <th onclick="sortTable(1, 'subscriptionsTable1')">Plan Name</th>
             <th onclick="sortTable(2, 'subscriptionsTable1')">Payment Method</th>
-            <th onclick="sortTable(3, 'subscriptionsTable1')">Reference Number</th>
-            <th onclick="sortTable(4, 'subscriptionsTable1')">Status</th>
+            <!--<th onclick="sortTable(3, 'subscriptionsTable1')">Reference Number</th>
+            <th onclick="sortTable(4, 'subscriptionsTable1')">Status</th>-->
         </tr>
     </thead>
     <tbody>
@@ -126,8 +126,8 @@
     <tr>
         <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
         <td>{{ $subscription->subscriptionType->plan_name }}</td>
-        <td>{{ $subscription->mop ?? 'N/A' }}</td>
-        <td>{{ $subscription->ref_number ?? 'N/A' }}</td>
+        <!--<td>{{ $subscription->mop ?? 'N/A' }}</td>
+        <td>{{ $subscription->ref_number ?? 'N/A' }}</td>-->
         <td>
             <form action="{{ route('subscriptions.updateStatus') }}" method="POST">
                 @csrf
