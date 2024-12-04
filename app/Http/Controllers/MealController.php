@@ -52,7 +52,7 @@ class MealController extends Controller
             $validatedData = $request->validate([
                 'meal_name' => 'nullable|string|max:500',
                 'calories' => 'required|numeric|between:0,999999.99',
-                'description' => 'nullable|string|max:250',
+                'description' => 'nullable|string|max:500',
                 'meal_type' => 'nullable|string|max:50',
                 'time' => 'nullable|date_format:H:i',
                 'date' => 'nullable|date',

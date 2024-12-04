@@ -1053,7 +1053,7 @@ public function register(Request $request)
         
         $testimonials = Feedback::with('customer:customer_id,first_name,last_name')->get();
 
-        return view('testimonials', compact('testimonials'));
+        return view('sandbox', compact('testimonials'));
     }
 
 

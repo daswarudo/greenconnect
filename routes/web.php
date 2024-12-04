@@ -21,11 +21,11 @@ Route::get('/welcome', function () {//dashboard
     return view('welcome');
 })->name('welcome');
 
-Route::get('/testimonials', function () {//dashboard
-    return view('testimonials');
-})->name('testimonials');
+Route::get('/sandbox', function () {//dashboard
+    return view('sandbox');
+})->name('sandbox');
 
-Route::get('/testimonials',[LoginRegisterController::class,'indexTesti'])->name('sand');
+Route::get('/sandbox',[LoginRegisterController::class,'indexTesti'])->name('sand');
 //indexTesti
 
 Route::get('/test', function () {//dashboard

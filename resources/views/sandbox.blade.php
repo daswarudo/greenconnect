@@ -30,7 +30,7 @@
                     <a class="nav-link"  href="/welcome">HOME</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/testimonials">TESTIMONIALS</a>
+                  <a class="nav-link active" aria-current="page" href="/sandbox">TESTIMONIALS</a>
               </li>
 
               @if(session()->has('loginId') && session()->has('userType'))

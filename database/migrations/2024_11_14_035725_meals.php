@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('meals', function (Blueprint $table) {
             $table->increments('meal_id'); // Using increments to create a primary key
             
-            $table->string('meal_name', 50)->nullable();
+            $table->string('meal_name', 500)->nullable();
             $table->decimal('calories', 8, 2);
-            $table->string('description', 250)->nullable();
+            $table->string('description', 500)->nullable();
 
             $table->string('meal_type', 50)->nullable();
             $table->time('time')->nullable();
