@@ -12,7 +12,7 @@
     <style>
 
         #calendar {
-            width:120vh;
+            width:100vw;
             max-width: 200vh;
             background-color: white;
             padding: 10px;
@@ -54,13 +54,6 @@
         
         <div id="calendar">
         </div>
-        <div style="width: 30vh; height: 10vh; padding:10vh 10vh 10vh 5vh;">
-            
-            <button class="crudButtons" onclick="window.location.href='{{ url('viewAppointmentsRdn') }}'">View All Consultations</button>
-                
-
-
-        </div>
         <!--
         <script>
 
@@ -99,6 +92,20 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
+            headerToolbar: {
+            left: 'prev,next today', // Include customButton beside "Today"
+            center: 'title',
+            right: 'customButton'
+        },
+        customButtons: {
+            customButton: {
+                text: 'View All Consultations',
+                click: function () {
+                    // Redirect to the consultations page
+                    window.location.href = '{{ url('viewAppointmentsRdn') }}';
+                }
+            }
+        },
             events: [
                 @foreach($appointments as $consultation)
                     {

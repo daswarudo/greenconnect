@@ -37,23 +37,31 @@
         });
         
         function searchTable(tableId, inputId) {
-            let input = document.getElementById(inputId);
-            let filter = input.value.toLowerCase();
-            let table = document.getElementById(tableId);
-            let rows = table.getElementsByTagName("tr");
+    // Get input value and table elements
+    const input = document.getElementById(inputId);
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById(tableId);
+    const rows = table.getElementsByTagName("tr");
 
-            for (let i = 1; i < rows.length; i++) { // Skip the header row
-                let td = rows[i].getElementsByTagName("td")[0]; // Customer Name column
-                if (td) {
-                    let textValue = td.textContent || td.innerText;
-                    if (textValue.toLowerCase().indexOf(filter) > -1) {
-                        rows[i].style.display = "";
-                    } else {
-                        rows[i].style.display = "none";
-                    }
-                }
+    // Loop through all table rows (excluding the header row)
+    for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const cells = row.getElementsByTagName("td");
+
+        let match = false;
+        // Check all cells in the current row for a match
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j].innerText.toLowerCase().includes(filter)) {
+                match = true;
+                break;
             }
         }
+
+        // Show or hide the row based on whether there's a match
+        row.style.display = match ? "" : "none";
+    }
+}
+
 
         function sortTable(n, tableId) {
         var table = document.getElementById(tableId);
@@ -94,8 +102,6 @@
     
    </div>
    <div class="dashboard">
-
-   
    <h2>
      GreenConnect Dashboard
     </h2>
@@ -107,7 +113,7 @@
      <!--
    -->
 <!-- Search Input for Table 1 -->
-<input type="text" id="searchInput1" onkeyup="searchTable('subscriptionsTable1', 'searchInput1')" placeholder="Search in Pending Subscriptions..." style="margin-bottom: 10px; padding: 5px;">
+<input type="text" id="searchInput1" onkeyup="searchTable('subscriptionsTable1', 'searchInput1')" placeholder="Search for Pending Subscriptions..." style="margin-bottom: 10px; padding: 5px; width:17vw">
 <div style="overflow: scroll;height: 30vh;">
 
 
@@ -116,9 +122,9 @@
         <tr>
             <th onclick="sortTable(0, 'subscriptionsTable1')">Customer Name</th>
             <th onclick="sortTable(1, 'subscriptionsTable1')">Plan Name</th>
-            <th onclick="sortTable(2, 'subscriptionsTable1')">Status</th>
-            <!--<th onclick="sortTable(3, 'subscriptionsTable1')">Reference Number</th>
-            <th onclick="sortTable(4, 'subscriptionsTable1')">Status</th>-->
+            <th onclick="sortTable(2, 'subscriptionsTable1')">Payment Method</th>
+            <th onclick="sortTable(3, 'subscriptionsTable1')">Reference Number</th>
+            <th onclick="sortTable(4, 'subscriptionsTable1')">Status</th>
         </tr>
     </thead>
     <tbody>
@@ -126,8 +132,8 @@
     <tr>
         <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
         <td>{{ $subscription->subscriptionType->plan_name }}</td>
-        <!--<td>{{ $subscription->mop ?? 'N/A' }}</td>
-        <td>{{ $subscription->ref_number ?? 'N/A' }}</td>-->
+        <td>{{ $subscription->mop ?? 'N/A' }}</td>
+        <td>{{ $subscription->ref_number ?? 'N/A' }}</td>
         <td>
             <form action="{{ route('subscriptions.updateStatus') }}" method="POST">
                 @csrf
@@ -156,20 +162,21 @@
       Manage your subscriber list
      </p>
     <!-- Search Input for Table 2 -->
-<input type="text" id="searchInput2" onkeyup="searchTable('subscriptionsTable2', 'searchInput2')" placeholder="Search in Active Subscriptions..." style="margin-bottom: 10px; padding: 5px;">
+<input type="text" id="searchInput2" onkeyup="searchTable('subscriptionsTable2', 'searchInput2')" placeholder="Search in Active Subscriptions..." style="margin-bottom: 10px; padding: 5px;width:16vw">
      <div style="overflow: scroll;height: 60vh;">
-        
      <table id="subscriptionsTable2">
     <thead>
         <tr>
-            <th onclick="sortTable(0, 'subscriptionsTable2')">Name</th>
-            <th onclick="sortTable(1, 'subscriptionsTable2')">Subscription</th>
+            <th onclick="sortTable(0, 'subscriptionsTable2')">First Name</th>
+            <th onclick="sortTable(1, 'subscriptionsTable2')">Last Name</th>
+            <th onclick="sortTable(2,'subscriptionsTable2')">Subscription Plan</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($subscriptions->where('sub_status', 'active') as $subscription)
             <tr>
-                <td>{{ $subscription->customer->first_name }} {{ $subscription->customer->last_name }}</td>
+                <td>{{ $subscription->customer->first_name }}</td>
+                <td> {{ $subscription->customer->last_name }}</td>
                 <td>{{ $subscription->subscriptionType->plan_name }}</td>
             </tr>
         @endforeach
@@ -178,19 +185,6 @@
 </div>
 
 
-    </div>
-    <div class="widget calendar">
-        <!--
-     <h3>
-      Appointments
-     </h3>
-     <p>
-      View your upcoming appointments
-     </p>
-
-	
-	<div id='calendar'></div>-->
-		
     </div>
    </div>
   </div>

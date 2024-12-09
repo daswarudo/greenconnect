@@ -36,12 +36,41 @@
         background-color: transparent !important;  /* Remove hover background color */
         border: none !important;  /* Remove hover border */
     }
+    .confirmation-popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #f8f9fa;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        text-align: center;
+        z-index: 1000;
+    }
+    .confirmation-popup button {
+        margin: 5px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .confirmation-popup button:nth-child(1) {
+        background: #dc3545;
+        color: white;
+    }
+    .confirmation-popup button:nth-child(2) {
+        background: #6c757d;
+        color: white;
+    }
 </style>
 <body>
 
 <div class="sidebar">
     <a href="/customerSubscription" class="logo-link">
-        <img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
+        <img alt="Green Chef Logo" height="200" src="{{ asset('images/logo.png') }}" />
     </a>
     
     
@@ -79,11 +108,21 @@
    
    
    
-   <a href="{{ route('logout') }}"  onclick="confirm('Are you sure about that?')">
-    <i class="fas fa-sign-out-alt">
-    </i>
-    Log Out
-   </a>
+   <!--<a href="{{ route('logout') }}"  onclick="confirm('Are you sure about that?')">
+        <i class="fas fa-sign-out-alt">
+        </i>
+            Log Out
+   </a>-->
+   <a href="javascript:void(0);" onclick="confirmLogout()" class="logout-link">
+        <i class="fas fa-sign-out-alt"></i> Log Out
+    </a>
+
+    <!-- Confirmation Pop-Up -->
+    <div id="logout-confirmation" class="confirmation-popup">
+        <p>Are you sure you want to log out?</p>
+        <button onclick="proceedLogout()">Yes</button>
+        <button onclick="closePopup()">Cancel</button>
+    </div>
 </div>
   
 <!-- Bootstrap JS and dependencies (optional) -->
@@ -108,6 +147,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+function confirmLogout() {
+    document.getElementById('logout-confirmation').style.display = 'block';
+}
+
+function closePopup() {
+    document.getElementById('logout-confirmation').style.display = 'none';
+}
+
+function proceedLogout() {
+    window.location.href = "{{ route('logout') }}";
+}
 </script>
 </body>
 </html>

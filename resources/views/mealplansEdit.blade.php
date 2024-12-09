@@ -104,12 +104,12 @@
                         value="{{ old('date', $meal->date) }}" style="width: 50vh;"  type="date">
                 </div>
 
-                <!-- Time Input -->
+                <!-- Time Input 
                 <div class="form-group">
                     <label for="time"><br><b>Time</b></label><br>
                     <input name="time" id="time" class="form-control" 
                         value="{{ old('time', \Carbon\Carbon::parse($meal->time)->format('H:i')) }}"  style="width: 50vh;"  type="time">
-                </div>
+                </div>-->
 
                 
                 <label for="description"><br><b>Allergens</b></label>

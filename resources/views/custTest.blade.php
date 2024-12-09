@@ -12,7 +12,7 @@
     </head>
     <style>
         .small-calendar {
-            width: 70%; /* Adjust width as needed */
+            width: 100%; /* Adjust width as needed */
             height: 500px; /* Set a fixed height or adjust dynamically */
             margin: 0 auto; /* Center it horizontally */
             border: 1px solid #ccc; /* Optional: Add a border for clarity */
@@ -83,12 +83,7 @@
         
     </h1>
        </div>
-       <br>
-       <a href="{{ route('consultation.create') }}" class="custom-button"><b>Add Consultation</b></a>
-       <br>
-
-       
-
+      
        <div class="table-container">
        <div id="calendar" class="small-calendar"><!--main calendar-->
        </div>
@@ -143,37 +138,48 @@
 
         calendar.render();
     });*/
+    /*
     document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'title',
+            right: 'dayGridMonth addConsultationButton' // Custom button added here
+        },
+        customButtons: {
+            addConsultationButton: {
+                text: 'Add Consultation',
+                click: function() {
+                    // Redirect to the "Add Consultation" page
+                    window.location.href = "{{ route('consultation.create') }}";
+                }
+            }
+        },
         events: [
             @foreach($appointments as $consultation)
                 {
-                    title: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}', // Display first and last name
-                    start: '{{ $consultation->start }}', // Full datetime (combined date + time)
+                    title: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
+                    start: '{{ $consultation->start }}',
                     extendedProps: {
                         customer_name: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
-                        time: '{{ $consultation->formatted_time }}', // Formatted time (HH:mm)
-                        notes: '{{ $consultation->notes ?? 'No notes provided' }}' // Notes or default message
+                        time: '{{ $consultation->formatted_time }}',
+                        notes: '{{ $consultation->notes ?? 'No notes provided' }}'
                     },
-                    color: 'blue' // Set the highlight color of this event
+                    color: 'blue'
                 }@if(!$loop->last),@endif
             @endforeach
         ],
         eventContent: function(arg) {
-            // Custom display for event content as <first_name> <last_name>, <time>
             let customLabel = document.createElement('div');
             customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
             return { domNodes: [customLabel] };
         },
         dateClick: function(info) {
-            // Action when a day is clicked
             alert('Date clicked: ' + info.dateStr);
         },
         eventClick: function(info) {
-            // Action when an event is clicked
             let eventDetails = `
                 Customer Name: ${info.event.extendedProps.customer_name}
                 Time: ${info.event.extendedProps.time}
@@ -185,7 +191,89 @@
     });
 
     calendar.render();
+});*/
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'title',
+            right: 'dayGridMonth addConsultationButton' // Custom button added here
+        },
+        customButtons: {
+            addConsultationButton: {
+                text: 'Add Consultation',
+                click: function() {
+                    // Redirect to the "Add Consultation" page
+                    window.location.href = "{{ route('consultation.create') }}";
+                }
+            }
+        },
+        events: [
+            @foreach($appointments as $consultation)
+                {
+                    title: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
+                    start: '{{ $consultation->start }}',
+                    extendedProps: {
+                        customer_name: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
+                        time: '{{ $consultation->formatted_time }}',
+                        notes: '{{ $consultation->notes ?? 'No notes provided' }}'
+                    },
+                    color: 'blue'
+                }@if(!$loop->last),@endif
+            @endforeach
+        ],
+        eventContent: function(arg) {
+            let customLabel = document.createElement('div');
+            customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
+            return { domNodes: [customLabel] };
+        },
+        dateClick: function(info) {
+            // Do nothing if there are no events on this date
+            let events = calendar.getEvents().filter(event => 
+                event.start.toISOString().split('T')[0] === info.dateStr
+            );
+
+            if (events.length === 0) {
+                console.log('No events on this date: ' + info.dateStr);
+            } else {
+                console.log('Events exist on this date: ' + info.dateStr);
+            }
+        },
+        eventClick: function(info) {
+            let eventDetails = '';
+
+            // Add details only if they exist
+            if (info.event.extendedProps.customer_name) {
+                eventDetails += `Customer Name: ${info.event.extendedProps.customer_name}\n`;
+            }
+
+            if (info.event.extendedProps.time) {
+                eventDetails += `Time: ${info.event.extendedProps.time}\n`;
+            }
+
+            if (info.event.start) {
+                eventDetails += `Date: ${info.event.start.toISOString().split('T')[0]}\n`;
+            }
+
+            if (info.event.extendedProps.notes) {
+                eventDetails += `Notes: ${info.event.extendedProps.notes}\n`;
+            }
+
+            // Show the alert with event details or indicate no details available
+            if (eventDetails) {
+                alert('Event Details:\n' + eventDetails);
+            } else {
+                alert('No details available for this event.');
+            }
+        }
+    });
+
+    calendar.render();
 });
+
+
 
 </script>
 

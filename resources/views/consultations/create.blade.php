@@ -23,9 +23,6 @@
        </div>
        <div class="table-container">
       
-
-        
-        
         </div>
         <div class="container">
         <h2>Add a New Consultation</h2>
@@ -48,7 +45,7 @@
             <input type="hidden" name="rdn_id" value="{{ $rdnId }}">
 
             <!-- Date Input -->
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom:2vh; ">
                 <label for="date">Consultation Date</label>
                 <input type="date" name="date" id="date" class="form-control" required>
             </div>
@@ -60,8 +57,10 @@
                 
             </div>
 
+            </div>
+
             <!-- Submit Button -->
-            <button style="width:30vh;" class="crudButtons" type="submit" class="btn btn-success" onclick="return confirm('Are you sure about that?')">Add Consultation</button>
+            <button style="width:10vw; height:10vh" class="crudButtons" type="submit" class="btn btn-success" onclick="return confirm('Are you sure about that?')">Add Consultation</button>
         </form>
     </div>
 </body>

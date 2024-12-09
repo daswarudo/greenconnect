@@ -13,7 +13,7 @@
 
     </style>
     </head>
-    <body>
+    <body style="overflow-x:hidden">
         @include('sidebar')
         
         <div class="container" style="margin:5vh 10vh 10vh 10vh;">
@@ -23,7 +23,7 @@
 <input type="text" id="searchInput" class="form-control" placeholder="Search Consultations...">
 <div style="margin-bottom:3vh;"></div>
 <!-- Table -->
-<table id="consultationsTable" class="table table-bordered"  style="max-height: 60vh; height:60vh; overflow-y: auto;">
+<table id="consultationsTable" class="table table-bordered"  style="max-height: 60vh; height:60vh; overflow-y: auto; width:75vw;">
     <thead>
         <tr>
             <th>Consultation ID</th>

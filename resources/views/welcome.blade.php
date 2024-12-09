@@ -48,8 +48,7 @@
           <ul class="navbar-nav ms-auto">
               <!-- Links -->
               <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{{ url('/') }}">HOME</a>
-<!--http://127.0.0.1:8000/-->
+                  <a class="nav-link active" aria-current="page" href="/welcome">HOME</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link"   href="/sandbox">TESTIMONIALS</a>
@@ -257,8 +256,12 @@
     
     </div>
     <div class="footer-right">
+        <a href="https://www.foodpanda.ph/restaurant/kxxh/the-green-chef-dumaguete-santa-rosa-street">
         <img src="{{ asset('images/panda.jpg') }}" alt="Image 1">
+        </a>
+        <a href="https://food.grab.com/ph/en/restaurant/the-greenchef-mango-avenue-delivery/2-C2LXNJUWVVB2RN?">
         <img src="{{ asset('images/grab.jpg') }}" alt="Image 2">
+        </a>
     </div>
 </div>
 

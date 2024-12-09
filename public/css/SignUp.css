@@ -129,189 +129,222 @@
                height:100%;
            }
         */
-        .hidden { display: none; }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f5f5f5;
-        }
-        .container {
-            display: flex;
-            width: 100%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            height: 170vh;
-        }
-        
-        .left-panel {
-            background: rgb(249,249,249);
-            background: linear-gradient(90deg, rgba(249,249,249,1) 1%, rgba(36,173,123,1) 100%);
-            color: #202020;
-            padding: 40px;
-            width: 20%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .left-panel img {
-            width: 100px;
-            margin-bottom: 32px;
-        }
-        .left-panel h1 {
-            font-weight: bold;
-            font-size: 24px;
-            margin-bottom: 18px;
-        }
-        .left-panel p {
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        .left-panel a {
-            border-radius: 20px;
-            border: 1px solid rgb(255, 255, 255);
-            background: rgb(249,249,249);
-            background: linear-gradient(90deg, rgba(249,249,249,1) 1%, rgba(36,173,123,1) 100%);
-            color: #202020;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 12px 45px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: transform 80ms ease-in;
-        }
-        .right-panel{
-            position:relative;
-            top:37vh;
-        }
-        form .right-panel {
-           
-            padding: 20px;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-        form.right-panel h2 {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 30px;
-            width: 100%;
-        }
-        form.right-panel .form-group {
-            width: 100%;
-            margin-bottom: 5px;
-        }
-        form.right-panel .form-group.full-width {
-            width: 100%;
-        }
-        form .right-panel label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-        form .right-panel input, .right-panel select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        form.right-panel .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-        form .right-panel .checkbox-group input {
-            margin-right: 10px;
-        }
-        form.right-panel .checkbox-group label {
-            margin-right: 10px;
-        }
-        form.right-panel .checkbox-group select {
-            margin-left: auto;
-            padding: 5px;
-            font-size: 12px;
-        }
-        form.right-panel .checkbox-group {
-            border: 1px solid #ccc;
-            border-radius: 2px;
-            padding: 2px;
-            margin-bottom: 10px;
-        }
-        form.right-panel .allergies-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        form .right-panel button {
-            background: rgb(249,249,249);
-            background: linear-gradient(90deg, rgba(249,249,249,1) 1%, rgba(36,173,123,1) 100%);
-            color: rgb(0, 0, 0);
-            border: none;
-            padding: 5px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 50%;
-            height: 100%;
-            gap: 10px;
-        }
-        span {
-            color: red;
-        }
-        .hidden {
-            display: none;
-        }
-        .form-container {
-            display: flex;
-            width: 100%;
-            flex-wrap: wrap;
-        }
-        .form-section {
-            width: 50%;
-            padding: 20px;
-        }
-        .form-section.allergies {
-            width: 30%;
-        }
-        .form-section.diet-program {
-            width: 70%;
-        }
+.hidden {
+    display: none;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+    border: 1px solid black;
+    overflow-y: hidden;
+}
+.container {
+    display: flex;
+    width: 60vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 75vh;
+    border: 1px solid black;
+}
 
-        @media (max-width: 768px) {
-            .left-panel {
-                width: 100%;
-                padding: 20px;
-            }
-            .form-section {
-                width: 100%;
-                padding: 10px;
-            }
-            .form-section.allergies {
-                width: 100%;
-            }
-            .form-section.diet-program {
-                width: 100%;
-            }
-            form .right-panel {
-                flex-direction: column;
-            }
-            form .right-panel button {
-                width: 100%;
-            }
-        }
+.left-panel {
+    background: rgb(249, 249, 249);
+    background: linear-gradient(
+        90deg,
+        rgba(249, 249, 249, 1) 1%,
+        rgba(36, 173, 123, 1) 100%
+    );
+    color: #202020;
+    width: 30%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: -0.9vw;
+}
+.left-panel img {
+    width: 150px;
+    margin-bottom: 32px;
+    height: 150px;
+}
+.left-panel h1 {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 18px;
+}
+.left-panel p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.left-panel #login {
+    border-radius: 20px;
+    border: 1px solid rgb(255, 255, 255);
+    background: rgb(249, 249, 249);
+    background: linear-gradient(
+        90deg,
+        rgba(249, 249, 249, 1) 1%,
+        rgba(36, 173, 123, 1) 100%
+    );
+    color: #202020;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+}
 
-        span{
-            color:red;
-        }
-        #login{
-            text-decoration: none;
-            color:black;
-        }
-        
+.right-panel {
+    position: relative;
+    top: 7vh;
+    margin-left: 2vw;
+}
+form .right-panel {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.form-container2 {
+    display: flex;
+    gap: 10px;
+    gap: 2.5vw;
+    margin-top: 2vh;
+}
+
+form.right-panel h2 {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+form.right-panel .form-group {
+    width: 100%;
+    margin-bottom: 5px;
+}
+form.right-panel .form-group.full-width {
+    width: 100%;
+}
+form .right-panel label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+form .right-panel input,
+.right-panel select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+form.right-panel .checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+form .right-panel .checkbox-group input {
+    margin-right: 10px;
+}
+form.right-panel .checkbox-group label {
+    margin-right: 10px;
+}
+form.right-panel .checkbox-group select {
+    margin-left: auto;
+    padding: 5px;
+    font-size: 12px;
+}
+form.right-panel .checkbox-group {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 2px;
+    margin-bottom: 10px;
+}
+form.right-panel .allergies-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+form .right-panel button {
+    background: rgb(249, 249, 249);
+    background: linear-gradient(
+        90deg,
+        rgba(249, 249, 249, 1) 1%,
+        rgba(36, 173, 123, 1) 100%
+    );
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%;
+    height: 100%;
+    gap: 10px;
+}
+span {
+    color: red;
+}
+.hidden {
+    display: none;
+}
+.form-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.form-section {
+    width: 50%;
+    padding: 20px;
+}
+.form-section.allergies {
+    width: 30%;
+}
+.form-section.diet-program {
+    width: 20vw;
+}
+
+#button-signUp {
+    margin-left: 30vw;
+    margin-top: 2vh;
+}
+
+@media (max-width: 768px) {
+    .left-panel {
+        width: 100%;
+        padding: 20px;
+    }
+    .form-section {
+        width: 100%;
+        padding: 10px;
+    }
+    .form-section.allergies {
+        width: 100%;
+    }
+    .form-section.diet-program {
+        width: 100%;
+    }
+    form .right-panel {
+        flex-direction: column;
+    }
+    form .right-panel button {
+        width: 100%;
+    }
+}
+
+span {
+    color: red;
+}
+#login {
+    text-decoration: none;
+    color: black;
+}

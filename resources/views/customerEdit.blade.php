@@ -46,7 +46,6 @@ only use this if customer ray mu change password
    <div class="details">
         <div class="info">
             <div class="form-container">
-                    
                 </div>
                 <p>
                     <input type="hidden" name="customer_id" value="{{ $customer->customer_id }}">

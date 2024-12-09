@@ -114,11 +114,11 @@
                                         <div id="content{{ $meal->meal_id }}" style="display: none;">
                                             <span id="moreText">
                                                 <em>{{ $meal->plan_name }}</em><br>
-                                                <b>Description:</b>{{ $meal->description }} <br>
-                                                <b>Calories: </b>{{ $meal->calories }} cal <br>
-                                                <b>Meal type: </b>{{ $meal->meal_type }} <br>
-                                                <b>Meal date: </b>{{ $meal->date }} <br>
-                                                <b>Meal time: </b>{{ $meal->time }} <br>
+                                                <b>Description:</b><br>{{ $meal->description }} <br>
+                                                <b>Calories: </b><br>{{ $meal->calories }} cal <br>
+                                                <b>Meal type: </b><br>{{ $meal->meal_type }} <br>
+                                                <b>Meal date: </b><br>{{ $meal->date }} <br>
+                                                <b>Meal time: </b><br>{{ $meal->time }} <br>
                                                 <b>Meal Allergies:</b><br>
                                                 @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
                                                     @if ($meal->{"meal_allergy_{$allergy}"})

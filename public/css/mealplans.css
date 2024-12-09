@@ -6,48 +6,52 @@ body {
 }
 .container {
     display: flex;
-    
 }
 .sidebar {
-
-width: 200px;
-background-color: #f8f8f8;
-padding: 20px;
-border-right: 1px solid #ccc;
-height: 100vh;
-background: rgb(249,249,249);
-background: -moz-linear-gradient(90deg, rgba(249,249,249,1) 0%, rgb(143, 212, 187) 56%);
-background: -webkit-linear-gradient(90deg, rgba(249,249,249,1) 0%, rgb(113, 226, 185) 56%);
-background: linear-gradient(90deg,rgb(90, 192, 155) 56%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f9f9f9",endColorstr="#0fbb7c",GradientType=1);
-
+    width: 200px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    height: 100vh;
+    background: rgb(249, 249, 249);
+    background: -moz-linear-gradient(
+        90deg,
+        rgba(249, 249, 249, 1) 0%,
+        rgb(143, 212, 187) 56%
+    );
+    background: -webkit-linear-gradient(
+        90deg,
+        rgba(249, 249, 249, 1) 0%,
+        rgb(113, 226, 185) 56%
+    );
+    background: linear-gradient(90deg, rgb(90, 192, 155) 56%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f9f9f9",endColorstr="#0fbb7c",GradientType=1);
 }
 .sidebar img {
-width: 100px;
-display: block;
-margin: 0 auto 20px;
+    width: 100px;
+    display: block;
+    margin: 0 auto 20px;
 }
 .sidebar a {
-display: block;
-color: #000;
-text-decoration: none;
-margin: 100px 10px;
-font-size: 16px;
-background-color: #bee7c5;
-border-radius: 5px;
-padding:10px;
+    display: block;
+    color: #000;
+    text-decoration: none;
+    margin: 100px 10px;
+    font-size: 16px;
+    background-color: #bee7c5;
+    border-radius: 5px;
+    padding: 10px;
 }
-.sidebar a:hover
-{
-color:white;
-background-color: #7d9b82;
-border: 1px solid  dd;
-padding:10px;
-border-radius: 5px;
+.sidebar a:hover {
+    color: white;
+    background-color: #7d9b82;
+    border: 1px solid dd;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .sidebar a i {
-margin-right: 15px;
+    margin-right: 15px;
 }
 .main-content {
     flex-grow: 1;
@@ -78,15 +82,14 @@ margin-right: 15px;
     font-weight: bold;
 }
 .meal-planner .meal-button {
-   background-color: white;
+    background-color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    margin-right:0px;
+    margin-right: 0px;
 }
 .meal-planner .meal-button:hover {
-    
     background-color: #8fe296;
     padding: 10px 20px;
 }
@@ -105,6 +108,36 @@ margin-right: 15px;
     background-color: #4caf50;
     color: #fff;
 }
-.buttons{
-text-align: center;
+.buttons {
+    text-align: center;
+}
+
+.allergens {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: space-between;
+    gap: 5px; /* Space between items */
+
+    padding: 10px;
+    height: auto; /* Adjust container height */
+}
+
+.allergens label {
+    flex: 1 1 calc(20% - 10px); /* Each item takes 20% of the row minus gap */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap to the next line if needed */
+    align-items: center; /* Align items vertically */
+    gap: 15px; /* Space between items */
+}
+
+.flex label {
+    width: 20vh; /* Ensure consistent width for labels */
+    text-align: right; /* Align text to the right */
+    margin-right: 10px; /* Space between label and input */
 }

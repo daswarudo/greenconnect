@@ -49,7 +49,7 @@
         </button>
     </a>
 --> 
-    <div class="table-responsive" style="max-height: 60vh; height:60vh; overflow-y: auto;">
+    <div class="table-responsive" style="max-height: 60vh; height:auto; overflow-y: auto;">
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -73,7 +73,7 @@
 </div>
 <a href="/customerSubscriptionAdd">
     <button type="submit" id="addButton">
-        ADD
+        ADD SUBSCRIPTION
     </button>
 </a>
 

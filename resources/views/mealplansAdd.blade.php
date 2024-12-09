@@ -41,37 +41,40 @@
     <div class="container">
         
             <div>
-                <label for="diet-program"><b>Diet Program</b></label>
-                <div class="form-group">
-                    
-                    <select id="subscription_type_id" name="subscription_type_id"  style="width: 50vh;" required><!-- query subs type-->
-                        <option value="">Select Diet Program</option>
-                        @foreach ($subscriptionTypes as $subscriptionType)
-                            <option value="{{ $subscriptionType->subscription_type_id }}">
-                                {{ $subscriptionType->plan_name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <label for="meal_name"><br><b>Meal Name</b></label>
-                <div class="form-group">
-                    
-                    <input id="meal_name" name="meal_name" type="text"  style="width: 50vh;" required />
-                </div>
-                <label for="calories"><br><b>Calories</b></label>
-                <div class="form-group">
-                    
-                    <input id="calories" name="calories" type="number" step="0.01" style="width: 50vh;" required />
-
+                <div class="flex">
+                    <label for="diet-program"><b>Diet Program</b></label>
+                    <div class="form-group">
+                        <select id="subscription_type_id" name="subscription_type_id" style="width: 25vh;" required>
+                            <option value="">Select Diet Program</option>
+                            @foreach ($subscriptionTypes as $subscriptionType)
+                                <option value="{{ $subscriptionType->subscription_type_id }}">
+                                    {{ $subscriptionType->plan_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                
+                    <label for="meal_name"><b>Meal Name</b></label>
+                    <div class="form-group">
+                        <input id="meal_name" name="meal_name" type="text" style="width: 45vh;" required />
+                    </div>
+                
+                    <label for="calories"><b>Calories</b></label>
+                    <div class="form-group">
+                        <input id="calories" name="calories" type="number" step="0.01" style="width: 10vh;" required />
+                    </div>
                 </div>
                 <label for="description"><br><b>Description</b></label>
                 <div class="form-group">
                     
                     <!--<input id="description" name="description" type="text" required />-->
-                    <textarea name="description" class="form-control" rows="4" style="height:30vh;width: 50vh;"  max="747" required></textarea>
+                    <textarea name="description" class="form-control" rows="4" style="height:20vh;width: 75vw;"  max="747" required></textarea>
                 </div>
                 
-                <label for="meal_type"><br><b>Meal Type</b></label>
+
+                <label for="meal_type"><br>
+                    <div class="flex">
+                    <b>Meal Type</b></label>
                     <div class="radio-group">
                             <input id="breakfast" name="meal_type" type="radio" value="breakfast" required />
                             <label for="breakfast">breakfast</label>
@@ -82,27 +85,32 @@
                             <input id="snacks" name="meal_type" type="radio" value="snacks" required />
                             <label for="snacks">snacks</label>
                     </div>
+                    </div>
                 
                 
                 <!-- Date Input -->
+                <div class="flex">
                 <div class="form-group">
-                    <label for="date"><br><b>Date</b></label><br>
-                    <input name="date" id="date" class="form-control" style="width: 50vh;"  type="date">
+                    <label for="date"><br><b>Date</b></label>
+                    <input name="date" id="date" class="form-control" style="width: 20vw;"  type="date">
                 </div>
 
-                <!-- Time Input -->
+                <!-- Time Input
                 <div class="form-group">
-                    <label for="time"><br><b>Time</b></label><br>
-                    <input name="time" id="time" class="form-control"  style="width: 50vh;"  type="time">
-                </div>
-                
+                    <label for="time"><br><b>Time</b></label>
+                    <input name="time" id="time" class="form-control" style="width: 20vw;" type="time" value="00:00">
+                </div> -->
+
+            </div>
+
                 <label for="description"><br><b>Allergens</b></label>
-                
                 <br>
+                <div class="allergens">
                 <label>
+                
         <input type="checkbox" name="allergy_wheat" value="1" {{ old('allergy_wheat') ? 'checked' : '' }}>
         Wheat
-    </label><br>
+                 </label>
     
     <label>
         <input type="checkbox" name="allergy_milk" value="1" {{ old('allergy_milk') ? 'checked' : '' }}>
@@ -173,6 +181,8 @@
         <input type="checkbox" name="allergy_gluten" value="1" {{ old('allergy_gluten') ? 'checked' : '' }}>
         Gluten
     </label><br>
+            
+            </div>
             </div>
             
             
