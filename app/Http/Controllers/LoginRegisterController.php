@@ -537,7 +537,7 @@ public function register(Request $request)
         // Update subscription status
         $subscription->sub_status = $request->sub_status;
 
-        $subscription->save();
+        $subscription->update();
 
         return redirect()->route('subscribers')->with('success', 'Subscription updated successfully!');
     }
