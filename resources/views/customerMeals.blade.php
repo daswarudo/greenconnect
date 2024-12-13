@@ -35,42 +35,50 @@
     <table>
     <tbody id="tableBody">
     @php
-    // Step 1: Sort the details by date
-    $sortedDetails = $details->sortBy(function($detail) {
-        return \Carbon\Carbon::parse($detail->date)->dayOfWeek;
-    });
+// Custom order for meal types
+$mealTypeOrder = ['breakfast', 'lunch', 'snacks', 'dinner'];
 
-    $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    $weeks = []; // Array to store meals grouped by week and day
+// Sort meals by meal type based on the custom order
+$sortedDetails = $details->sortBy(function ($detail) use ($mealTypeOrder) {
+    $mealTypeIndex = array_search(strtolower($detail->meal_type), $mealTypeOrder);
+    return $mealTypeIndex !== false ? $mealTypeIndex : count($mealTypeOrder); // Push undefined types to the end
+})->sortBy(function ($detail) {
+    return \Carbon\Carbon::parse($detail->date)->dayOfWeek; // Then sort by day of the week
+});
 
-    // Step 2: Group meals by week and day of the week
-    foreach ($sortedDetails as $detail) {
-        $mealDay = \Carbon\Carbon::parse($detail->date)->format('l'); // Get full day name
-        $weekNumber = \Carbon\Carbon::parse($detail->date)->weekOfMonth; // Get the week number of the month
+// Initialize week-based grouping logic
+$daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+$weeks = []; // Array to store meals grouped by week and day
 
-        // Create week entry if it doesn't exist
-        if (!isset($weeks[$weekNumber])) {
-            $weeks[$weekNumber] = [
-                'week' => 'Week ' . $weekNumber,
-                'days' => [
-                    'Monday' => [],
-                    'Tuesday' => [],
-                    'Wednesday' => [],
-                    'Thursday' => [],
-                    'Friday' => [],
-                    'Saturday' => [],
-                    'Sunday' => []
-                ]
-            ];
-        }
+// Group meals by week and day of the week
+foreach ($sortedDetails as $detail) {
+    $mealDay = \Carbon\Carbon::parse($detail->date)->format('l'); // Get full day name
+    $weekNumber = \Carbon\Carbon::parse($detail->date)->weekOfMonth; // Get the week number of the month
 
-        // Group meals by the corresponding week and day
-        $weeks[$weekNumber]['days'][$mealDay][] = $detail;
+    // Create week entry if it doesn't exist
+    if (!isset($weeks[$weekNumber])) {
+        $weeks[$weekNumber] = [
+            'week' => 'Week ' . $weekNumber,
+            'days' => [
+                'Monday' => [],
+                'Tuesday' => [],
+                'Wednesday' => [],
+                'Thursday' => [],
+                'Friday' => [],
+                'Saturday' => [],
+                'Sunday' => []
+            ]
+        ];
     }
 
-    // Step 3: Sort the weeks array by week number
-    ksort($weeks); // Sorts the weeks by their keys (week numbers) in ascending order
+    // Group meals by the corresponding week and day
+    $weeks[$weekNumber]['days'][$mealDay][] = $detail;
+}
+
+// Sort weeks by week number
+ksort($weeks);
 @endphp
+
 
 @foreach ($weeks as $week)
             <tr class="week-label">
