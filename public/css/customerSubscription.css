@@ -15,7 +15,8 @@
     width: 100%;
     border-collapse: collapse;
 }
-.subscription-info th, .subscription-info td {
+.subscription-info th,
+.subscription-info td {
     padding: 10px;
     text-align: left;
 }
@@ -23,12 +24,33 @@
     background-color: #f9f9f9;
 }
 
-span{
+span {
     color: #0fbb7c;
     font-size: 25px;
 }
 
+.allergens {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: space-between;
+    gap: 5px; /* Space between items */
 
+    padding: 10px;
+    height: auto; /* Adjust container height */
+}
+
+.allergens label {
+    flex: 1 1 calc(20% - 10px); /* Each item takes 20% of the row minus gap */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex {
+    display: flex;
+    gap: 3vw;
+    margin-top: 1vh;
+}
 /* MOBILE */
 @media (max-width: 768px) {
     body {
@@ -52,7 +74,8 @@ span{
     .subscription-info {
         padding: 10px;
     }
-    .subscription-info th, .subscription-info td {
+    .subscription-info th,
+    .subscription-info td {
         padding: 5px;
         font-size: 14px;
     }
@@ -75,7 +98,8 @@ span{
     .subscription-info {
         padding: 5px;
     }
-    .subscription-info th, .subscription-info td {
+    .subscription-info th,
+    .subscription-info td {
         padding: 3px;
         font-size: 12px;
     }

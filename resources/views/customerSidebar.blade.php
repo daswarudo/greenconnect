@@ -17,39 +17,112 @@
 <!-- naa sa public/css folder ang css, ignore css sa resources sdfasfda-->
     
 </head>
+
+<style>
+    /* More specific selector to override the sidebar link stylesa */
+    .sidebar .logo-link {
+        text-decoration: none !important;
+        display: block !important;
+        color: inherit !important;  /* Inherit the color to prevent other styles */
+        margin: 0 !important;  /* Remove any margin */
+        background-color: transparent !important;  /* Remove background color */
+        border-radius: 0 !important;  /* Remove border radius */
+        padding: 0 !important;  /* Remove padding */
+        box-shadow: none !important;  /* Remove box-shadow */
+    }
+
+    .sidebar .logo-link:hover {
+        color: inherit !important;  /* Remove hover color change */
+        background-color: transparent !important;  /* Remove hover background color */
+        border: none !important;  /* Remove hover border */
+    }
+    .confirmation-popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #f8f9fa;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        text-align: center;
+        z-index: 1000;
+    }
+    .confirmation-popup button {
+        margin: 5px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .confirmation-popup button:nth-child(1) {
+        background: #dc3545;
+        color: white;
+    }
+    .confirmation-popup button:nth-child(2) {
+        background: #6c757d;
+        color: white;
+    }
+</style>
 <body>
 
 <div class="sidebar">
-	<img alt="Green Chef Logo" height="100" src="{{ asset('images/logo.png') }}" width="100" />
+    <a href="/customerSubscription" class="logo-link">
+        <img alt="Green Chef Logo" height="200" src="{{ asset('images/logo.png') }}" />
+    </a>
     
-    <!--<a href="{{ route('customerDashboard') }}">-->
-    <a href="#">
-    <i class="fas fa-utensils">
-    </i>
-    Meal Plans
+    
+    
+    
+   <a href="/customerSubscription">
+    <i class="fa fa-info" ></i>
+        
+        Subscription
    </a>
-   <a href="#">             <!-- WALA pako kabalo aning sa appointments CUSTOMER SIDE --> 
-    <i class="fas fa-calendar-alt">
-    </i>
-    Appointments
+    
+   <a href="/customerView">
+    <i class="fa fa-user"></i>
+        
+    Account Info
    </a>
-   <!--<a href="{{ route('customerFeedback') }}">-->
-   <a href="#">
+
+   <a href="/custTest">            
+        <i class="fas fa-calendar-alt">
+        </i>
+        Appointments
+   </a>
+
+   <a href="/customerMeals">
+        <i class="fas fa-utensils">
+        </i>
+        Meal Plans
+   </a>
+   
+   <a href="/customerFeedback">
    <i class="fa fa-comment" ></i>
-    </i>
+    
     Feedback
    </a>
-   <!--<a href="{{ route('customerSubscription') }}">-->
-   <a href="#">
-   <i class="fa fa-info" ></i>
-    </i>
-    Subscription
-   </a>
-   <a href="{{ route('login') }}">
-    <i class="fas fa-sign-out-alt">
-    </i>
-    Log Out
-   </a>
+   
+   
+   
+   <!--<a href="{{ route('logout') }}"  onclick="confirm('Are you sure about that?')">
+        <i class="fas fa-sign-out-alt">
+        </i>
+            Log Out
+   </a>-->
+   <a href="javascript:void(0);" onclick="confirmLogout()" class="logout-link">
+        <i class="fas fa-sign-out-alt"></i> Log Out
+    </a>
+
+    <!-- Confirmation Pop-Up -->
+    <div id="logout-confirmation" class="confirmation-popup">
+        <p>Are you sure you want to log out?</p>
+        <button onclick="proceedLogout()">Yes</button>
+        <button onclick="closePopup()">Cancel</button>
+    </div>
 </div>
   
 <!-- Bootstrap JS and dependencies (optional) -->
@@ -74,6 +147,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+function confirmLogout() {
+    document.getElementById('logout-confirmation').style.display = 'block';
+}
+
+function closePopup() {
+    document.getElementById('logout-confirmation').style.display = 'none';
+}
+
+function proceedLogout() {
+    window.location.href = "{{ route('logout') }}";
+}
 </script>
 </body>
 </html>

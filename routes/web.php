@@ -6,6 +6,10 @@ use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\MealController;
 
+use App\Http\Middleware\NoCacheHeaders;
+
+use App\Http\Middleware\CheckUserType;
+
 
 //RND
 
@@ -16,6 +20,13 @@ Route::get('/', function () {
 Route::get('/welcome', function () {//dashboard
     return view('welcome');
 })->name('welcome');
+
+Route::get('/sandbox', function () {//dashboard
+    return view('sandbox');
+})->name('sandbox');
+
+Route::get('/sandbox',[LoginRegisterController::class,'indexTesti'])->name('sand');
+//indexTesti
 
 Route::get('/test', function () {//dashboard
     return view('test');
@@ -56,6 +67,11 @@ Route::post('/events', [EventController::class, 'createEvent']);
 Route::get('/mealplans', function () {
     return view('mealplans');
 })->name('mealplans');
+
+Route::get('/mealplansAllCust', function () {
+    return view('mealplansAllCust');
+})->name('mealplansAllCust');
+
 Route::get('/mealplansEdit', function () {
     return view('mealplansEdit');
 })->name('mealplansEdit');
@@ -65,10 +81,17 @@ Route::get('/viewsubscriber', function () {
     return view('viewsubscriber');
 })->name('viewsubscriber');
 
+
+// middlewared customer
+
+Route::get('/custTest', function () {
+    return view('custTest');
+})->name('custTest');
+
+
+
+
 // CUSTOMERS
-
-Route::get('/custTest', [LoginRegisterController::class, 'showCustomerDashboard'])->name('custTest');
-
 Route::get('/customerDashboard', function () {
     return view('customerDashboard');
 })->name('customerDashboard');
@@ -81,11 +104,23 @@ Route::get('/restoMealInput', function () {
     return view('restoMealInput');
 })->name('restoMealInput');
 
-// LACKING ROUTE IN CUSTOMER APPOINTMENT SINCE IT IS UNKNOWN 
+// LACKING ROUTE IN CUSTOMER APPOINTMENT SINCE IT IS UNKNOWN -> not anymore
 
 Route::get('/customerFeedback', function () {
     return view('customerFeedback');
 })->name('customerFeedback');
+
+Route::get('/customerFeedbackAdd', function () {
+    return view('customerFeedbackAdd');
+})->name('customerFeedbackAdd');
+
+Route::get('/customerView', function () {
+    return view('customerView');
+})->name('customerView');
+
+Route::get('/customerMeals', function () {
+    return view('customerMeals');
+})->name('customerMeals');
 
 Route::get('/customerSubscription', function () {
     return view('customerSubscription');
@@ -97,46 +132,88 @@ Route::get('/signUp',[LoginRegisterController::class,'viewSubs'])->name('view.su
 Route::post('/signUp',[LoginRegisterController::class,'register'])->name('register.customer');
 
 Route::post('/login', [LoginRegisterController::class, 'loginUser'])->name('login.user');
+Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');//logout
+Route::get('/welcome', [LoginRegisterController::class, 'showWelcomeLogged'])->name('welcome');
+//Route::get('/welcome/test', [LoginRegisterController::class, 'indexTesti'])->name('testimonials.index');
 
-//rdn
+ //for locking pages
+
+//rdn //->middleware('auth')
 Route::view('/subscribers', 'subscribers')->name('subscribers');
-Route::get('/rdnDashboard', [LoginRegisterController::class, 'showSubscriptions'])->name('rdnDashboard');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/rdnDashboard', [LoginRegisterController::class, 'showSubscriptions'])->name('rdnDashboard');
+    //lock rdn??
+    //Route::get('/rdnDashboard', [LoginRegisterController::class, 'showRdnDashboard'])->name('rdnDashboardLock');//lock test
 
 Route::patch('/rdnDashboard', [LoginRegisterController::class, 'updateStatus'])
-    ->name('subscriptions.updateStatus');
+        ->name('subscriptions.updateStatus');
 
-
-// Route to view customer details
-Route::get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
-Route::get('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewSubscriber.view');///EDITS
-Route::put('/subscribers/{id}', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
-
-
-//CONSULTATIONSSSSS
-// Show the form to add a new consultation
-Route::get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
-
+Route::get('/custTest', [LoginRegisterController::class, 'showCustomerDashboard'])->name('custTest');//ERROR
 // Handle form submission
 Route::post('/consultation/store', [ConsultationController::class, 'store'])->name('consultation.store');
+//CONSULTATIONSSSSS
 
-Route::get('/appointments', [ConsultationController::class, 'showCalendar'])->name('appointments');
-Route::get('/viewAppointmentsRdn', [ConsultationController::class, 'index'])->name('viewAppointmentsRdn');
-Route::get('/viewAppointmentsRdnEdit/edit/{id}', [ConsultationController::class, 'edit'])->name('viewAppointmentsRdnEdit.edit');
-Route::put('/viewAppointmentsRdn/{id}', [ConsultationController::class, 'update'])->name('consultations.update');//krazy routing bug
+
+//(['auth:customer', NoCacheHeaders::class ])
+// Show the form to add a new consultation
+Route::middleware(['auth:customer', NoCacheHeaders::class ])->get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
+Route::middleware(['auth:customer', NoCacheHeaders::class ])->get('/customerView', [ConsultationController::class, 'viewCust'])->name('viewCust');
+Route::middleware(['auth:customer', NoCacheHeaders::class ])->put('/customerView/{id}/cust', [LoginRegisterController::class, 'custEdit'])->name('custedit');
+
+
+//also test
+Route::middleware(['auth:customer', NoCacheHeaders::class ])->get('/customerSubscription', [LoginRegisterController::class, 'viewCustSubs'])->name('viewCustSubs');
+Route::middleware(['auth:customer', NoCacheHeaders::class ])->get('/customerSubscriptionAdd', [LoginRegisterController::class, 'viewSubsCreate'])->name('viewSubsCreate');
+
+Route::middleware(['auth:customer', NoCacheHeaders::class ])->post('/customerSubscriptionAdd', [LoginRegisterController::class, 'addSubscription'])->name('subscription.add');
+Route::middleware(['auth:customer', NoCacheHeaders::class ])->post('/customerFeedbackAdd', [LoginRegisterController::class, 'storeFeedback'])->name('addFeedback');
+Route::middleware(['auth:customer', NoCacheHeaders::class ])->get('/customerFeedback', [LoginRegisterController::class, 'showMyFeedback'])->name('customerFeedback');
+
+Route::delete('/customerFeedback/{id}', [LoginRegisterController::class, 'destroyFeedback'])->name('feedback.delete');
+Route::middleware(['auth:customer', NoCacheHeaders::class ])->get('/customerMeals', [LoginRegisterController::class, 'getLoggedInCustomerMealDetails'])->name('customerMeals');
+//TEST//customerEdit
+//Route::middleware('auth:customer')->get('/customerEdit', [ConsultationController::class, 'viewCustEdit'])->name('editCust');
+//Route::middleware('auth:customer')->get('/custTest/a', [ConsultationController::class, 'showCalendarCust'])->name('appointments');
+
+
+
+
+
+
+
+//
+//R dee en middlewarez
+// Route to view customer details
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/subscribers', [LoginRegisterController::class, 'showSubscriptions'])->name('subscribers');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/viewsubscriber/edit/{id}', [LoginRegisterController::class, 'viewDetails'])->name('viewSubscriber.view');///EDITS
+
+///EDIT SUBS SA CUST
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'edit'])->name('editSubscription');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->put('/subscribers/{id}/cust', [LoginRegisterController::class, 'custEditRnd'])->name('viewSubscriber.custEditRnd');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->put('/subscribers/{id}/subs', [LoginRegisterController::class, 'update'])->name('updateSubscription');
+
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/appointments', [ConsultationController::class, 'showCalendar'])->name('appointments');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/viewAppointmentsRdn', [ConsultationController::class, 'index'])->name('viewAppointmentsRdn');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/viewAppointmentsRdnEdit/edit/{id}', [ConsultationController::class, 'edit'])->name('viewAppointmentsRdnEdit.edit');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->put('/viewAppointmentsRdn/{id}', [ConsultationController::class, 'update'])->name('consultations.update');//krazy routing bug
 
 //MEALSssss
-
-Route::get('/mealplans', [MealController::class, 'index'])->name('mealplans');
-Route::get('/mealplansAdd', [MealController::class, 'viewSubs'])->name('mealplansAdd');
-Route::post('/mealplansAdd',[MealController::class,'addMeals'])->name('mealplans.addition');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/mealplans', [MealController::class, 'index'])->name('mealplans');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/mealplansAdd', [MealController::class, 'viewSubs'])->name('mealplansAdd');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->post('/mealplansAdd',[MealController::class,'addMeals'])->name('mealplans.addition');
 //Route::post('/mealplansAdd',[MealController::class,'add'])->name('mealplans.add');//
 
-
-Route::get('/mealplansEdit/edit/{id}', [MealController::class, 'edit'])->name('meals.edit');
-Route::put('/mealplans/{id}', [MealController::class, 'update'])->name('meals.update');
-Route::delete('/mealplans/{id}', [MealController::class, 'destroy'])->name('meals.destroy');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/mealplansEdit/edit/{id}', [MealController::class, 'edit'])->name('meals.edit');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->put('/mealplans/{id}', [MealController::class, 'update'])->name('meals.update');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->delete('/mealplans/{id}', [MealController::class, 'destroy'])->name('meals.destroy');
 
 //Route::get('/mealplansEdit', [MealController::class, 'viewSubs2'])->name('mealplansEdit');
-Route::get('/mealplansEdit/edit/{id}', [MealController::class, 'viewSubs2'])->name('meals.edit');
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/mealplansEdit/edit/{id}', [MealController::class, 'viewSubs2'])->name('meals.edit');
 
-//login customer
+
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->put('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'custPass'])->name('custpass');
+
+Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/mealsplansAllCust', [LoginRegisterController::class, 'showCustomerMealsDetails'])->name('mealsplansAllCust');
+
+//Route::middleware('auth:rdn')->get('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'edit'])->name('editSubscription');
+
+

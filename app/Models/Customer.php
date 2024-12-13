@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Customer extends Model
+class Customer extends Authenticatable
 {
     use HasFactory;
-
+    protected $guard = 'customer';
     // The table associated with the model.
     protected $table = 'customer';
 
@@ -86,7 +87,7 @@ class Customer extends Model
         'weight' => 'decimal:2',
         'height' => 'decimal:2',
         'daily_calorie' => 'integer',
-        'age' => 'integer',
+        'age' => 'date',
     ];
 
     // Define the relationship with the Subscription model
@@ -104,5 +105,15 @@ class Customer extends Model
     public function consultations()
     {
         return $this->hasMany(ConsultationSched::class, 'customer_id');
+    }
+
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class, 'customer_id', 'customer_id');
+    }
+
+    public function setProfilePictureAttribute($value)
+    {
+        $this->attributes['profile_picture'] = 'images/' . $value;
     }
 }

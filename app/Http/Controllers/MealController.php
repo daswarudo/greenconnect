@@ -16,6 +16,7 @@ use App\Models\Payments;
 use App\Models\Meals;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ConsultationSched;
+use App\Models\Feedback;
 use Illuminate\Validation\ValidationException;
 
 
@@ -49,9 +50,9 @@ class MealController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'meal_name' => 'nullable|string|max:50',
+                'meal_name' => 'nullable|string|max:500',
                 'calories' => 'required|numeric|between:0,999999.99',
-                'description' => 'nullable|string|max:250',
+                'description' => 'nullable|string|max:500',
                 'meal_type' => 'nullable|string|max:50',
                 'time' => 'nullable|date_format:H:i',
                 'date' => 'nullable|date',
@@ -135,6 +136,7 @@ class MealController extends Controller
     {
         $request->validate([
             'meal_name' => 'required|string',
+            'meal_type' => 'required|string',
             'description' => 'required|string',
             'calories' => 'required|numeric',
             'time' => 'nullable|date_format:H:i',
@@ -142,20 +144,20 @@ class MealController extends Controller
             'subscription_type_id' => 'nullable|exists:subscription_type,subscription_type_id',
 
             'allergy_wheat' => 'nullable|boolean',
-                'allergy_milk' => 'nullable|boolean',
-                'allergy_egg' => 'nullable|boolean',
-                'allergy_peanut' => 'nullable|boolean',
-                'allergy_fish' => 'nullable|boolean',
-                'allergy_soy' => 'nullable|boolean',
-                'allergy_shellfish' => 'nullable|boolean',
-                'allergy_treenut' => 'nullable|boolean',
-                'allergy_sesame' => 'nullable|boolean',
-                'allergy_corn' => 'nullable|boolean',
-                'allergy_chicken' => 'nullable|boolean',
-                'allergy_beef' => 'nullable|boolean',
-                'allergy_pork' => 'nullable|boolean',
-                'allergy_lamb' => 'nullable|boolean',
-                'allergy_gluten' => 'nullable|boolean',
+            'allergy_milk' => 'nullable|boolean',
+            'allergy_egg' => 'nullable|boolean',
+            'allergy_peanut' => 'nullable|boolean',
+            'allergy_fish' => 'nullable|boolean',
+            'allergy_soy' => 'nullable|boolean',
+            'allergy_shellfish' => 'nullable|boolean',
+            'allergy_treenut' => 'nullable|boolean',
+            'allergy_sesame' => 'nullable|boolean',
+            'allergy_corn' => 'nullable|boolean',
+            'allergy_chicken' => 'nullable|boolean',
+            'allergy_beef' => 'nullable|boolean',
+            'allergy_pork' => 'nullable|boolean',
+            'allergy_lamb' => 'nullable|boolean',
+            'allergy_gluten' => 'nullable|boolean',
         ]);
 
         // Retrieve the meal record
@@ -163,11 +165,12 @@ class MealController extends Controller
 
         // Update basic details
         $meal->meal_name = $request->meal_name;
+        $meal->meal_type = $request->meal_type;
         $meal->description = $request->description;
         $meal->calories = $request->calories;
         $meal->time = $request->time;
         $meal->date = $request->date;
-
+        
         $meal->allergy_wheat = $request->boolean('allergy_wheat');
         $meal->allergy_milk = $request->boolean('allergy_milk');
         $meal->allergy_egg = $request->boolean('allergy_egg');
