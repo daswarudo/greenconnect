@@ -23,6 +23,7 @@
     <h1>Customer Meal Plans</h1>
     <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
 
+    <div style="overflow-y: scroll; height:70vh;">
     @foreach($groupedMeals as $week => $days)
     <div style="margin-bottom: 20px;">
         <h2>{{ $week }}</h2>
@@ -94,6 +95,7 @@
         </table>
     </div>
 @endforeach
+    </div>
 
 <!-- Popup Modal -->
 <div id="mealPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 9999;">

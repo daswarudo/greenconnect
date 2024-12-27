@@ -126,7 +126,7 @@ ksort($weeks);
                                                         mealType: '{{ $meal->meal_type }}',
                                                         date: '{{ $meal->date }}'
                                                     })">
-                                                    See More
+                                                    View Details
                                                 </button>
                                             </div>
                                         @endif
