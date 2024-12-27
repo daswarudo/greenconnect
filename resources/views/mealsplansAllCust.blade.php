@@ -10,7 +10,7 @@
             height: 3vh;
             max-height: 3vh;
         }
-
+        
     </style>
     
  </head>
@@ -22,126 +22,92 @@
 <div class="content">
     <h1>Customer Meal Plans</h1>
     <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
-    <div class="container" style="overflow: scroll;height: 70vh;margin-top:2vh;">
-    
 
-    <table class="table table-striped">
-    <tbody>
-    @php
-        // Determine the earliest date to establish "Week 1"
-        $earliestDate = $customers->min('date');
-        $startOfWeek = \Carbon\Carbon::parse($earliestDate)->startOfWeek();
+    @foreach($groupedMeals as $week => $days)
+    <div style="margin-bottom: 20px;">
+        <h2>{{ $week }}</h2>
+        
+        <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($days as $dayName => $meals)
+                    @foreach($meals->groupBy('customer_id') as $customerId => $customerMeals)
+                        <tr>
+                            <!-- Customer Name -->
+                            <td>
+                                {{ $customerMeals->first()->first_name }} {{ $customerMeals->first()->last_name }}
+                            </td>
 
-        // Group customers by relative week (starting from the first detected week)
-        $groupedByWeek = $customers->groupBy(function ($customer) use ($startOfWeek) {
-            $currentDate = \Carbon\Carbon::parse($customer->date);
-            return $startOfWeek->diffInWeeks($currentDate) + 1; // Calculate relative week number
-        });
+                            <!-- Days of the week -->
+                            @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                                <td>
+                                    @if($day === $dayName)
+                                        @foreach($customerMeals as $meal)
+                                            @php
+                                                $foodNotRecommended = false;
+                                            @endphp
 
-        // Sort weeks numerically
-        $sortedWeeks = $groupedByWeek->sortKeys();
-    @endphp
+                                            @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                @if ($meal->{"meal_allergy_{$allergy}"} && $meal->{"customer_allergy_{$allergy}"})
+                                                    @php
+                                                        $foodNotRecommended = true;
+                                                    @endphp
+                                                    @break
+                                                @endif
+                                            @endforeach
 
-    @foreach($sortedWeeks as $weekNumber => $customersInWeek)
-        @php
-            // Filter out rows where the food is not recommended
-            $customersInWeek = $customersInWeek->filter(function ($customer) {
-                foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy) {
-                    if ($customer->{"meal_allergy_{$allergy}"} && $customer->{"customer_allergy_{$allergy}"}) {
-                        return false; // Exclude if the food contains an allergen the customer is allergic to
-                    }
-                }
-                return true; // Include if no allergens conflict
-            });
-        @endphp
+                                            @if (!$foodNotRecommended)
+                                                <!-- Meal clickable for popup -->
+                                                <div class="meal-item" 
+                                                    style="display: block; padding: 10px 20px; margin: 5px 0; background-color: #007bff; color: white; text-align: center; border-radius: 5px; cursor: pointer; font-size: 16px; text-decoration: none; transition: background-color 0.3s, transform 0.2s;"
+                                                    onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
+                                                    onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';"
+                                                    onclick="showMealDetails('{{ $meal->meal_name }}', '{{ $meal->description }}', '{{ $meal->calories }}', '{{ $meal->meal_type }}', '{{ $meal->date }}')">
+                                                    {{ $meal->meal_name }} ({{ $meal->calories }} kcal)
+                                                </div>
 
-        @if($customersInWeek->isNotEmpty())
-            <tr>
-                <td colspan="6" style="font-weight: bold; text-align: center; background-color: #e0e0e0;">
-                    Week {{ $weekNumber }}<br>
-                    <button type="button" class="toggle-week btn btn-sm btn-link" data-target="week-{{ $weekNumber }}">
-                        Show Days
-                    </button>
-                </td>
-            </tr>
 
-            @php
-                // Further group filtered customers in the week by weekday
-                $groupedByDay = $customersInWeek->groupBy(function ($customer) {
-                    return \Carbon\Carbon::parse($customer->date)->format('l'); // Full weekday name
-                });
-            @endphp
 
-            <tr id="week-{{ $weekNumber }}" class="week-container" style="display: none;">
-                <td colspan="6">
-                    <table class="table">
-                        <tbody>
-                            @foreach($groupedByDay as $day => $customersByDay)
-                                <tr>
-                                    <td colspan="6" style="font-weight: bold; text-align: center; background-color: #f9f9f9;">
-                                        {{ $day }}<br>
-                                        <button type="button" class="toggle-day btn btn-sm btn-link" data-target="day-{{ $weekNumber }}-{{ $day }}">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="day-container" id="day-{{ $weekNumber }}-{{ $day }}" style="display: none;">
-                                    <td colspan="6">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>Subscription Type</th>
-                                                    <th>Meal Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($customersByDay as $customer)
-                                                    <tr>
-                                                        <td></td>
-                                                        <td>{{ $customer->first_name }}</td>
-                                                        <td>{{ $customer->last_name }}</td>
-                                                        <td>{{ $customer->subscription_type }}</td>
-                                                        <td>{{ $customer->meal_name }}</td>
-                                                        <td>
-                                                            <div class="details" style="display: none;">
-                                                                <b>Date: </b>{{ $customer->date }}<br>
-                                                                <b>Customer Daily Calorie: </b>{{ $customer->daily_calorie }} cal<br>
-                                                                <b>Customer Diet Recommended: </b>{{ $customer->diet_recom }}<br>
-                                                                <b>Customer Health Condition: </b>{{ $customer->health_condition }}<br>
-                                                                <b>Customer Activity Level: </b>{{ $customer->activity_level }}<br>
-                                                                <b>Meal Calories: </b>{{ $customer->calories }} cal<br>
-                                                                <b>Meal Type: </b>{{ $customer->meal_type }}<br>
-                                                            </div>
-                                                            <button type="button" class="toggle-details btn btn-sm btn-primary">Show Details</button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
+
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <div>No meals</div>
+                                    @endif
+                                </td>
                             @endforeach
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        @endif
-    @endforeach
-</tbody>
-
-</table>
-
-
-
-
-
-
-
-            
+                        </tr>
+                    @endforeach
+                @endforeach
+            </tbody>
+        </table>
     </div>
+@endforeach
+
+<!-- Popup Modal -->
+<div id="mealPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 9999;">
+    <div style="background: white; padding: 20px; border-radius: 10px; width: 400px;">
+        <h3 id="mealName"></h3>
+        <p><strong>Description:</strong> <span id="mealDescription"></span></p>
+        <p><strong>Calories:</strong> <span id="mealCalories"></span></p>
+        <p><strong>Meal Type:</strong> <span id="mealType"></span></p>
+        <p><strong>Date:</strong> <span id="mealDate"></span></p>
+        <button onclick="closeMealPopup()">Close</button>
+    </div>
+</div>
+      
+    
 </div>
     
  </body>
@@ -201,6 +167,22 @@
             });
         });
     });
+    // Function to show the meal details in the popup
+    function showMealDetails(mealName, mealDescription, mealCalories, mealType, mealDate) {
+        document.getElementById('mealName').textContent = mealName;
+        document.getElementById('mealDescription').textContent = mealDescription;
+        document.getElementById('mealCalories').textContent = mealCalories;
+        document.getElementById('mealType').textContent = mealType;
+        document.getElementById('mealDate').textContent = mealDate;
+        
+        // Display the popup
+        document.getElementById('mealPopup').style.display = 'flex';
+    }
+
+    // Function to close the popup
+    function closeMealPopup() {
+        document.getElementById('mealPopup').style.display = 'none';
+    }
 </script>
 
 </html>
