@@ -923,78 +923,80 @@ public function register(Request $request)
     }
     */
     public function showCustomerMealsDetails() // R&D side meals views
-{
-    $customers = Customer::join('subscriptions', 'customer.customer_id', '=', 'subscriptions.customer_id')
-        ->join('subscription_type', 'subscriptions.subscription_type_id', '=', 'subscription_type.subscription_type_id')
-        ->join('meals', 'subscription_type.subscription_type_id', '=', 'meals.subscription_type_id')
-        ->select(
-            'customer.customer_id',
-            'customer.first_name',
-            'customer.last_name',
-            'customer.allergy_wheat as customer_allergy_wheat',
-            'customer.allergy_milk as customer_allergy_milk',
-            'customer.allergy_egg as customer_allergy_egg',
-            'customer.allergy_peanut as customer_allergy_peanut',
-            'customer.allergy_fish as customer_allergy_fish',
-            'customer.allergy_soy as customer_allergy_soy',
-            'customer.allergy_shellfish as customer_allergy_shellfish',
-            'customer.allergy_treenut as customer_allergy_treenut',
-            'customer.allergy_sesame as customer_allergy_sesame',
-            'customer.allergy_corn as customer_allergy_corn',
-            'customer.allergy_chicken as customer_allergy_chicken',
-            'customer.allergy_beef as customer_allergy_beef',
-            'customer.allergy_pork as customer_allergy_pork',
-            'customer.allergy_lamb as customer_allergy_lamb',
-            'customer.allergy_gluten as customer_allergy_gluten',
-            'meals.meal_id',
-            'meals.meal_name',
-            'meals.calories',
-            'meals.meal_type',
-            'meals.time',
-            'meals.date',
-            'meals.allergy_wheat as meal_allergy_wheat',
-            'meals.allergy_milk as meal_allergy_milk',
-            'meals.allergy_egg as meal_allergy_egg',
-            'meals.allergy_peanut as meal_allergy_peanut',
-            'meals.allergy_fish as meal_allergy_fish',
-            'meals.allergy_soy as meal_allergy_soy',
-            'meals.allergy_shellfish as meal_allergy_shellfish',
-            'meals.allergy_treenut as meal_allergy_treenut',
-            'meals.allergy_sesame as meal_allergy_sesame',
-            'meals.allergy_corn as meal_allergy_corn',
-            'meals.allergy_chicken as meal_allergy_chicken',
-            'meals.allergy_beef as meal_allergy_beef',
-            'meals.allergy_pork as meal_allergy_pork',
-            'meals.allergy_lamb as meal_allergy_lamb',
-            'meals.allergy_gluten as meal_allergy_gluten'
-        )
-        ->distinct()
-        ->get();
+    {
+        $customers = Customer::join('subscriptions', 'customer.customer_id', '=', 'subscriptions.customer_id')
+            ->join('subscription_type', 'subscriptions.subscription_type_id', '=', 'subscription_type.subscription_type_id')
+            ->join('meals', 'subscription_type.subscription_type_id', '=', 'meals.subscription_type_id')
+            ->select(
+                'customer.customer_id',
+                'customer.first_name',
+                'customer.last_name',
+                'customer.allergy_wheat as customer_allergy_wheat',
+                'customer.allergy_milk as customer_allergy_milk',
+                'customer.allergy_egg as customer_allergy_egg',
+                'customer.allergy_peanut as customer_allergy_peanut',
+                'customer.allergy_fish as customer_allergy_fish',
+                'customer.allergy_soy as customer_allergy_soy',
+                'customer.allergy_shellfish as customer_allergy_shellfish',
+                'customer.allergy_treenut as customer_allergy_treenut',
+                'customer.allergy_sesame as customer_allergy_sesame',
+                'customer.allergy_corn as customer_allergy_corn',
+                'customer.allergy_chicken as customer_allergy_chicken',
+                'customer.allergy_beef as customer_allergy_beef',
+                'customer.allergy_pork as customer_allergy_pork',
+                'customer.allergy_lamb as customer_allergy_lamb',
+                'customer.allergy_gluten as customer_allergy_gluten',
+                'subscriptions.sub_status',
+                'meals.meal_id',
+                'meals.meal_name',
+                'meals.calories',
+                'meals.meal_type',
+                'meals.time',
+                'meals.date',
+                'meals.allergy_wheat as meal_allergy_wheat',
+                'meals.allergy_milk as meal_allergy_milk',
+                'meals.allergy_egg as meal_allergy_egg',
+                'meals.allergy_peanut as meal_allergy_peanut',
+                'meals.allergy_fish as meal_allergy_fish',
+                'meals.allergy_soy as meal_allergy_soy',
+                'meals.allergy_shellfish as meal_allergy_shellfish',
+                'meals.allergy_treenut as meal_allergy_treenut',
+                'meals.allergy_sesame as meal_allergy_sesame',
+                'meals.allergy_corn as meal_allergy_corn',
+                'meals.allergy_chicken as meal_allergy_chicken',
+                'meals.allergy_beef as meal_allergy_beef',
+                'meals.allergy_pork as meal_allergy_pork',
+                'meals.allergy_lamb as meal_allergy_lamb',
+                'meals.allergy_gluten as meal_allergy_gluten'
+            )
+            ->where('subscriptions.sub_status', 'active')
+            ->distinct()
+            ->get();
 
-    // Filter meals based on customer allergies
-    $filteredMeals = $customers->filter(function ($customer) {
-        foreach ($customer->getAttributes() as $key => $value) {
-            if (str_starts_with($key, 'customer_allergy_') && $value) {
-                $mealAllergyKey = str_replace('customer_', 'meal_', $key);
-                if ($customer->{$mealAllergyKey}) {
-                    return false;
+        // Filter meals based on customer allergies
+        $filteredMeals = $customers->filter(function ($customer) {
+            foreach ($customer->getAttributes() as $key => $value) {
+                if (str_starts_with($key, 'customer_allergy_') && $value) {
+                    $mealAllergyKey = str_replace('customer_', 'meal_', $key);
+                    if ($customer->{$mealAllergyKey}) {
+                        return false;
+                    }
                 }
             }
-        }
-        return true;
-    });
-
-    // Group meals by week and day of the week
-    $groupedMeals = $filteredMeals->groupBy(function ($meal) {
-        return 'Week ' . Carbon::parse($meal->date)->weekOfMonth;
-    })->map(function ($weekMeals) {
-        return $weekMeals->groupBy(function ($meal) {
-            return Carbon::parse($meal->date)->format('l'); // Group by day name
+            return true;
         });
-    });
 
-    return view('mealsplansAllCust', compact('groupedMeals'));
-}
+        // Group meals by week and day of the week
+        $groupedMeals = $filteredMeals->groupBy(function ($meal) {
+            return 'Week ' . Carbon::parse($meal->date)->weekOfMonth;
+        })->map(function ($weekMeals) {
+            return $weekMeals->groupBy(function ($meal) {
+                return Carbon::parse($meal->date)->format('l'); // Group by day name
+            });
+        });
+
+        return view('mealsplansAllCust', compact('groupedMeals'));
+    }
 
     
 
