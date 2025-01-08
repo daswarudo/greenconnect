@@ -96,11 +96,23 @@
                     <input id="contact_num" name="contact_num" type="text" minlength="11" maxlength="11" 
                             oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  value="{{ old('age', $customer->contact_num) }}"  disabled/>
                 </p>
-                
+                <!--
                 <p>
                     <b>Diet Recommended:</b> 
                     <input id="diet_recom" name="diet_recom" type="text" value="{{ $customer->diet_recom  ?? 'No diet recommended' }}"/>
+                </p>-->
+                <p>
+                    <b>Diet Recommended:</b>
+                    <select id="diet_recom" name="diet_recom" class="form-control">
+                        <option value="" disabled {{ empty($customer->diet_recom) ? 'selected' : '' }}>Select a recommended diet</option>
+                        <option value="a" {{ $customer->diet_recom == 'a' ? 'selected' : '' }}>A</option>
+                        <option value="b" {{ $customer->diet_recom == 'b' ? 'selected' : '' }}>B</option>
+                        <option value="c" {{ $customer->diet_recom == 'c' ? 'selected' : '' }}>C</option>
+                        <option value="d" {{ $customer->diet_recom == 'd' ? 'selected' : '' }}>D</option>
+                        <!-- Add more options as needed -->
+                    </select>
                 </p>
+
                 <p>
                     <b>Health Condition:</b> 
                     <input id="health_condition" name="health_condition" type="text" value="{{ $customer->health_condition }}"  disabled/>

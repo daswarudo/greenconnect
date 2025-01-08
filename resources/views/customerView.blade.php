@@ -103,10 +103,23 @@
 
                 </div>
                 <div class="flex">
+                    <!--
                 <p>
                     <b>Diet Recommended:</b> 
                     <input style="margin-right:8vw" id="diet_recom" name="diet_recom" type="text" value="{{ $customer->diet_recom  ?? '' }}"  />
-                </p>
+                </p>-->
+                <p>
+    <b>Diet Recommended:</b>
+    <select id="diet_recom" name="diet_recom" style="margin-right:8vw" class="form-control">
+        <option value="" disabled {{ empty($customer->diet_recom) ? 'selected' : '' }}>Select a recommended diet</option>
+        <option value="a" {{ $customer->diet_recom == 'a' ? 'selected' : '' }}>A</option>
+        <option value="b" {{ $customer->diet_recom == 'b' ? 'selected' : '' }}>B</option>
+        <option value="c" {{ $customer->diet_recom == 'c' ? 'selected' : '' }}>C</option>
+        <option value="d" {{ $customer->diet_recom == 'd' ? 'selected' : '' }}>D</option>
+        <!-- Add more options as needed -->
+    </select>
+</p>
+
                 <p>
                     <b>Health Condition:</b> 
                     <input style="width: 20vw;" id="health_condition" name="health_condition" type="text" value="{{ $customer->health_condition }}"  />
