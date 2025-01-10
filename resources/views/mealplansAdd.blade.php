@@ -88,11 +88,17 @@
                     </div>
                 
                 
-                <!-- Date Input -->
+                <!-- Date Input 
                 <div class="flex">
                 <div class="form-group">
                     <label for="date"><br><b>Date</b></label>
                     <input name="date" id="date" class="form-control" style="width: 20vw;"  type="date">
+                </div>-->
+                <div class="flex" style="display: none;">
+                    <div class="form-group">
+                        <label for="date"><br><b>Date</b></label>
+                        <input name="date" id="date" class="form-control" style="width: 20vw;" type="date">
+                    </div>
                 </div>
 
                 <!-- Time Input
@@ -193,6 +199,16 @@
 </form> 
  </body>
  <script>
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setMonth(endDate.getMonth() + 2);
+
+    const randomTimestamp = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+    const randomDate = new Date(randomTimestamp);
+
+    const formattedDate = randomDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    document.getElementById('date').value = formattedDate;
+
     document.getElementById('calories').addEventListener('input', function (e) {
         const max = 747;
         const value = parseFloat(e.target.value);

@@ -97,12 +97,12 @@
                     
                 
                 
-                <!-- Date Input -->
+                <!-- Date Input 
                 <div class="form-group">
                     <label for="date"><br><b>Date</b></label><br>
                     <input name="date" id="date" class="form-control" 
                         value="{{ old('date', $meal->date) }}" style="width: 50vh;"  type="date">
-                </div>
+                </div>-->
 
                 <!-- Time Input 
                 <div class="form-group">

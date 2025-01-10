@@ -28,10 +28,7 @@
     </div>
 
     <div style="overflow: scroll;height: 70vh;margin-top:2vh;">
-    <table class="table table-bordered">
-        
-    </table>
-    
+   
     <table>
     <tbody id="tableBody">
     @php

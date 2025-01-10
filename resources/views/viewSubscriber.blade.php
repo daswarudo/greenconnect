@@ -102,14 +102,26 @@
                     <input id="diet_recom" name="diet_recom" type="text" value="{{ $customer->diet_recom  ?? 'No diet recommended' }}"/>
                 </p>-->
                 <p>
-                    <b>Diet Recommended:</b>
-                    <select id="diet_recom" name="diet_recom" class="form-control">
+                <b>Diet Recommended:</b>
+                    <select id="diet_recom" name="diet_recom" style="margin-right:8vw" class="form-control">
                         <option value="" disabled {{ empty($customer->diet_recom) ? 'selected' : '' }}>Select a recommended diet</option>
-                        <option value="a" {{ $customer->diet_recom == 'a' ? 'selected' : '' }}>A</option>
-                        <option value="b" {{ $customer->diet_recom == 'b' ? 'selected' : '' }}>B</option>
-                        <option value="c" {{ $customer->diet_recom == 'c' ? 'selected' : '' }}>C</option>
-                        <option value="d" {{ $customer->diet_recom == 'd' ? 'selected' : '' }}>D</option>
-                        <!-- Add more options as needed -->
+                        <option value="clear_liquid_diet" {{ $customer->diet_recom == 'clear_liquid_diet' ? 'selected' : '' }}>Clear Liquid Diet</option>
+                        <option value="soft_diet" {{ $customer->diet_recom == 'soft_diet' ? 'selected' : '' }}>Soft Diet</option>
+                        <option value="regular_diet" {{ $customer->diet_recom == 'regular_diet' ? 'selected' : '' }}>Regular Diet</option>
+                        <option value="cardiac_diet" {{ $customer->diet_recom == 'cardiac_diet' ? 'selected' : '' }}>Cardiac Diet</option>
+                        <option value="low_sodium" {{ $customer->diet_recom == 'low_sodium' ? 'selected' : '' }}>Low Sodium</option>
+                        <option value="low_fiber" {{ $customer->diet_recom == 'low_fiber' ? 'selected' : '' }}>Low-fiber</option>
+                        <option value="diabetic" {{ $customer->diet_recom == 'diabetic' ? 'selected' : '' }}>Diabetic</option>
+                        <option value="low_fat" {{ $customer->diet_recom == 'low_fat' ? 'selected' : '' }}>Low-fat</option>
+                        <option value="mashed" {{ $customer->diet_recom == 'mashed' ? 'selected' : '' }}>Mashed</option>
+                        <option value="no_added_salt" {{ $customer->diet_recom == 'no_added_salt' ? 'selected' : '' }}>No Added Salt Diet</option>
+                        <option value="therapeutic" {{ $customer->diet_recom == 'therapeutic' ? 'selected' : '' }}>Therapeutic</option>
+                        <option value="clear_fluid" {{ $customer->diet_recom == 'clear_fluid' ? 'selected' : '' }}>Clear Fluid</option>
+                        <option value="high_fiber" {{ $customer->diet_recom == 'high_fiber' ? 'selected' : '' }}>High Fiber</option>
+                        <option value="mechanically_altered" {{ $customer->diet_recom == 'mechanically_altered' ? 'selected' : '' }}>Mechanically Altered</option>
+                        <option value="renal" {{ $customer->diet_recom == 'renal' ? 'selected' : '' }}>Renal</option>
+                        <option value="special_diet" {{ $customer->diet_recom == 'special_diet' ? 'selected' : '' }}>Special Diet</option>
+                    <!-- Add more options as needed -->
                     </select>
                 </p>
 
