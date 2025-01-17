@@ -36,7 +36,7 @@
             <th>Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody><!--error-->
         @foreach($meals as $meal)
             <tr>
                 <td>{{ $meal->meal_name }}</td>
@@ -62,7 +62,8 @@
                     @endphp
                     {{ number_format($meal->calories, 2) }} cal ({{ $calorieLevel }})
                 </td>
-                <td>{{ $mealPurpose }}</td>
+                <!--<td>{{ $mealPurpose }}</td>-->
+                <td>{{ $meal->subscriptionType->plan_name ?? 'No Plan' }}</td>
                 <td><a href="{{ route('meals.edit', $meal->meal_id) }}" style="text-decoration: none; 
                 padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; display: inline-block;
                  font-weight: bold; text-align: center;

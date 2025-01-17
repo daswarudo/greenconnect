@@ -22,14 +22,23 @@ use Illuminate\Validation\ValidationException;
 
 class MealController extends Controller
 {
-    public function index()
+    /*public function index()
     {
         // Fetch all meals
         $meals = Meals::all();
 
         // Pass the meals to the view
         return view('mealplans', compact('meals'));
+    }*/
+    public function index()
+    {
+        // Fetch all meals with the related subscription type
+        $meals = Meals::with('subscriptionType')->get();
+
+        // Pass the meals to the view
+        return view('mealplans', compact('meals'));
     }
+
 
     public function show($meal_id)
     {
