@@ -67,7 +67,14 @@
                             <!-- Days of the week -->
                             @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
                                 <td>
-                                    @if($day === $dayName)
+                                    @php
+                                        // Parse the meal's date and get the weekday name
+                                        $mealDate = \Carbon\Carbon::parse($firstMeal['date'])->timezone('UTC'); // Replace 'UTC' with your desired timezone
+                                        $mealDate->subDays(3);
+                                        $mealDayName = $mealDate->format('l'); // Get full weekday name
+                                    @endphp
+
+                                    @if($mealDayName === $day)
                                         @foreach(collect($customerMeals)->sortBy(function ($meal) use ($mealTypeOrder) {
                                             return array_search(strtolower($meal['meal_type']), $mealTypeOrder);
                                         }) as $meal)
@@ -96,7 +103,7 @@
                                                         '{{ $meal['meal_type'] ?? 'Unknown' }}', 
                                                         '{{ $meal['date'] ?? 'Unknown Date' }}'
                                                     )">
-                                                    <strong>{{ ucfirst($meal['meal_type']) }}:</strong> {{ $meal['meal_name'] ?? 'Unnamed Meal' }} ({{ $meal['calories'] ?? '0' }} kcal)
+                                                    <strong>{{ ucfirst($meal['meal_type']) }}:</strong> {{ $meal['meal_name'] ?? 'Unnamed Meal' }} ({{ $meal['calories'] ?? '0' }} kcal) 
                                                 </div>
                                             @endif
                                         @endforeach
@@ -112,6 +119,7 @@
         </table>
     </div>
 @endforeach
+
 
 
 

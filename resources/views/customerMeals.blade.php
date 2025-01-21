@@ -31,6 +31,7 @@
    
     <table>
     <tbody id="tableBody">
+        <!--
     @php
 // Custom order for meal types
 $mealTypeOrder = ['breakfast', 'lunch', 'snacks', 'dinner'];
@@ -135,6 +136,114 @@ ksort($weeks);
                 </td>
             </tr>
         @endforeach
+-->
+@php
+// Custom order for meal types
+$mealTypeOrder = ['breakfast', 'lunch', 'snacks', 'dinner'];
+
+// Sort meals by meal type based on the custom order
+$sortedDetails = $details->sortBy(function ($detail) use ($mealTypeOrder) {
+    $mealTypeIndex = array_search(strtolower($detail->meal_type), $mealTypeOrder);
+    return $mealTypeIndex !== false ? $mealTypeIndex : count($mealTypeOrder); // Push undefined types to the end
+})->sortBy(function ($detail) {
+    return \Carbon\Carbon::parse($detail->date)->dayOfWeek; // Then sort by day of the week
+});
+
+// Initialize week-based grouping logic
+$daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+$weeks = []; // Array to store meals grouped by week and day
+
+// Group meals by week and day of the week
+foreach ($sortedDetails as $detail) {
+    // Original day of the week
+    $mealDay = \Carbon\Carbon::parse($detail->date)->format('l'); // Get full day name
+    $weekNumber = \Carbon\Carbon::parse($detail->date)->weekOfMonth; // Get the week number of the month
+
+    // Subtract days from the meal day (e.g., subtracting 1 day)
+    $modifiedMealDay = \Carbon\Carbon::parse($detail->date)->subDays(3)->format('l'); // Modify the day of the week, not the date
+
+    // Create week entry if it doesn't exist
+    if (!isset($weeks[$weekNumber])) {
+        $weeks[$weekNumber] = [
+            'week' => 'Week ' . $weekNumber,
+            'days' => [
+                'Monday' => [],
+                'Tuesday' => [],
+                'Wednesday' => [],
+                'Thursday' => [],
+                'Friday' => [],
+                'Saturday' => [],
+                'Sunday' => []
+            ]
+        ];
+    }
+
+    // Group meals by the modified day, keeping the original date intact
+    $weeks[$weekNumber]['days'][$modifiedMealDay][] = $detail;
+}
+
+// Sort weeks by week number
+ksort($weeks);
+@endphp
+
+@foreach ($weeks as $week)
+    <tr class="week-label">
+        <td colspan="7">
+            <strong>{{ $week['week'] }}</strong><br>
+            <button class="toggle-week" onclick="toggleWeek('{{ $week['week'] }}')">Show {{ $week['week'] }}</button>
+        </td>
+    </tr>
+
+    <tr class="week-contents" id="week-{{ $week['week'] }}" style="display:none;">
+        <td colspan="7">
+            <table>
+                <tr>
+                    @foreach ($daysOfWeek as $day)
+                        <th>{{ $day }}</th>
+                    @endforeach
+                </tr>
+
+                <tr>
+                    @foreach ($daysOfWeek as $day)
+                        <td>
+                            @foreach ($week['days'][$day] as $meal)
+                                @php
+                                    $foodNotRecommended = false;
+                                @endphp
+
+                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                    @if ($meal->{"meal_allergy_{$allergy}"} && $meal->{"customer_allergy_{$allergy}"})
+                                        @php
+                                            $foodNotRecommended = true;
+                                        @endphp
+                                        @break
+                                    @endif
+                                @endforeach
+
+                                @if (!$foodNotRecommended)
+                                    <div>
+                                        <strong>{{ $meal->meal_name }}</strong><br>
+                                        <button class="toggleButton" 
+                                            onclick="showMealDetails({
+                                                mealId: {{ $meal->meal_id }},
+                                                planName: '{{ $meal->plan_name }}',
+                                                description: `{{ $meal->description }}`,
+                                                calories: {{ $meal->calories }},
+                                                mealType: '{{ $meal->meal_type }}',
+                                                date: '{{ $meal->date }}'  <!-- Keep original date intact -->
+                                            })">
+                                            View Details
+                                        </button>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </td>
+                    @endforeach
+                </tr>
+            </table>
+        </td>
+    </tr>
+@endforeach
 
         </tbody>
     </table>

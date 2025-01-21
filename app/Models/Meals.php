@@ -27,21 +27,7 @@ class Meals extends Model
     ];
 
 
-    public function getDateAttribute($value)//idk
-    {
-        // Seed the random generator with a value that changes daily
-        $seed = now()->format('Y-m-d') . $this->id; // Use the date and meal ID as a seed
-        srand(crc32($seed));
-
-        // Generate a consistent random offset for the day
-        $randomDays = rand(0, 35);
-
-        // Reset the random number generator to avoid side effects
-        srand();
-
-        // Return the dynamically generated date, but still respect the `date` attribute
-        return now()->addDays($randomDays);
-    }
+    
 
     // Optionally, you can define the relationship with the SubscriptionType model
     public function subscriptionType()

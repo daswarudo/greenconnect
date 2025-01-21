@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
+
 class LoginRegisterController extends Controller
 {
     public function showSignUpPage()
