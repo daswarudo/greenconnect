@@ -20,93 +20,100 @@
 -->
 
 <div class="content">
-    <h1>Customer Meal Plans</h1>
-    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
+<h1>Customer Meal Plans</h1>
+<input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
 
-    <div style="overflow-y: scroll; height:70vh;">
+<div style="overflow-y: scroll; height:70vh;">
 
-    @php
-        // Sort weeks numerically using Laravel's collection helper
-        $groupedMeals = collect($groupedMeals)->sortKeysUsing(function ($a, $b) {
-            return (int) str_replace('Week ', '', $a) - (int) str_replace('Week ', '', $b);
-        })->toArray();
-    @endphp
+@php
+    // Sort weeks numerically using Laravel's collection helper
+    $groupedMeals = collect($groupedMeals)->sortKeysUsing(function ($a, $b) {
+        return (int) str_replace('Week ', '', $a) - (int) str_replace('Week ', '', $b);
+    })->toArray();
 
-    @foreach($groupedMeals as $week => $days)
-        <div style="margin-bottom: 20px;">
-            <h2>{{ $week }}</h2>
-            
-            <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th>Customer Name</th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                        <th>Sunday</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($days as $dayName => $meals)
-                        @foreach(collect($meals)->groupBy('customer_id') as $customerId => $customerMeals)
-                            @php
-                                $firstMeal = collect($customerMeals)->first(); // Get the first meal
-                            @endphp
-                            <tr>
-                                <!-- Customer Name -->
+    // Define the order of meal types
+    $mealTypeOrder = ['breakfast', 'lunch', 'dinner', 'snacks','snack'];
+@endphp
+
+@foreach($groupedMeals as $week => $days)
+    <div style="margin-bottom: 20px;">
+        <h2>{{ $week }}</h2>
+        
+        <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($days as $dayName => $meals)
+                    @foreach(collect($meals)->groupBy('customer_id') as $customerId => $customerMeals)
+                        @php
+                            $firstMeal = collect($customerMeals)->first(); // Get the first meal
+                        @endphp
+                        <tr>
+                            <!-- Customer Name -->
+                            <td>
+                                {{ $firstMeal['first_name'] ?? 'Unknown' }} {{ $firstMeal['last_name'] ?? '' }}
+                            </td>
+
+                            <!-- Days of the week -->
+                            @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
                                 <td>
-                                    {{ $firstMeal['first_name'] ?? 'Unknown' }} {{ $firstMeal['last_name'] ?? '' }}
-                                </td>
+                                    @if($day === $dayName)
+                                        @foreach(collect($customerMeals)->sortBy(function ($meal) use ($mealTypeOrder) {
+                                            return array_search(strtolower($meal['meal_type']), $mealTypeOrder);
+                                        }) as $meal)
+                                            @php
+                                                $foodNotRecommended = false;
+                                            @endphp
 
-                                <!-- Days of the week -->
-                                @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                                    <td>
-                                        @if($day === $dayName)
-                                            @foreach($customerMeals as $meal)
-                                                @php
-                                                    $foodNotRecommended = false;
-                                                @endphp
-
-                                                @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                    @if ($meal["meal_allergy_{$allergy}"] && $meal["customer_allergy_{$allergy}"])
-                                                        @php
-                                                            $foodNotRecommended = true;
-                                                        @endphp
-                                                        @break
-                                                    @endif
-                                                @endforeach
-
-                                                @if (!$foodNotRecommended)
-                                                    <div class="meal-item" 
-                                                        style="display: block; padding: 10px 20px; margin: 5px 0; background-color: #007bff; color: white; text-align: center; border-radius: 5px; cursor: pointer; font-size: 16px; text-decoration: none; transition: background-color 0.3s, transform 0.2s;"
-                                                        onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
-                                                        onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';"
-                                                        onclick="showMealDetails(
-                                                            '{{ $meal['meal_name'] ?? 'Unknown Meal' }}', 
-                                                            '{{ $meal['description'] ?? 'No description available' }}', 
-                                                            '{{ $meal['calories'] ?? '0' }}', 
-                                                            '{{ $meal['meal_type'] ?? 'Unknown' }}', 
-                                                            '{{ $meal['date'] ?? 'Unknown Date' }}'
-                                                        )">
-                                                        {{ $meal['meal_name'] ?? 'Unnamed Meal' }} ({{ $meal['calories'] ?? '0' }} kcal)
-                                                    </div>
+                                            @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
+                                                @if ($meal["meal_allergy_{$allergy}"] && $meal["customer_allergy_{$allergy}"])
+                                                    @php
+                                                        $foodNotRecommended = true;
+                                                    @endphp
+                                                    @break
                                                 @endif
                                             @endforeach
-                                        @else
-                                            <div>No meals</div>
-                                        @endif
-                                    </td>
-                                @endforeach
-                            </tr>
-                        @endforeach
+
+                                            @if (!$foodNotRecommended)
+                                                <div class="meal-item" 
+                                                    style="display: block; padding: 10px 20px; margin: 5px 0; background-color: #007bff; color: white; text-align: center; border-radius: 5px; cursor: pointer; font-size: 16px; text-decoration: none; transition: background-color 0.3s, transform 0.2s;"
+                                                    onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
+                                                    onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';"
+                                                    onclick="showMealDetails(
+                                                        '{{ $meal['meal_name'] ?? 'Unknown Meal' }}', 
+                                                        '{{ $meal['description'] ?? 'No description available' }}', 
+                                                        '{{ $meal['calories'] ?? '0' }}', 
+                                                        '{{ $meal['meal_type'] ?? 'Unknown' }}', 
+                                                        '{{ $meal['date'] ?? 'Unknown Date' }}'
+                                                    )">
+                                                    <strong>{{ ucfirst($meal['meal_type']) }}:</strong> {{ $meal['meal_name'] ?? 'Unnamed Meal' }} ({{ $meal['calories'] ?? '0' }} kcal)
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <div>No meals</div>
+                                    @endif
+                                </td>
+                            @endforeach
+                        </tr>
                     @endforeach
-                </tbody>
-            </table>
-        </div>
-    @endforeach
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@endforeach
+
+
 
 
 

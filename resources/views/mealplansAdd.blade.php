@@ -94,12 +94,13 @@
                     <label for="date"><br><b>Date</b></label>
                     <input name="date" id="date" class="form-control" style="width: 20vw;"  type="date">
                 </div>-->
+                <!--
                 <div class="flex" style="display: none;">
                     <div class="form-group">
                         <label for="date"><br><b>Date</b></label>
                         <input name="date" id="date" class="form-control" style="width: 20vw;" type="date">
                     </div>
-                </div>
+                </div>-->
 
                 <!-- Time Input
                 <div class="form-group">
