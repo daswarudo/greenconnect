@@ -54,7 +54,7 @@ class MealController extends Controller
         $subscriptionTypes = SubscriptionType::all(); // Fetch all subscription types
         return view('mealplansAdd', compact('subscriptionTypes'));
     }
-    /*
+    
     public function addMeals(Request $request)
     {
         try {
@@ -135,7 +135,8 @@ class MealController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Something went wrong: ' . $e->getMessage())->withInput();
         }
-    }*/
+    }
+    /*
     public function addMeals(Request $request)//temp
     {
         try {
@@ -221,7 +222,7 @@ class MealController extends Controller
             return back()->with('error', 'Something went wrong: ' . $e->getMessage())->withInput();
         }
     }
-
+*/
     public function edit($id)
     {
         $meal = Meals::findOrFail($id);

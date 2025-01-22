@@ -85,28 +85,28 @@
                             <input id="snacks" name="meal_type" type="radio" value="snacks" required />
                             <label for="snacks">snacks</label>
                     </div>
-                    </div>
+                    
                 
                 
-                <!-- Date Input 
+                <!-- Date Input -->
                 <div class="flex">
                 <div class="form-group">
                     <label for="date"><br><b>Date</b></label>
                     <input name="date" id="date" class="form-control" style="width: 20vw;"  type="date">
-                </div>-->
+                </div>
                 <!--
                 <div class="flex" style="display: none;">
                     <div class="form-group">
                         <label for="date"><br><b>Date</b></label>
                         <input name="date" id="date" class="form-control" style="width: 20vw;" type="date">
                     </div>
-                </div>-->
-
-                <!-- Time Input
+                </div>
+-->
+                <!-- Time Input 
                 <div class="form-group">
                     <label for="time"><br><b>Time</b></label>
                     <input name="time" id="time" class="form-control" style="width: 20vw;" type="time" value="00:00">
-                </div> -->
+                </div>-->
 
             </div>
 
@@ -200,6 +200,7 @@
 </form> 
  </body>
  <script>
+    /*
     const startDate = new Date();
     const endDate = new Date();
     endDate.setMonth(endDate.getMonth() + 2);
@@ -218,6 +219,6 @@
             alert('Calories cannot exceed 747.');
             e.target.value = max; // Reset to max value
         }
-    });
+    });*/
 </script>
 </html>
