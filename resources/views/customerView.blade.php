@@ -65,16 +65,21 @@
                 </p>
                 
                 
+
+                
                 <p>
                     <b>Birthdate:</b>   
                     <input 
-                        id="age" 
-                        name="age" 
-                        type="date" 
-                        min="0" 
-                        step="1" 
-                        value="{{ old('age', optional($customer->age)->format('Y-m-d')) }}" 
-                    />
+                    id="age" 
+                    name="age" 
+                    type="date" 
+                    value="{{ old('age', $customer->getRawOriginal('age')) }}" 
+                    required
+                />
+                
+                
+                
+                
 
                     
                 </p>
@@ -109,7 +114,7 @@
                     <input style="margin-right:8vw" id="diet_recom" name="diet_recom" type="text" value="{{ $customer->diet_recom  ?? '' }}"  />
                 </p>-->
                 <b>Diet Recommended:</b>
-    <select id="diet_recom" name="diet_recom" style="margin-right:8vw" class="form-control">
+    <select id="diet_recom" name="diet_recom" style="margin-right:2vw" class="form-control">
         <option value="" disabled {{ empty($customer->diet_recom) ? 'selected' : '' }}>Select a recommended diet</option>
         <option value="clear_liquid_diet" {{ $customer->diet_recom == 'clear_liquid_diet' ? 'selected' : '' }}>Clear Liquid Diet</option>
         <option value="soft_diet" {{ $customer->diet_recom == 'soft_diet' ? 'selected' : '' }}>Soft Diet</option>
@@ -139,13 +144,32 @@
             <div class="flex">
                 <p>
                     <b>Height (cm):</b> 
-                    <input style="width: 5vw" id="height" name="height" type="number"  step="0.01" value="{{ $customer->height }}"  oninput="calculateBMI()" required/>
+                    <input 
+                        style="width: 5vw" 
+                        id="height" 
+                        name="height" 
+                        type="number"  
+                        step="0.01" 
+                        value="{{ old('height', number_format($customer->height, 2, '.', '')) }}"  
+                        oninput="calculateBMI(); calculateCalories();" 
+                        required
+                    />
                 </p>
-
+                
                 <p>
                     <b>Weight (kg):</b> 
-                    <input style="width: 5vw" id="weight" name="weight" type="number"  step="0.01" value="{{ old('weight', $customer->weight) }}"  oninput="calculateBMI()" required />
+                    <input 
+                        style="width: 5vw" 
+                        id="weight" 
+                        name="weight" 
+                        type="number"  
+                        step="0.01" 
+                        value="{{ old('weight', number_format($customer->weight, 2, '.', '')) }}"  
+                        oninput="calculateBMI(); calculateCalories();" 
+                        required
+                    />
                 </p>
+                
             
                 <p>
                     <b>BMI:</b>
@@ -153,8 +177,7 @@
                 </p>
                 <p>
                     <b>Daily Calorie:</b> 
-                    <input style="width: 5vw" type="number" name="daily_calorie" id="daily_calorie" class="form-control" value="{{ old('daily_calorie', $customer->daily_calorie) }}">
-                    
+                    <input style="width: 5vw" type="text" name="daily_calorie" id="daily_calorie" class="form-control" value="{{ old('daily_calorie', $customer->daily_calorie) }}" readonly/>
                 </p>
                 
             </div>
@@ -365,5 +388,79 @@
                 document.getElementById('bmi').value = bmi.toFixed(2);
             }
         }
+
+        
+        function calculateCalories() {
+    let weight = parseFloat(document.getElementById("weight").value);
+    let height = parseFloat(document.getElementById("height").value);
+    let birthdate = document.getElementById("age").value;
+    let activityLevel = document.getElementById("activity_level").value;
+    let sex = document.getElementById("sex").value;
+    let calorieField = document.getElementById("daily_calorie");
+
+    if (!weight || !height || !birthdate || !activityLevel || !sex) {
+        return;
+    }
+
+    // ✅ Improved Age Calculation (Considers full birthdate)
+    let birthDateObj = new Date(birthdate);
+    let today = new Date();
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+
+    // Check if the birthday hasn't happened yet this year
+    if (
+        today.getMonth() < birthDateObj.getMonth() ||
+        (today.getMonth() === birthDateObj.getMonth() && today.getDate() < birthDateObj.getDate())
+    ) {
+        age--;
+    }
+
+    // ✅ Corrected BMR Calculation
+    let BMR;
+    if (sex === "M") { // Male
+        BMR = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+    } else if (sex === "F") { // Female
+        BMR = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+    } else {
+        return;
+    }
+
+    // Activity Level Multipliers
+    let activityMultipliers = {
+        "Sedentary": 1.2,
+        "Low Active": 1.375,
+        "Active": 1.55,
+        "Very Active": 1.725
+    };
+
+    if (!activityMultipliers[activityLevel]) {
+        return;
+    }
+
+    // ✅ More Precise TDEE Calculation
+    let TDEE = (BMR * activityMultipliers[activityLevel]);
+
+    // Round TDEE to the nearest integer
+    calorieField.value = Math.round(TDEE);
+
+    // 🔍 Debugging Log (Check Values)
+    console.log("Weight:", weight, "Height:", height, "Age:", age, "BMR:", BMR, "Activity Level:", activityLevel, "TDEE:", Math.round(TDEE));
+}
+
+// Attach event listeners to recalculate when input changes
+document.getElementById("weight").addEventListener("input", calculateCalories);
+document.getElementById("height").addEventListener("input", calculateCalories);
+document.getElementById("age").addEventListener("change", calculateCalories);
+document.getElementById("activity_level").addEventListener("change", calculateCalories);
+document.getElementById("sex").addEventListener("change", calculateCalories);
+
+// Run once on page load
+calculateCalories();
+
+
+
+
+
+    
 </script>
 </html>

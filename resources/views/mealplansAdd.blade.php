@@ -44,7 +44,7 @@
                 <div class="flex">
                     <label for="diet-program"><b>Diet Program</b></label>
                     <div class="form-group">
-                        <select id="subscription_type_id" name="subscription_type_id" style="width: 25vh;" required>
+                        <select id="subscription_type_id" name="subscription_type_id" style="width: 14vw; font-size: 16px;" required>
                             <option value="">Select Diet Program</option>
                             @foreach ($subscriptionTypes as $subscriptionType)
                                 <option value="{{ $subscriptionType->subscription_type_id }}">
@@ -56,19 +56,19 @@
                 
                     <label for="meal_name"><b>Meal Name</b></label>
                     <div class="form-group">
-                        <input id="meal_name" name="meal_name" type="text" style="width: 45vh;" required />
+                        <input id="meal_name" name="meal_name" type="text" style="width: 20vw; font-size: 16px;" required />
                     </div>
                 
                     <label for="calories"><b>Calories</b></label>
                     <div class="form-group">
-                        <input id="calories" name="calories" type="number" step="0.01" style="width: 10vh;" required />
+                        <input id="calories" name="calories" type="number" step="0.01" style="width: 7vw; font-size: 16px;" required />
                     </div>
                 </div>
                 <label for="description"><br><b>Description</b></label>
                 <div class="form-group">
                     
                     <!--<input id="description" name="description" type="text" required />-->
-                    <textarea name="description" class="form-control" rows="4" style="height:20vh;width: 75vw;"  max="747" required></textarea>
+                    <textarea name="description" class="form-control" rows="4" style="height:20vh;width: 75vw; font-size: 18px !important;"  max="747" required></textarea>
                 </div>
                 
 
@@ -77,23 +77,24 @@
                     <b>Meal Type</b></label>
                     <div class="radio-group">
                             <input id="breakfast" name="meal_type" type="radio" value="breakfast" required />
-                            <label for="breakfast">breakfast</label>
+                            <label for="breakfast">Breakfast</label>
                             <input id="lunch" name="meal_type" type="radio" value="lunch" required />
-                            <label for="lunch">lunch</label>
+                            <label for="lunch">Lunch</label>
                             <input id="dinner" name="meal_type" type="radio" value="dinner" required />
-                            <label for="dinner">dinner</label>
+                            <label for="dinner">Dinner</label>
                             <input id="snacks" name="meal_type" type="radio" value="snacks" required />
-                            <label for="snacks">snacks</label>
+                            <label for="snacks">Snacks</label>
                     </div>
                     
                 
                 
                 <!-- Date Input -->
-                <div class="flex">
+                <!--  <div class="flex">
+                    CHECK THIS PART
                 <div class="form-group">
                     <label for="date"><br><b>Date</b></label>
                     <input name="date" id="date" class="form-control" style="width: 20vw;"  type="date">
-                </div>
+                </div>-->
                 <!--
                 <div class="flex" style="display: none;">
                     <div class="form-group">
@@ -194,7 +195,7 @@
             
             
     </div>
-    <button class="crudButtons" style="height:5vh;width:15vh;margin-top:2vh;margin-bottom:2vh;"  onclick="return confirm('Are you sure about that?')">Add Meal</button>
+    <button class="crudButtons" style="height:8vh;width:15vh;margin-top:30px;"  onclick="return confirm('Are you sure about that?')">Add Meal</button>
     </form> 
 </div>
 </form> 

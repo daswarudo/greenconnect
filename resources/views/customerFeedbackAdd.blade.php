@@ -13,12 +13,12 @@
         <div class="content">
    <div class="header">
     <h1>
-     WELCOME, 
+     WELCOME
     </h1>
    
    </div>
    <h2>
-    Do you have any feedback for Green Chef?
+    Do you have any testimonials about our subscription plans in Green Chef ?
     <br/>
     Mind sharing them?
    </h2>

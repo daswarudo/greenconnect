@@ -6,153 +6,121 @@
     <title>GreenConnect</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    
-
     <link rel="stylesheet" href="{{ asset('css/customerDash.css') }}">
-    </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css">
+    
     <style>
         .small-calendar {
-            width: 100%; /* Adjust width as needed */
-            height: 500px; /* Set a fixed height or adjust dynamically */
-            margin: 0 auto; /* Center it horizontally */
-            border: 1px solid #ccc; /* Optional: Add a border for clarity */
-            padding: 10px; /* Add some padding */
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for aesthetics */
-            overflow: hidden; /* Ensure content fits inside the container */
-            background-color: #f9f9f9; /* Optional background color */
-        }
+    width: 100%;
+    height: auto; /* Adjusts height dynamically */
+    min-height: 600px; /* Ensures enough height for full month view */
+    max-height: 800px; /* Prevents it from getting too large */
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: visible; /* Ensures full visibility */
+    background-color: #f9f9f9;
+}
 
-        /* Make sure the table container aligns with the smaller size */
-        .table-container {
-            text-align: center;
-            height: 500px;
-        }
-        .custom-button {
-            display: inline-block;
-            padding: 10px 20px;
-            color: #fff; /* Text color */
-            background-color: #007bff; /* Button background */
-            text-decoration: none; /* Remove underline */
-            border-radius: 5px; /* Rounded corners */
-            font-weight: bold; /* Bold text */
-            text-align: center;
-            transition: background-color 0.3s ease; /* Smooth hover effect */
-            margin-bottom:3vh;
-        }
+/* ✅ Ensures month view displays fully */
+.fc-daygrid-body {
+    height: 100%;
+}
 
-        .custom-button:hover {
-            background-color: #0056b3; /* Darker shade on hover */
-            text-decoration: none; /* Prevent underline on hover */
-        }
-        .fc-daygrid-day-frame {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start; /* Aligns content to the left */
-            height: 100%; /* Ensures alignment spans the full height */
-            padding-left: 10px; /* Optional: Adds spacing from the edge */
-        }
+/* ✅ Fixes FullCalendar Event Visibility */
+.fc-daygrid-day-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns date numbers to the top-left */
+    justify-content: flex-start; /* Aligns date numbers at the top */
+    height: 100%;
+    padding: 5px; /* Adds spacing */
+}
 
-        /* Optional: Customize padding or appearance */
-        .fc-daygrid-day-frame {
-            font-weight: bold; /* Optional: Makes the day numbers more visible */
-        }
-        .fc-event-title {
-            
-            color: white !important; /* Make text white for better contrast on blue */
-        }
-        
-        /* Add hover effect */
-        .fc-event {
-            background-color: darkblue !important; /* Darker shade on hover */
-            color: white
-        }
-        .fc-event:hover {
-            background-color: blue !important; /* Darker shade on hover */
-            color: white
-        }
+/* ✅ Styles for the date numbers (positions them properly) */
+.fc-daygrid-day-top {
+    font-weight: bold;
+    text-align: left;
+    padding-left: 5px; /* Aligns numbers to the left */
+    font-size: 14px; /* Adjust size for better readability */
+}
+
+/* ✅ Ensures events are fully visible and centered inside the cell */
+.fc-event {
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 1px;
+    text-align: center;
+    background-color: #52634F !important;
+    color: white !important;
+    width: 100%; /* Ensures the event fills the cell width */
+    margin-top: 5px; /* Adds spacing from the date number */
+}
+
+/* ✅ Hover effect for better user experience */
+.fc-event:hover {
+    background-color: #0056b3 !important;
+    cursor: pointer;
+}
+
+/* ✅ Adjusts calendar row heights dynamically */
+.fc-daygrid-day {
+    min-height: 100px; /* Prevents overlapping */
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .small-calendar {
+        min-height: 500px;
+        padding: 5px;
+    }
+
+    .fc-daygrid-day {
+        min-height: 80px;
+    }
+
+    .fc-event {
+        font-size: 12px;
+        padding: 3px;
+    }
+}
 
     </style>
-    <body>
-        @include('customerSidebar')
+</head>
+<body>
+    @include('customerSidebar')
+
     <div class="content">
         <div class="header">
-    <h1>
-    WELCOME, 
-        @if($userType == 'customer')
-            <p>Customer {{ $customer->first_name }} {{ $customer->last_name }}!</p>
-        
-    </h1>
-       </div>
-      
-       <div class="table-container">
-       <div id="calendar" class="small-calendar"><!--main calendar-->
-       </div>
-      
-       
+            <h1>
+                WELCOME, 
+                @if($userType == 'customer')
+                    <p>Customer {{ $customer->first_name }} {{ $customer->last_name }}!</p>
+                @endif
+            </h1>
         </div>
-        @endif
-</body>
-<script>/*
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            events: [
-                @foreach($appointments as $consultation)
-                    {
-                        title: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}', // Display first and last name
-                        start: '{{ $consultation->start }}', // Full datetime (combined date + time)
-                        extendedProps: {
-                            customer_name: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
-                            time: '{{ $consultation->formatted_time }}', // Formatted time (HH:mm)
-                            notes: '{{ $consultation->notes ?? 'No notes provided' }}' // Notes or default message
-                        }
-                        
-                    }@if(!$loop->last),@endif
-                @endforeach
-            ],
-            eventContent: function(arg) {
-                // Custom display for event content as <first_name> <last_name>, <time>
-                let customLabel = document.createElement('div');
-                customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
-                return { domNodes: [customLabel] };
-            },
-            dateClick: function(info) {
-                // Action when a day is clicked
-                alert('Date clicked: ' + info.dateStr);
-                // Add logic to fetch and display events for the clicked day
-            },
-            eventClick: function(info) {
-                // Action when an event is clicked
-                let eventDetails = `
-                    Customer Name: ${info.event.extendedProps.customer_name}
-                    Time: ${info.event.extendedProps.time}
-                    Date: ${info.event.start.toISOString().split('T')[0]}
-                    Notes:${info.event.extendedProps.notes}
-                `;
-                // Display details (can be a modal or any other UI component)
-                alert('Event Details:\n' + eventDetails);
-            }
-        });
+        <div class="table-container">
+            <div id="calendar" class="small-calendar"></div>
+        </div>
+    </div>
 
-        calendar.render();
-    });*/
-    /*
-    document.addEventListener('DOMContentLoaded', function() {
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         headerToolbar: {
             left: 'title',
-            right: 'dayGridMonth addConsultationButton' // Custom button added here
+            right: 'dayGridMonth addConsultationButton'
         },
         customButtons: {
             addConsultationButton: {
                 text: 'Add Consultation',
                 click: function() {
-                    // Redirect to the "Add Consultation" page
                     window.location.href = "{{ route('consultation.create') }}";
                 }
             }
@@ -160,10 +128,11 @@
         events: [
             @foreach($appointments as $consultation)
                 {
-                    title: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
-                    start: '{{ $consultation->start }}',
+                    title: formatTime12Hour('{{ $consultation->formatted_time }}'), // Show only formatted time
+                    start: '{{ $consultation->start }}', // Keep for correct event placement
+                    display: 'block',
+                    allDay: false,
                     extendedProps: {
-                        customer_name: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
                         time: '{{ $consultation->formatted_time }}',
                         notes: '{{ $consultation->notes ?? 'No notes provided' }}'
                     },
@@ -171,111 +140,62 @@
                 }@if(!$loop->last),@endif
             @endforeach
         ],
+
+        // ✅ Ensures only formatted time is displayed
         eventContent: function(arg) {
-            let customLabel = document.createElement('div');
-            customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
-            return { domNodes: [customLabel] };
+            let timeLabel = document.createElement('div');
+            timeLabel.innerHTML = `<b>${arg.event.title}</b>`; 
+            return { domNodes: [timeLabel] };
         },
-        dateClick: function(info) {
-            alert('Date clicked: ' + info.dateStr);
-        },
-        eventClick: function(info) {
-            let eventDetails = `
-                Customer Name: ${info.event.extendedProps.customer_name}
-                Time: ${info.event.extendedProps.time}
-                Date: ${info.event.start.toISOString().split('T')[0]}
-                Notes: ${info.event.extendedProps.notes}
-            `;
-            alert('Event Details:\n' + eventDetails);
-        }
-    });
 
-    calendar.render();
-});*/
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-            left: 'title',
-            right: 'dayGridMonth addConsultationButton' // Custom button added here
-        },
-        customButtons: {
-            addConsultationButton: {
-                text: 'Add Consultation',
-                click: function() {
-                    // Redirect to the "Add Consultation" page
-                    window.location.href = "{{ route('consultation.create') }}";
-                }
-            }
-        },
-        events: [
-            @foreach($appointments as $consultation)
-                {
-                    title: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
-                    start: '{{ $consultation->start }}',
-                    extendedProps: {
-                        customer_name: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
-                        time: '{{ $consultation->formatted_time }}',
-                        notes: '{{ $consultation->notes ?? 'No notes provided' }}'
-                    },
-                    color: 'blue'
-                }@if(!$loop->last),@endif
-            @endforeach
-        ],
-        eventContent: function(arg) {
-            let customLabel = document.createElement('div');
-            customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
-            return { domNodes: [customLabel] };
-        },
-        dateClick: function(info) {
-            // Do nothing if there are no events on this date
-            let events = calendar.getEvents().filter(event => 
-                event.start.toISOString().split('T')[0] === info.dateStr
-            );
-
-            if (events.length === 0) {
-                console.log('No events on this date: ' + info.dateStr);
-            } else {
-                console.log('Events exist on this date: ' + info.dateStr);
-            }
-        },
+        // ✅ Shows event details in a modal when clicked
         eventClick: function(info) {
             let eventDetails = '';
 
-            // Add details only if they exist
-            if (info.event.extendedProps.customer_name) {
-                eventDetails += `Customer Name: ${info.event.extendedProps.customer_name}\n`;
-            }
-
             if (info.event.extendedProps.time) {
-                eventDetails += `Time: ${info.event.extendedProps.time}\n`;
+                eventDetails += `<p><strong>Time:</strong> ${formatTime12Hour(info.event.extendedProps.time)}</p>`;
             }
 
             if (info.event.start) {
-                eventDetails += `Date: ${info.event.start.toISOString().split('T')[0]}\n`;
+                eventDetails += `<p><strong>Date:</strong> ${info.event.start.toISOString().split('T')[0]}</p>`;
             }
 
             if (info.event.extendedProps.notes) {
-                eventDetails += `Notes: ${info.event.extendedProps.notes}\n`;
+                eventDetails += `<p><strong>Notes:</strong> ${info.event.extendedProps.notes}</p>`;
             }
 
-            // Show the alert with event details or indicate no details available
             if (eventDetails) {
-                alert('Event Details:\n' + eventDetails);
+                showModal('Event Details', eventDetails);
             } else {
-                alert('No details available for this event.');
+                showModal('Event Details', '<p>No details available for this event.</p>');
             }
         }
     });
 
     calendar.render();
 });
+        function formatTime12Hour(timeString) {
+    if (!timeString) return "No time provided";
+    let [hours, minutes] = timeString.split(':');
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // Convert 0-23 to 12-hour format
+    return `${hours}:${minutes} ${ampm}`;
+}
 
 
-
-</script>
-
+        function showModal(title, content) {
+            let modal = document.createElement('div');
+            modal.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; width: 400px;">
+                        <h3>${title}</h3>
+                        ${content}
+                        <button onclick="this.parentElement.parentElement.remove()" style="background: #007bff; color: white; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; border-radius: 5px;">Close</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+    </script>
+</body>
 </html>
-

@@ -18,6 +18,8 @@ use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+
 
 
 class LoginRegisterController extends Controller
@@ -409,11 +411,21 @@ public function register(Request $request)
     {
         $customer = Customer::findOrFail($id);
         $subscription = Subscriptions::where('customer_id', $id)->first(); // Assuming a customer has one subscription
-
-        //return view('customer.view', compact('customer', 'subscription'));
+    
+        // ✅ Debugging: Check if function is being called
+        Log::info('Calculating Daily Calorie for customer ID: ' . $customer->customer_id);
+    
+        // ✅ Ensure `daily_calorie` is calculated and updated
+        $customer->daily_calorie = $this->calculateDailyCalorie($customer);
+        $customer->save();
+    
+        // ✅ Debugging: Check if the value was updated
+        Log::info('Updated Daily Calorie: ' . $customer->daily_calorie);
+    
         return view('viewSubscriber', compact('customer', 'subscription'));
-
     }
+    
+    
 
     public function custEditRnd(Request $request, $id)
     {
@@ -761,13 +773,15 @@ public function register(Request $request)
     }
     public function showMyFeedback()
     {
-        // Retrieve the loginId from the session
-        $loginId = session()->get('loginId');
+        $customerId = session('loginId'); // Get logged-in user's ID
 
-        // Fetch all feedback for the logged-in customer
-        $feedbacks = Feedback::where('customer_id', $loginId)->latest()->get();
-
-        return view('customerFeedback', compact('feedbacks'));
+        // Fetch all testimonials for display
+        $testimonials = Feedback::with('customer')->latest()->get();
+    
+        // Fetch only the logged-in customer's feedback
+        $feedbacks = Feedback::where('customer_id', $customerId)->get();
+    
+        return view('customerFeedback', compact('testimonials', 'feedbacks'));
     }
     public function destroyFeedback($id)
     {
@@ -856,165 +870,77 @@ public function register(Request $request)
         return view('customerMeals', compact('details'));
     }
 
-    /*
-    public function getLoggedInCustomerMealDetails()//cust side meals views RECOMMENDED MEALS
+    
+    public function showCustomerMealsDetails()//not buggy(?) //add later //abomination code //add blade later
     {
-        // Retrieve the loginId and userType from the session
-        $loginId = session()->get('loginId'); // Logged-in user's ID
-        $userType = session()->get('userType'); // Logged-in user's type
+        
+        $customers = Customer::join('subscriptions', 'customer.customer_id', '=', 'subscriptions.customer_id')
+            ->join('subscription_type', 'subscriptions.subscription_type_id', '=', 'subscription_type.subscription_type_id')
+            ->join('meals', 'subscription_type.subscription_type_id', '=', 'meals.subscription_type_id')
+            ->select(
+                'customer.first_name',
+                'customer.last_name',
+                'customer.daily_calorie',
+                'customer.diet_recom',
+                'customer.health_condition',
+                'customer.activity_level',
 
-        // Ensure only customers can access this page
-        if ($userType !== 'customer') {
-            return redirect()->route('dashboard')->with('fail', 'Only customers can view meal details.');
-        }
+                'customer.prefer_pork',
+                'customer.prefer_beef',
+                'customer.prefer_fish',
+                'customer.prefer_chicken',
+                'customer.prefer_veggie',
 
-        // Get the customer based on the loginId
-        $customer = Customer::where('customer_id', $loginId)->first();
+                'customer.allergy_wheat as customer_allergy_wheat',
+                'customer.allergy_milk as customer_allergy_milk',
+                'customer.allergy_egg as customer_allergy_egg',
+                'customer.allergy_peanut as customer_allergy_peanut',
+                'customer.allergy_fish as customer_allergy_fish',
+                'customer.allergy_soy as customer_allergy_soy',
+                'customer.allergy_shellfish as customer_allergy_shellfish',
+                'customer.allergy_treenut as customer_allergy_treenut',
+                'customer.allergy_sesame as customer_allergy_sesame',
+                'customer.allergy_corn as customer_allergy_corn',
+                'customer.allergy_chicken as customer_allergy_chicken',
+                'customer.allergy_beef as customer_allergy_beef',
+                'customer.allergy_pork as customer_allergy_pork',
+                'customer.allergy_lamb as customer_allergy_lamb',
+                'customer.allergy_gluten as customer_allergy_gluten',
+
+                'subscriptions.subscription_id',
+                'subscriptions.sub_status',
+                'subscription_type.plan_name as subscription_type',
+
+                'meals.meal_id',
+                'meals.meal_name',
+                'meals.calories',
+                'meals.meal_type',
+                'meals.time',
+                'meals.date',
+
+                'meals.allergy_wheat as meal_allergy_wheat',
+                'meals.allergy_milk as meal_allergy_milk',
+                'meals.allergy_egg as meal_allergy_egg',
+                'meals.allergy_peanut as meal_allergy_peanut',
+                'meals.allergy_fish as meal_allergy_fish',
+                'meals.allergy_soy as meal_allergy_soy',
+                'meals.allergy_shellfish as meal_allergy_shellfish',
+                'meals.allergy_treenut as meal_allergy_treenut',
+                'meals.allergy_sesame as meal_allergy_sesame',
+                'meals.allergy_corn as meal_allergy_corn',
+                'meals.allergy_chicken as meal_allergy_chicken',
+                'meals.allergy_beef as meal_allergy_beef',
+                'meals.allergy_pork as meal_allergy_pork',
+                'meals.allergy_lamb as meal_allergy_lamb',
+                'meals.allergy_gluten as meal_allergy_gluten'
+            )
+            ->distinct() // Remove duplicate rows
+            ->get();
 
         
-
-        $details = DB::table('customer as a')
-        ->join('subscriptions as b', 'a.customer_id', '=', 'b.customer_id')
-        ->join('subscription_type as c', 'b.subscription_type_id', '=', 'c.subscription_type_id')
-        ->join('meals as d', 'c.subscription_type_id', '=', 'd.subscription_type_id')
-        ->select(
-            'a.first_name',
-            'a.last_name',
-            'b.subscription_id',
-            'c.plan_name',
-            'd.meal_id',
-            'd.meal_name',
-            'd.date',
-            'd.time',
-            'd.description',
-            'd.calories',
-            'd.meal_type',
-            'd.allergy_wheat as meal_allergy_wheat',
-            'd.allergy_milk as meal_allergy_milk',
-            'd.allergy_egg as meal_allergy_egg',
-            'd.allergy_peanut as meal_allergy_peanut',
-            'd.allergy_fish as meal_allergy_fish',
-            'd.allergy_soy as meal_allergy_soy',
-            'd.allergy_shellfish as meal_allergy_shellfish',
-            'd.allergy_treenut as meal_allergy_treenut',
-            'd.allergy_sesame as meal_allergy_sesame',
-            'd.allergy_corn as meal_allergy_corn',
-            'd.allergy_chicken as meal_allergy_chicken',
-            'd.allergy_beef as meal_allergy_beef',
-            'd.allergy_pork as meal_allergy_pork',
-            'd.allergy_lamb as meal_allergy_lamb',
-            'd.allergy_gluten as meal_allergy_gluten',
-            'a.allergy_wheat as customer_allergy_wheat',  // Alias for customer allergy
-            'a.allergy_milk as customer_allergy_milk',  // Alias for customer allergy
-            'a.allergy_egg as customer_allergy_egg',  // Alias for customer allergy
-            'a.allergy_peanut as customer_allergy_peanut',  // Alias for customer allergy
-            'a.allergy_fish as customer_allergy_fish',  // Alias for customer allergy
-            'a.allergy_soy as customer_allergy_soy',  // Alias for customer allergy
-            'a.allergy_shellfish as customer_allergy_shellfish',  // Alias for customer allergy
-            'a.allergy_treenut as customer_allergy_treenut',  // Alias for customer allergy
-            'a.allergy_sesame as customer_allergy_sesame',  // Alias for customer allergy
-            'a.allergy_corn as customer_allergy_corn',  // Alias for customer allergy
-            'a.allergy_chicken as customer_allergy_chicken',  // Alias for customer allergy
-            'a.allergy_beef as customer_allergy_beef',  // Alias for customer allergy
-            'a.allergy_pork as customer_allergy_pork',  // Alias for customer allergy
-            'a.allergy_lamb as customer_allergy_lamb',  // Alias for customer allergy
-            'a.allergy_gluten as customer_allergy_gluten'  // Alias for customer allergy
-        )
-        ->where('a.customer_id', $loginId)
-        ->where('b.sub_status', 'active') // Add condition to filter active subscriptions
-        ->get();
-
-
-
-        return view('customerMeals', compact('details'));
+        return view('mealsplansAllCust', compact('customers'));
     }
-        */
-    /*
     
-    */
-    public function showCustomerMealsDetails() // R&D side meals views //UPDATE LATER 1 meal per m type//temp fix
-{
-    $customers = Customer::join('subscriptions', 'customer.customer_id', '=', 'subscriptions.customer_id')
-        ->join('subscription_type', 'subscriptions.subscription_type_id', '=', 'subscription_type.subscription_type_id')
-        ->join('meals', 'subscription_type.subscription_type_id', '=', 'meals.subscription_type_id')
-        ->select(
-            'customer.customer_id',
-            'customer.first_name',
-            'customer.last_name',
-            'customer.allergy_wheat as customer_allergy_wheat',
-            'customer.allergy_milk as customer_allergy_milk',
-            'customer.allergy_egg as customer_allergy_egg',
-            'customer.allergy_peanut as customer_allergy_peanut',
-            'customer.allergy_fish as customer_allergy_fish',
-            'customer.allergy_soy as customer_allergy_soy',
-            'customer.allergy_shellfish as customer_allergy_shellfish',
-            'customer.allergy_treenut as customer_allergy_treenut',
-            'customer.allergy_sesame as customer_allergy_sesame',
-            'customer.allergy_corn as customer_allergy_corn',
-            'customer.allergy_chicken as customer_allergy_chicken',
-            'customer.allergy_beef as customer_allergy_beef',
-            'customer.allergy_pork as customer_allergy_pork',
-            'customer.allergy_lamb as customer_allergy_lamb',
-            'customer.allergy_gluten as customer_allergy_gluten',
-            'subscriptions.sub_status',
-            'meals.meal_id',
-            'meals.meal_name',
-            'meals.calories',
-            'meals.meal_type',
-            'meals.time',
-            'meals.date',
-            'meals.allergy_wheat as meal_allergy_wheat',
-            'meals.allergy_milk as meal_allergy_milk',
-            'meals.allergy_egg as meal_allergy_egg',
-            'meals.allergy_peanut as meal_allergy_peanut',
-            'meals.allergy_fish as meal_allergy_fish',
-            'meals.allergy_soy as meal_allergy_soy',
-            'meals.allergy_shellfish as meal_allergy_shellfish',
-            'meals.allergy_treenut as meal_allergy_treenut',
-            'meals.allergy_sesame as meal_allergy_sesame',
-            'meals.allergy_corn as meal_allergy_corn',
-            'meals.allergy_chicken as meal_allergy_chicken',
-            'meals.allergy_beef as meal_allergy_beef',
-            'meals.allergy_pork as meal_allergy_pork',
-            'meals.allergy_lamb as meal_allergy_lamb',
-            'meals.allergy_gluten as meal_allergy_gluten'
-        )
-        ->where('subscriptions.sub_status', 'active')
-        ->distinct()
-        ->get();
-
-    // Filter meals based on customer allergies
-    $filteredMeals = $customers->filter(function ($customer) {
-        foreach ($customer->getAttributes() as $key => $value) {
-            if (str_starts_with($key, 'customer_allergy_') && $value) {
-                $mealAllergyKey = str_replace('customer_', 'meal_', $key);
-                if ($customer->{$mealAllergyKey}) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    });
-
-    // Group meals by date and meal type, and keep only the first meal for each group
-    $details = $filteredMeals->groupBy(function ($meal) {
-        return $meal->date . '_' . $meal->meal_type; // Group by both date and meal type
-    })->map(function ($group) {
-        return $group->first(); // Only take the first meal for each group (meal type per day)
-    });
-
-    // Group meals by week and day of the week
-    $groupedMeals = $details->groupBy(function ($meal) {
-        return 'Week ' . Carbon::parse($meal->date)->weekOfMonth;
-    })->map(function ($weekMeals) {
-        return $weekMeals->groupBy(function ($meal) {
-            return Carbon::parse($meal->date)->format('l'); // Group by day name
-        });
-    });
-
-    return view('mealsplansAllCust', compact('groupedMeals'));
-}
-
 
 
     
@@ -1068,8 +994,52 @@ public function register(Request $request)
 
         return view('sandbox', compact('testimonials'));
     }
-
-
-
+    public function editByCustomer() {
+        // Fetch the first customer from the database (change logic if needed)
+        $customer = Customer::first(); 
+    
+        // If no customer exists, return an error message
+        if (!$customer) {
+            return redirect()->back()->with('error', 'Customer not found');
+        }
+    
+        // Pass the customer data to the view
+        return view('customerView', compact('customer'));
+    }
+    
+    
+    public function calculateDailyCalorie($customer) {
+        // ✅ Corrected Age Calculation
+        $birthDate = Carbon::parse($customer->age);
+        $currentDate = Carbon::now();
+        $age = $currentDate->year - $birthDate->year;
+        
+        if ($currentDate->format('md') < $birthDate->format('md')) {
+            $age--;
+        }
+    
+        // ✅ Calculate BMR
+        if ($customer->sex == "M") {
+            $bmr = (10 * $customer->weight) + (6.25 * $customer->height) - (5 * $age) + 5;
+        } else { // Female
+            $bmr = (10 * $customer->weight) + (6.25 * $customer->height) - (5 * $age) - 161;
+        }
+    
+        // ✅ Apply Activity Level Multipliers
+        $activityMultipliers = [
+            "Sedentary" => 1.2,
+            "Low Active" => 1.375,
+            "Active" => 1.55,
+            "Very Active" => 1.725
+        ];
+    
+        $tdee = round($bmr * ($activityMultipliers[$customer->activity_level] ?? 1.2));
+    
+        // ✅ Update Customer's Daily Calorie in Database
+        $customer->daily_calorie = $tdee;
+        $customer->save();
+    
+        return $tdee;
+    }
 
 }

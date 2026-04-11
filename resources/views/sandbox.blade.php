@@ -10,6 +10,60 @@
 
     <!-- Custom CSS, different ni nga directory if laravel-->
     <link rel="stylesheet" href="{{ asset('css/landstyle.css') }}">
+    <style>
+    .social-media-post {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 40px;
+        max-width: 143vh;
+        margin: 0px auto;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+        /*margin-left: 15px;*/
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .username {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .timestamp {
+        font-size: 12px;
+        color: #888;
+        margin: 0;
+    }
+
+    .post-content {
+        margin-bottom: 15px;
+    }
+
+    .testimonial-text {
+        font-size: 24px;
+        line-height: 1.5;
+        color: #333;
+    }
+
+
+    </style>
 </head>
 
 <body>
@@ -23,7 +77,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-<div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
               <!-- Links -->
               <li class="nav-item">
@@ -65,26 +119,27 @@
     <h1 class ="title4"><b>Testimonials</b></h1>
 </div>
 
-<div class="div-2"> <!--hide-->
-    <div class="flex-container2">
+⠀
+<div class="social-media-post">
+    
+    @foreach($testimonials as $testimonial)⠀
+    <div class="post-header">
+        <img src="{{ asset('images/freepik1-min.jpg') }}" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">
+            <p class="username">{{ $testimonial->customer->first_name ?? 'N/A' }} {{ $testimonial->customer->last_name ?? '' }}</p>
             
-        @foreach($testimonials as $testimonial)⠀⠀
-            <div class="flex-item2">
-
-              <div style="height: auto;overflow: hidden;position: relative;">
-                  
-              <p><em>"{{ $testimonial->feedback }}"</em></p>
-
-
-                  <p style = "font-size:12px; margin-bottom:0px;">{{ $testimonial->customer->first_name ?? 'N/A' }} {{ $testimonial->customer->last_name ?? '' }}</p>
-                  
-              </div>
-          </div>⠀⠀
-        @endforeach
-        
+        </div>
     </div>
-</div>
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+
+    <div class="post-content">
+        <p class="testimonial-text"><em>"{{ $testimonial->feedback }}"</em></p>
+    </div>
+
+    @if (!$loop->last) 
+        <hr> <!-- Adds line between testimonials but not after the last one -->
+    @endif
+    @endforeach
+</div>            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
 <script>
 

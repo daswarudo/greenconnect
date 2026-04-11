@@ -101,10 +101,12 @@ only use this if customer ray mu change password
                 </p>
                 <p>
                     <b>Daily Calorie:</b> 
-                    <input type="number" name="daily_calorie" id="daily_calorie" class="form-control" value="{{ old('daily_calorie', $customer->daily_calorie) }}">
-                    
+                    <input type="number" name="daily_calorie" id="daily_calorie" class="form-control" 
+                           value="{{ \App\Models\Customer::find($customer->customer_id)->daily_calorie }}" readonly>
                 </p>
                 
+                
+                <h1>BUG</h1>
                 
                 <p>
                     <b>Activity Level:</b> 

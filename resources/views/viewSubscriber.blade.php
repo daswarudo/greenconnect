@@ -64,20 +64,19 @@
                     <input type="hidden" name="customer_id" value="{{ $customer->customer_id }}">
                     <b>Name:</b>  {{$customer->first_name}} {{$customer->last_name}}
                 </p>
-                
-                
+              
                 <p>
-                    <b>Birthdate:</b>   <input 
-                        id="age" 
-                        name="age" 
-                        type="date" 
-                        min="0" 
-                        step="1" 
-                        value="{{ old('age', optional($customer->age)->format('Y-m-d')) }}" 
-                        disabled
-                    />
-                    
+                    <b>Birthdate:</b>   
+                    <input 
+                    id="age" 
+                    name="age" 
+                    type="date" 
+                    value="{{ old('age', $customer->getRawOriginal('age')) }}" 
+                    required
+                />
+                
                 </p>
+                
                 <p>
                 <b>Sex:</b>
                 <select name="sex" id="sex" disabled>
@@ -87,6 +86,8 @@
                 </select>
 
                 </p>
+                
+
                 <p>
                     <b>Address:</b> 
                     <input id="address" name="address" type="text" value="{{ old('address', $customer->address) }}"  disabled/>
@@ -142,11 +143,6 @@
                     <b>BMI:</b>
                     <input type="text" name="bmi" id="bmi" class="form-control" value="{{ old('bmi', $customer->bmi) }}">
                 </p>
-                <p>
-                    <b>Daily Calorie:</b> 
-                    <input type="number" name="daily_calorie" id="daily_calorie" class="form-control" value="{{ old('daily_calorie', $customer->daily_calorie) }}">
-                    
-                </p>
                 <!--
                 <p>
                     <b>Subscription Status:</b> 
@@ -169,6 +165,15 @@
                         <option value="Very Active" {{ $customer->activity_level == 'Very Active' ? 'selected' : '' }}>Very Active</option>
                     </select>
                 </p>
+
+
+                <p>
+                    <b>Daily Calorie:</b> 
+                    <input style="width: 5vw" type="text" name="daily_calorie" id="daily_calorie" class="form-control" value="{{ old('daily_calorie', $customer->daily_calorie) }}" readonly/>
+                </p>
+
+
+
                 <div style="margin: 0; padding: 0; display: inline-block;" class="checked">
                 <b>Food Preference:</b><br>
                 <label>
@@ -390,9 +395,87 @@
                 document.getElementById('bmi').value = bmi.toFixed(2);
             }
         }
+       
+
+     function calculateCalories() {
+    let weight = parseFloat(document.getElementById("weight").value);
+    let height = parseFloat(document.getElementById("height").value);
+    let birthdate = document.getElementById("age").value;
+    let activityLevel = document.getElementById("activity_level").value;
+    let sex = document.getElementById("sex").value;
+    let calorieField = document.getElementById("daily_calorie");
+
+    if (!weight || !height || !birthdate || !activityLevel || !sex) {
+        return;
+    }
+
+    // ✅ Improved Age Calculation (Considers full birthdate)
+    let birthDateObj = new Date(birthdate);
+    let today = new Date();
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+
+    // Check if the birthday hasn't happened yet this year
+    if (
+        today.getMonth() < birthDateObj.getMonth() ||
+        (today.getMonth() === birthDateObj.getMonth() && today.getDate() < birthDateObj.getDate())
+    ) {
+        age--;
+    }
+
+    // ✅ Corrected BMR Calculation
+    let BMR;
+    if (sex === "M") { // Male
+        BMR = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+    } else if (sex === "F") { // Female
+        BMR = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+    } else {
+        return;
+    }
+
+    // Activity Level Multipliers
+    let activityMultipliers = {
+        "Sedentary": 1.2,
+        "Low Active": 1.375,
+        "Active": 1.55,
+        "Very Active": 1.725
+    };
+
+    if (!activityMultipliers[activityLevel]) {
+        return;
+    }
+
+    // ✅ More Precise TDEE Calculation
+    let TDEE = (BMR * activityMultipliers[activityLevel]);
+
+    // Round TDEE to the nearest integer
+    calorieField.value = Math.round(TDEE);
+
+    // 🔍 Debugging Log (Check Values)
+    console.log("Weight:", weight, "Height:", height, "Age:", age, "BMR:", BMR, "Activity Level:", activityLevel, "TDEE:", Math.round(TDEE));
+}
+
+// Attach event listeners to recalculate when input changes
+document.getElementById("weight").addEventListener("input", calculateCalories);
+document.getElementById("height").addEventListener("input", calculateCalories);
+document.getElementById("age").addEventListener("change", calculateCalories);
+document.getElementById("activity_level").addEventListener("change", calculateCalories);
+document.getElementById("sex").addEventListener("change", calculateCalories);
+
+// Run once on page load
+calculateCalories();
+
+
+
+
+
+    
+</script>
+
 </script>
 <!-- Bootstrap JS and dependencies (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 
 </body>
 </html>

@@ -1,343 +1,226 @@
-<html>
- <head>
-  <title>
-   Meal Planner
-  </title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="{{ asset('css/mealplans.css') }}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('css/mealplans.css') }}">
+
     <style>
-        td, th {
-            height: 3vh;
-            max-height: 3vh;
+        /* Center the table headers */
+        thead th {
+            text-align: center;
+            vertical-align: middle;
+            background-color: #f8f9fa;
+            padding: 10px;
         }
-        
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+        .close-btn {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Ensure meal buttons align properly */
+        .meal-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        /* Meal Button styling */
+        .meal-btn {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 75px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .meal-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Assign Meals Button */
+        .assign-meals-btn {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .assign-meals-btn:hover {
+            background-color: #218838;
+        }
     </style>
-    
- </head>
- <body>
- @include('sidebar')
-  <!-- testing 123a
--->
+</head>
+<body>
+    @include('sidebar')
 
-<div class="content">
-<h1>Customer Meal Plans</h1>
-<input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
-
-<div style="overflow-y: scroll; height:70vh;">
-<!--
-@php
-    use Carbon\Carbon;
-
-    // Calculate the start and end of the current week
-    $startOfWeek = Carbon::now()->startOfWeek(); // Monday
-    $endOfWeek = Carbon::now()->endOfWeek(); // Sunday
-
-    // Filter meals to include only those in the current week
-    $groupedMeals = collect($groupedMeals)->filter(function ($days, $week) use ($startOfWeek, $endOfWeek) {
-        foreach ($days as $dayName => $meals) {
-            foreach ($meals as $meal) {
-                $mealDate = Carbon::parse($meal['date']);
-                if ($mealDate->between($startOfWeek, $endOfWeek)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    })->toArray();
-
-    // Sort weeks numerically
-    $groupedMeals = collect($groupedMeals)->sortKeysUsing(function ($a, $b) {
-        return (int) str_replace('Week ', '', $a) - (int) str_replace('Week ', '', $b);
-    })->toArray();
-
-    // Define the order of meal types
-    $mealTypeOrder = ['breakfast', 'lunch', 'dinner', 'snacks', 'snack'];
-@endphp
-
-@foreach($groupedMeals as $week => $days)
-    <div style="margin-bottom: 20px;">
-        <h2>{{ $week }}</h2>
+    <div class="content">
+        <h1>Customer Meal Plans</h1>
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
         
-        <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th>Customer Name</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($days as $dayName => $meals)
-                    @foreach(collect($meals)->groupBy('customer_id') as $customerId => $customerMeals)
+        <div class="container" style="overflow: auto; height: 70vh; margin-top: 2vh;">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                       
+                        @foreach ($daysOfWeek as $day)
+                            <th>{{ $day }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($customers as $customer)
+                    <tr>
+                        <td>{{ $customer->first_name }} {{ $customer->last_name }}</td>
+                            
                         @php
-                            $firstMeal = collect($customerMeals)->first(); // Get the first meal
+                            $hasMeals = false;
                         @endphp
-                        <tr>
-                            
-                            <td>
-                                {{ $firstMeal['first_name'] ?? 'Unknown' }} {{ $firstMeal['last_name'] ?? '' }}
-                            </td>
-
-                            
-                            @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                
+                        @foreach ($daysOfWeek as $day)
+                            @php
+                                $mealsForDay = $mealPlans[$customer->customer_id][$day] ?? collect();
+                                if ($mealsForDay->isNotEmpty()) {
+                                    $hasMeals = true;
+                                }
+                            @endphp
+                        @endforeach
+                
+                        @if ($hasMeals)
+                            @foreach ($daysOfWeek as $day)
                                 <td>
                                     @php
-                                        $mealDate = \Carbon\Carbon::parse($firstMeal['date'])->timezone('UTC'); // Replace 'UTC' with your desired timezone
-                                        $mealDayName = $mealDate->format('l'); // Get full weekday name
+                                        $mealsForDay = $mealPlans[$customer->customer_id][$day] ?? collect();
                                     @endphp
-
-                                    @if($mealDayName === $day)
-                                        @foreach(collect($customerMeals)->sortBy(function ($meal) use ($mealTypeOrder) {
-                                            return array_search(strtolower($meal['meal_type']), $mealTypeOrder);
-                                        }) as $meal)
-                                            @php
-                                                $foodNotRecommended = false;
-                                            @endphp
-
-                                            @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                @if ($meal["meal_allergy_{$allergy}"] && $meal["customer_allergy_{$allergy}"])
-                                                    @php
-                                                        $foodNotRecommended = true;
-                                                    @endphp
-                                                    @break
-                                                @endif
-                                            @endforeach
-
-                                            @if (!$foodNotRecommended)
-                                                <div class="meal-item"
-                                                    style="display: block; padding: 10px 20px; margin: 5px 0; background-color: #007bff; color: white; text-align: center; border-radius: 5px; cursor: pointer; font-size: 16px; text-decoration: none; transition: background-color 0.3s, transform 0.2s;"
-                                                    onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
-                                                    onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';"
-                                                    onclick="showMealDetails(
-                                                        '{{ $meal['meal_name'] ?? 'Unknown Meal' }}', 
-                                                        '{{ $meal['description'] ?? 'No description available' }}', 
-                                                        '{{ $meal['calories'] ?? '0' }}', 
-                                                        '{{ $meal['meal_type'] ?? 'Unknown' }}', 
-                                                        '{{ $meal['date'] ?? 'Unknown Date' }}'
-                                                    )">
-                                                    <strong>{{ ucfirst($meal['meal_type']) }}:</strong> {{ $meal['meal_name'] ?? 'Unnamed Meal' }} ({{ $meal['calories'] ?? '0' }} kcal)
-                                                </div>
-                                            @endif
+                
+                                    @if ($mealsForDay->isNotEmpty())
+                                        @foreach ($mealsForDay as $mealEntry)
+                                            <button class="meal-btn" 
+                                                data-meal-name="{{ $mealEntry['meal_name'] }}" 
+                                                data-meal-type="{{ $mealEntry['meal_type'] }}" 
+                                                data-calories="{{ $mealEntry['calories'] }}" 
+                                                data-description="{{ $mealEntry['description'] }}">
+                                                {{ ucfirst($mealEntry['meal_type']) }}
+                                            </button>
                                         @endforeach
                                     @else
-                                        <div>No meals</div>
+                                        <span style="color: gray;">- - -</span>
                                     @endif
                                 </td>
                             @endforeach
-                        </tr>
-                    @endforeach
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-@endforeach
-                                    
--->
-
-@php
-    
-
-    // Calculate the start and end of the current week
-    $startOfWeek = Carbon::now()->startOfWeek(); // Monday
-    $endOfWeek = Carbon::now()->endOfWeek(); // Sunday
-
-    // Filter meals to include only those in the current week
-    $groupedMeals = collect($groupedMeals)->filter(function ($days) use ($startOfWeek, $endOfWeek) {
-        foreach ($days as $dayName => $meals) {
-            foreach ($meals as $meal) {
-                $mealDate = Carbon::parse($meal['date']);
-                if ($mealDate->between($startOfWeek, $endOfWeek)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    })->toArray();
-
-    // Define the order of meal types
-    $mealTypeOrder = ['breakfast', 'lunch', 'dinner', 'snacks', 'snack'];
-@endphp
-
-<div style="margin-bottom: 20px;">
-    <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th>Customer Name</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($groupedMeals as $days)
-                @foreach($days as $dayName => $meals)
-                    @foreach(collect($meals)->groupBy('customer_id') as $customerId => $customerMeals)
-                        @php
-                            $firstMeal = collect($customerMeals)->first(); // Get the first meal
-                        @endphp
-                        <tr>
-                            <!-- Customer Name -->
-                            <td>
-                                {{ $firstMeal['first_name'] ?? 'Unknown' }} {{ $firstMeal['last_name'] ?? '' }}
+                        @else
+                            <td colspan="{{ count($daysOfWeek) }}" style="text-align: center;">
+                                <button class="assign-meals-btn" data-customer-id="{{ $customer->customer_id }}">
+                                    Assign Meals
+                                </button>
                             </td>
-
-                            <!-- Days of the week -->
-                            @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                                <td>
-                                    @php
-                                        $mealDate = \Carbon\Carbon::parse($firstMeal['date'])->timezone('UTC'); // Replace 'UTC' with your desired timezone
-                                        $mealDayName = $mealDate->format('l'); // Get full weekday name
-                                    @endphp
-
-                                    @if($mealDayName === $day)
-                                        @foreach(collect($customerMeals)->sortBy(function ($meal) use ($mealTypeOrder) {
-                                            return array_search(strtolower($meal['meal_type']), $mealTypeOrder);
-                                        }) as $meal)
-                                            @php
-                                                $foodNotRecommended = false;
-                                            @endphp
-
-                                            @foreach (['wheat', 'milk', 'egg', 'peanut', 'fish', 'soy', 'shellfish', 'treenut', 'sesame', 'corn', 'chicken', 'beef', 'pork', 'lamb', 'gluten'] as $allergy)
-                                                @if ($meal["meal_allergy_{$allergy}"] && $meal["customer_allergy_{$allergy}"])
-                                                    @php
-                                                        $foodNotRecommended = true;
-                                                    @endphp
-                                                    @break
-                                                @endif
-                                            @endforeach
-
-                                            @if (!$foodNotRecommended)
-                                                <div class="meal-item"
-                                                    style="display: block; padding: 10px 20px; margin: 5px 0; background-color: #007bff; color: white; text-align: center; border-radius: 5px; cursor: pointer; font-size: 16px; text-decoration: none; transition: background-color 0.3s, transform 0.2s;"
-                                                    onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
-                                                    onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';"
-                                                    onclick="showMealDetails(
-                                                        '{{ $meal['meal_name'] ?? 'Unknown Meal' }}', 
-                                                        '{{ $meal['description'] ?? 'No description available' }}', 
-                                                        '{{ $meal['calories'] ?? '0' }}', 
-                                                        '{{ $meal['meal_type'] ?? 'Unknown' }}', 
-                                                        '{{ $meal['date'] ?? 'Unknown Date' }}'
-                                                    )">
-                                                    <strong>{{ ucfirst($meal['meal_type']) }}:</strong> {{ $meal['meal_name'] ?? 'Unnamed Meal' }} ({{ $meal['calories'] ?? '0' }} kcal)
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        <div>No meals</div>
-                                    @endif
-                                </td>
-                            @endforeach
-                        </tr>
+                        @endif
+                    </tr>
                     @endforeach
-                @endforeach
-            @endforeach
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-    <!--</div>-->
-
-<!-- Popup Modal -->
-<div id="mealPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 9999;">
-    <div style="background: white; padding: 20px; border-radius: 10px; width: 400px;">
-        <h3 id="mealName"></h3>
-        <p><strong>Description:</strong> <span id="mealDescription"></span></p>
-        <p><strong>Calories:</strong> <span id="mealCalories"></span></p>
-        <p><strong>Meal Type:</strong> <span id="mealType"></span></p>
-        <p><strong>Date:</strong> <span id="mealDate"></span></p>
-        <button onclick="closeMealPopup()">Close</button>
+                </tbody>
+                
+            </table>
+        </div>
     </div>
-</div>
-      
-    
-</div>
-    
- </body>
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $("#searchInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("table tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-    document.addEventListener("DOMContentLoaded", function() {
-        // Add event listener to toggle the visibility of the week days
-        let toggleWeekButtons = document.querySelectorAll('.toggle-week');
-        toggleWeekButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                let targetId = button.getAttribute('data-target');
-                let weekContainer = document.getElementById(targetId);
-                if (weekContainer.style.display === 'none') {
-                    weekContainer.style.display = 'table-row'; // Show the days for that week
-                    button.textContent = 'Hide Days'; // Change button text to "Hide Days"
-                } else {
-                    weekContainer.style.display = 'none'; // Hide the days for that week
-                    button.textContent = 'Show Days'; // Change button text to "Show Days"
+
+    <!-- Meal Modal -->
+    <div id="meal-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-btn" class="close-btn">&times;</span>
+            <h2 id="meal-title"></h2>
+            <p id="meal-details"></p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('meal-modal');
+            const modalTitle = document.getElementById('meal-title');
+            const modalDetails = document.getElementById('meal-details');
+            const closeButton = document.getElementById('close-btn');
+
+            document.addEventListener('click', function (event) {
+                if (event.target.classList.contains('meal-btn')) {
+                    const mealName = event.target.dataset.mealName;
+                    const mealType = event.target.dataset.mealType;
+                    const calories = event.target.dataset.calories;
+                    const description = event.target.dataset.description || "No description available";
+
+                    modalTitle.textContent = `${mealType}: ${mealName}`;
+                    modalDetails.innerHTML = `<strong>Calories:</strong> ${calories} kcal <br>
+                                              <p><strong>Description:</strong> ${description}</p>`;
+
+                    modal.style.display = "flex";
                 }
             });
-        });
 
-        // Add event listeners to toggle the visibility of each day
-        let toggleDayButtons = document.querySelectorAll('.toggle-day');
-        toggleDayButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                let targetId = button.getAttribute('data-target');
-                let dayRow = document.getElementById(targetId);
-                if (dayRow.style.display === 'none') {
-                    dayRow.style.display = 'table-row'; // Show the day row
-                } else {
-                    dayRow.style.display = 'none'; // Hide the day row
-                }
+            closeButton.addEventListener('click', function () {
+                modal.style.display = 'none';
             });
-        });
 
-        // Add event listeners to toggle the visibility of customer details
-        let detailsButtons = document.querySelectorAll('.toggle-details');
-        detailsButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                let detailsDiv = button.closest('td').querySelector('.details');
-                if (detailsDiv.style.display === 'none') {
-                    detailsDiv.style.display = 'block';
-                    button.textContent = 'Hide Details';
-                } else {
-                    detailsDiv.style.display = 'none';
-                    button.textContent = 'Show Details';
+            // Assign Meals AJAX
+            $(".assign-meals-btn").on("click", function () {
+                let customerId = $(this).data("customer-id");
+
+                if (!confirm("Are you sure you want to assign meals to this customer?")) {
+                    return;
                 }
+
+                $.ajax({
+                    url: "{{ route('assignMealsToCustomer') }}",
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    data: { customer_id: customerId },
+                    success: function (response) {
+                        alert("Meals assigned successfully!");
+                        location.reload();
+                    },
+                    error: function (xhr) {
+                        alert("Error: " + xhr.responseText);
+                    }
+                });
             });
+
         });
-    });
-    // Function to show the meal details in the popup
-    function showMealDetails(mealName, mealDescription, mealCalories, mealType, mealDate) {
-        document.getElementById('mealName').textContent = mealName;
-        document.getElementById('mealDescription').textContent = mealDescription;
-        document.getElementById('mealCalories').textContent = mealCalories;
-        document.getElementById('mealType').textContent = mealType;
-        document.getElementById('mealDate').textContent = mealDate;
-        
-        // Display the popup
-        document.getElementById('mealPopup').style.display = 'flex';
-    }
-
-    // Function to close the popup
-    function closeMealPopup() {
-        document.getElementById('mealPopup').style.display = 'none';
-    }
-</script>
-
+    </script>
+</body>
 </html>

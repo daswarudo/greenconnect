@@ -9,6 +9,7 @@ use App\Http\Controllers\MealController;
 use App\Http\Middleware\NoCacheHeaders;
 
 use App\Http\Middleware\CheckUserType;
+use App\Http\Controllers\MealPlanController;
 
 
 //RND
@@ -63,14 +64,14 @@ Route::get('/events', [EventController::class, 'getEvents']);
 
 // Route to create a new event
 Route::post('/events', [EventController::class, 'createEvent']);
-
 Route::get('/mealplans', function () {
     return view('mealplans');
 })->name('mealplans');
 
-Route::get('/mealplansAllCust', function () {
-    return view('mealplansAllCust');
-})->name('mealplansAllCust');
+Route::get('/mealsplansAllCust', [MealController::class, 'viewAllMealPlans'])->name('mealplansAllCust');
+Route::post('/assignMealsToCustomer', [MealController::class, 'assignMealsToCustomers'])->name('assignMealsToCustomer');
+
+
 
 Route::get('/mealplansEdit', function () {
     return view('mealplansEdit');
@@ -87,6 +88,12 @@ Route::get('/viewsubscriber', function () {
 Route::get('/custTest', function () {
     return view('custTest');
 })->name('custTest');
+
+
+Route::get('/meal-plan/{customerId}', [MealPlanController::class, 'generate']);
+Route::get('/meal-plan/today/{customerId}', [MealPlanController::class, 'getTodayMealPlan']);
+Route::get('/meal-plan/weekly/{customerId}', [MealPlanController::class, 'getWeeklyMealPlan']);
+
 
 
 
@@ -114,13 +121,14 @@ Route::get('/customerFeedbackAdd', function () {
     return view('customerFeedbackAdd');
 })->name('customerFeedbackAdd');
 
-Route::get('/customerView', function () {
-    return view('customerView');
-})->name('customerView');
 
+
+Route::get('/customerView', [LoginRegisterController::class, 'editByCustomer'])->name('customerView');
+
+/*
 Route::get('/customerMeals', function () {
     return view('customerMeals');
-})->name('customerMeals');
+})->name('customerMeals');*/
 
 Route::get('/customerSubscription', function () {
     return view('customerSubscription');
@@ -212,8 +220,11 @@ Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/mealplansEdit/edi
 
 Route::middleware(['auth:rdn', NoCacheHeaders::class ])->put('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'custPass'])->name('custpass');
 
-Route::middleware(['auth:rdn', NoCacheHeaders::class ])->get('/mealsplansAllCust', [LoginRegisterController::class, 'showCustomerMealsDetails'])->name('mealsplansAllCust');
+Route::middleware(['auth:rdn', NoCacheHeaders::class])
+    ->get('/mealsplansAllCust', [MealController::class, 'viewAllMealPlans'])
+    ->name('mealsplansAllCust');
 
 //Route::middleware('auth:rdn')->get('/viewSubscription/edit/{id}', [LoginRegisterController::class, 'edit'])->name('editSubscription');
 
+Route::middleware(['auth:customer'])->get('/customerMeals', [MealController::class, 'viewCustomerMeals'])->name('customerMeals');
 
