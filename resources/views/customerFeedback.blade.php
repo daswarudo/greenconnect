@@ -11,23 +11,75 @@
 <body>
         @include('customerSidebar')
         <div class="content">
-   <div class="header">
-    <h1>
-     WELCOME, SUBSCRIBER
-    </h1>
-   
-   </div>
-   <h2>
-    Do you have any feedback for Green Chef?
-    <br/>
-    Mind sharing them?
-   </h2>
-   <div class="feedback-box">
-    <textarea placeholder="Do you like what you have experienced so far, do you mind sharing it to the public?"></textarea>
-    <button>
-     Post
-    </button>
-   </div>
-  </div>
+            <div class="header">
+                <h1>Share Your Experience</h1>
+            </div>
+
+            <h2>
+                Enjoying our services?<br>Your testimony is greatly appreciated! &#x2661;&#x2661;&#x2661;
+            </h2>
+
+            <div class="feedback-box">
+                <a href="/customerFeedbackAdd">
+                    <button>Add Testimonials</button>
+                </a>
+                <div style="margin-bottom:3vh;"></div>
+
+                <!-- User Feedback Table -->
+                @if ($feedbacks->isEmpty())
+                    <p>You have not submitted any feedback yet.</p>
+                @else
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Feedback</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($feedbacks as $index => $feedback)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $feedback->feedback }}</td>
+                                    <td>
+                                        <form action="{{ route('feedback.delete', $feedback->feedback_id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure about that?')">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+            </div>
+
+            <br><br>
+
+            <!-- Display All Testimonials -->
+            <h2>What Others Are Saying</h2>
+            <div class="testimonial-box">
+                @if ($testimonials->isEmpty())
+                    <p>No testimonials available yet.</p>
+                @else
+                    @foreach ($testimonials as $testimonial)
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <img src="{{ asset('images/freepik1-min.jpg') }}" alt="Profile Picture" class="profile-pic">
+                                <div class="testimonial-user">
+                                    <p class="username">
+                                        {{ optional($testimonial->customer)->first_name ?? 'Anonymous' }} 
+                                        {{ optional($testimonial->customer)->last_name ?? '' }}
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="testimonial-text"><em>"{{ $testimonial->feedback }}"</em></p>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
 </body>
 </html>

@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenConnect</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('css/customerSubscription.css') }}">
+</head>
+<body>
+        @include('customerSidebar')
+
+<div class="content">
+   <h1>
+   WELCOME, 
+        @if($userType == 'customer')
+            <p>Customer {{ $customer->first_name }} {{ $customer->last_name }}!</p>
+        
+    </h1>
+
+    @endif
+    <form action="{{route('custedit', $customer->customer_id) }}" method="POST"  enctype="multipart/form-data">
+@csrf
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
+
+@method('PUT')
+
+    @if(session('message'))
+			<div class="alert alert-success">
+				{{ session('message') }}
+			</div>
+	@endif
+    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{ Session::get('fail') }}</div>
+                    @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                     @endif
+   </h1>
+   <div class="subscription-info">
+   
+   <div class="details">
+        <div class="info">
+            <div class="form-container">
+                </div>
+
+                <div class="flex">
+                <p>
+                    <input type="hidden" name="customer_id" value="{{ $customer->customer_id }}">
+                    <b>Name:</b> 
+                       <input id="first_name" name="first_name" type="text" min="0" step="1" value="{{ old('first_name', $customer->first_name) }}"/>
+                       <input id="last_name" name="last_name" type="text" min="0" step="1" value="{{ old('last_name', $customer->last_name) }}"/>
+                </p>
+                
+                
+
+                
+                <p>
+                    <b>Birthdate:</b>   
+                    <input 
+                    id="age" 
+                    name="age" 
+                    type="date" 
+                    value="{{ old('age', $customer->getRawOriginal('age')) }}" 
+                    required
+                />
+                
+                
+                
+                
+
+                    
+                </p>
+            </div>
+
+                <div class="flex">
+                <p>
+                <b>Sex:</b>
+                <select name="sex" id="sex" >
+                    <option value="" {{ !$customer->sex ? 'selected' : '' }}>-- Select Sex --</option>
+                    <option value="M" {{ $customer->sex == 'M' ? 'selected' : '' }}>Male</option>
+                    <option value="F" {{ $customer->sex == 'F' ? 'selected' : '' }}>Female</option>
+                </select>
+           
+
+                </p>
+                <p>
+                    <b>Address:</b> 
+                    <input  style="width: 20vw"id="address" name="address" type="text" value="{{ old('address', $customer->address) }}"  />
+                </p>
+                <p>
+                    <b>Contact Number:</b> 
+                    <input id="contact_num" name="contact_num" type="text" minlength="11" maxlength="11" 
+                            oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  value="{{ old('age', $customer->contact_num) }}"  />
+                </p>
+
+                </div>
+                <div class="flex">
+                    <!--
+                <p>
+                    <b>Diet Recommended:</b> 
+                    <input style="margin-right:8vw" id="diet_recom" name="diet_recom" type="text" value="{{ $customer->diet_recom  ?? '' }}"  />
+                </p>-->
+                <b>Diet Recommended:</b>
+    <select id="diet_recom" name="diet_recom" style="margin-right:2vw" class="form-control">
+        <option value="" disabled {{ empty($customer->diet_recom) ? 'selected' : '' }}>Select a recommended diet</option>
+        <option value="clear_liquid_diet" {{ $customer->diet_recom == 'clear_liquid_diet' ? 'selected' : '' }}>Clear Liquid Diet</option>
+        <option value="soft_diet" {{ $customer->diet_recom == 'soft_diet' ? 'selected' : '' }}>Soft Diet</option>
+        <option value="regular_diet" {{ $customer->diet_recom == 'regular_diet' ? 'selected' : '' }}>Regular Diet</option>
+        <option value="cardiac_diet" {{ $customer->diet_recom == 'cardiac_diet' ? 'selected' : '' }}>Cardiac Diet</option>
+        <option value="low_sodium" {{ $customer->diet_recom == 'low_sodium' ? 'selected' : '' }}>Low Sodium</option>
+        <option value="low_fiber" {{ $customer->diet_recom == 'low_fiber' ? 'selected' : '' }}>Low-fiber</option>
+        <option value="diabetic" {{ $customer->diet_recom == 'diabetic' ? 'selected' : '' }}>Diabetic</option>
+        <option value="low_fat" {{ $customer->diet_recom == 'low_fat' ? 'selected' : '' }}>Low-fat</option>
+        <option value="mashed" {{ $customer->diet_recom == 'mashed' ? 'selected' : '' }}>Mashed</option>
+        <option value="no_added_salt" {{ $customer->diet_recom == 'no_added_salt' ? 'selected' : '' }}>No Added Salt Diet</option>
+        <option value="therapeutic" {{ $customer->diet_recom == 'therapeutic' ? 'selected' : '' }}>Therapeutic</option>
+        <option value="clear_fluid" {{ $customer->diet_recom == 'clear_fluid' ? 'selected' : '' }}>Clear Fluid</option>
+        <option value="high_fiber" {{ $customer->diet_recom == 'high_fiber' ? 'selected' : '' }}>High Fiber</option>
+        <option value="mechanically_altered" {{ $customer->diet_recom == 'mechanically_altered' ? 'selected' : '' }}>Mechanically Altered</option>
+        <option value="renal" {{ $customer->diet_recom == 'renal' ? 'selected' : '' }}>Renal</option>
+        <option value="special_diet" {{ $customer->diet_recom == 'special_diet' ? 'selected' : '' }}>Special Diet</option>
+    <!-- Add more options as needed -->
+    </select>
+
+                <p>
+                    <b>Health Condition:</b> 
+                    <input style="width: 20vw;" id="health_condition" name="health_condition" type="text" value="{{ $customer->health_condition }}"  />
+                </p>
+            </div>
+
+            <div class="flex">
+                <p>
+                    <b>Height (cm):</b> 
+                    <input 
+                        style="width: 5vw" 
+                        id="height" 
+                        name="height" 
+                        type="number"  
+                        step="0.01" 
+                        value="{{ old('height', number_format($customer->height, 2, '.', '')) }}"  
+                        oninput="calculateBMI(); calculateCalories();" 
+                        required
+                    />
+                </p>
+                
+                <p>
+                    <b>Weight (kg):</b> 
+                    <input 
+                        style="width: 5vw" 
+                        id="weight" 
+                        name="weight" 
+                        type="number"  
+                        step="0.01" 
+                        value="{{ old('weight', number_format($customer->weight, 2, '.', '')) }}"  
+                        oninput="calculateBMI(); calculateCalories();" 
+                        required
+                    />
+                </p>
+                
+            
+                <p>
+                    <b>BMI:</b>
+                    <input style="width: 5vw" type="text" name="bmi" id="bmi" class="form-control" value="{{ old('bmi', $customer->bmi) }}">
+                </p>
+                <p>
+                    <b>Daily Calorie:</b> 
+                    <input style="width: 5vw" type="text" name="daily_calorie" id="daily_calorie" class="form-control" value="{{ old('daily_calorie', $customer->daily_calorie) }}" readonly/>
+                </p>
+                
+            </div>
+                
+                <p>
+                    <b>Activity Level:</b> 
+                    <select name="activity_level" id="activity_level">
+                        <option value="" {{ !$customer->activity_level ? 'selected' : '' }}>-- Level --</option>
+                        <option value="Sedentary" {{ $customer->activity_level == 'Sedentary' ? 'selected' : '' }}>Sedentary</option>
+                        <option value="Low Active" {{ $customer->activity_level == 'Low Active' ? 'selected' : '' }}>Low Active</option>
+                        <option value="Active" {{ $customer->activity_level == 'Active' ? 'selected' : '' }}>Active</option>
+                        <option value="Very Active" {{ $customer->activity_level == 'Very Active' ? 'selected' : '' }}>Very Active</option>
+                    </select>
+                </p>
+                
+                <b>Food Preference:</b><br>
+                <div class="flex">
+                <label>
+                    <input type="checkbox" name="prefer_pork" value="1" 
+                    {{ old('prefer_pork', $customer->prefer_pork) ? 'checked' : '' }}>
+                Pork
+                </label><br>
+              
+                <label>
+                    <input type="checkbox" name="prefer_beef" value="1" 
+                        {{ old('prefer_beef', $customer->prefer_beef) ? 'checked' : '' }}>
+                    Beef
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="prefer_fish" value="1" 
+                        {{ old('prefer_fish', $customer->prefer_fish) ? 'checked' : '' }}>
+                    Fish
+                </label><br>
+                <label>
+                    <input type="checkbox" name="prefer_chicken" value="1" 
+                        {{ old('prefer_chicken', $customer->prefer_chicken) ? 'checked' : '' }}>
+                        Chicken
+                </label><br>
+                <label>
+                    <input type="checkbox" name="prefer_veggie" value="1" 
+                        {{ old('prefer_veggie', $customer->prefer_veggie) ? 'checked' : '' }}>
+                        Veggie
+                </label><br>
+                </div>
+                <br>
+                <b>Allergens</b><br>
+                <div class="allergens">
+                <label>
+                    <input type="checkbox" name="allergy_wheat" value="1" 
+                    {{ old('allergy_wheat', $customer->allergy_wheat) ? 'checked' : '' }}>
+                Wheat
+                </label><br>
+              
+                <label>
+                    <input type="checkbox" name="allergy_milk" value="1" 
+                        {{ old('allergy_milk', $customer->allergy_milk) ? 'checked' : '' }}>
+                    Milk
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_egg" value="1" 
+                        {{ old('allergy_egg', $customer->allergy_egg) ? 'checked' : '' }}>
+                    Egg
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_peanut" value="1" 
+                        {{ old('allergy_peanut', $customer->allergy_peanut) ? 'checked' : '' }}>
+                    Peanut
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_fish" value="1" 
+                        {{ old('allergy_fish', $customer->allergy_fish) ? 'checked' : '' }}>
+                    Fish
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_soy" value="1" 
+                        {{ old('allergy_soy', $customer->allergy_soy) ? 'checked' : '' }}>
+                    Soy
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_shellfish" value="1" 
+                        {{ old('allergy_shellfish', $customer->allergy_shellfish) ? 'checked' : '' }}>
+                    Shellfish
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_treenut" value="1" 
+                        {{ old('allergy_treenut', $customer->allergy_treenut) ? 'checked' : '' }}>
+                    Tree Nut
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_sesame" value="1" 
+                        {{ old('allergy_sesame', $customer->allergy_sesame) ? 'checked' : '' }}>
+                    Sesame
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_corn" value="1" 
+                        {{ old('allergy_corn', $customer->allergy_corn) ? 'checked' : '' }}>
+                    Corn
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_chicken" value="1" 
+                        {{ old('allergy_chicken', $customer->allergy_chicken) ? 'checked' : '' }}>
+                    Chicken
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_beef" value="1" 
+                        {{ old('allergy_beef', $customer->allergy_beef) ? 'checked' : '' }}>
+                    Beef
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_pork" value="1" 
+                        {{ old('allergy_pork', $customer->allergy_pork) ? 'checked' : '' }}>
+                    Pork
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_lamb" value="1" 
+                        {{ old('allergy_lamb', $customer->allergy_lamb) ? 'checked' : '' }}>
+                    Lamb
+                </label><br>
+
+                <label>
+                    <input type="checkbox" name="allergy_gluten" value="1" 
+                        {{ old('allergy_gluten', $customer->allergy_gluten) ? 'checked' : '' }}>
+                    Gluten
+                </label>
+                </div>
+            </div>
+            
+            <div class="photo">
+                
+                <!--
+                <img 
+                    alt="Customer's Profile Picture" 
+                    height="100" 
+                    src="{{ asset($customer->profile_picture) }}" 
+                    width="100" 
+                    style="border-radius:50%; margin-top:5vh" 
+                /><br>
+
+                <input 
+                    type="file" 
+                    name="profile_picture" 
+                    accept="image/*"
+                    style="margin-bottom:5vh"
+                >
+-->
+            </div>
+   
+             <div class="save">
+                
+                <!--<button class = "saveButton" type="submit" onclick="return confirm('Are you sure about that')">
+                    APPLY CHANGES
+                </button>-->
+                <a href ="#">
+                  <button type="submit" 
+                  style="text-decoration: none; 
+                padding: 10px 20px; background-color: #599c7b;
+                 color: white; border-radius: 5px; 
+                 display: inline-block; text-align: center; margin-top:10px
+                 "
+                  
+                  onclick="return confirm('Are you sure about that')">
+                      SAVE
+                  </button>
+                </a>
+                <br>
+                <!--<button type="submit">
+                    CHANGE PASSWORD
+                </button>-->
+                       
+                
+            </div>
+  
+</div>
+    
+   </div>
+</form>
+  </div>
+</body>
+<script>
+    //bmi calculator
+    function calculateBMI() {
+            // Get weight and height values
+            let weight = parseFloat(document.getElementById('weight').value);
+            let height = parseFloat(document.getElementById('height').value);
+
+            // Check if both weight and height are valid numbers
+            if (!isNaN(weight) && !isNaN(height) && height > 0) {
+                // Convert height to meters if in cm
+                if (height > 3) {
+                    height = height / 100; // Assuming input in cm, convert to m
+                }
+                // Calculate BMI
+                let bmi = weight / (height * height);
+                // Set the calculated BMI to the BMI input field with two decimal places
+                document.getElementById('bmi').value = bmi.toFixed(2);
+            }
+        }
+
+        
+        function calculateCalories() {
+    let weight = parseFloat(document.getElementById("weight").value);
+    let height = parseFloat(document.getElementById("height").value);
+    let birthdate = document.getElementById("age").value;
+    let activityLevel = document.getElementById("activity_level").value;
+    let sex = document.getElementById("sex").value;
+    let calorieField = document.getElementById("daily_calorie");
+
+    if (!weight || !height || !birthdate || !activityLevel || !sex) {
+        return;
+    }
+
+    // ✅ Improved Age Calculation (Considers full birthdate)
+    let birthDateObj = new Date(birthdate);
+    let today = new Date();
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+
+    // Check if the birthday hasn't happened yet this year
+    if (
+        today.getMonth() < birthDateObj.getMonth() ||
+        (today.getMonth() === birthDateObj.getMonth() && today.getDate() < birthDateObj.getDate())
+    ) {
+        age--;
+    }
+
+    // ✅ Corrected BMR Calculation
+    let BMR;
+    if (sex === "M") { // Male
+        BMR = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+    } else if (sex === "F") { // Female
+        BMR = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+    } else {
+        return;
+    }
+
+    // Activity Level Multipliers
+    let activityMultipliers = {
+        "Sedentary": 1.2,
+        "Low Active": 1.375,
+        "Active": 1.55,
+        "Very Active": 1.725
+    };
+
+    if (!activityMultipliers[activityLevel]) {
+        return;
+    }
+
+    // ✅ More Precise TDEE Calculation
+    let TDEE = (BMR * activityMultipliers[activityLevel]);
+
+    // Round TDEE to the nearest integer
+    calorieField.value = Math.round(TDEE);
+
+    // 🔍 Debugging Log (Check Values)
+    console.log("Weight:", weight, "Height:", height, "Age:", age, "BMR:", BMR, "Activity Level:", activityLevel, "TDEE:", Math.round(TDEE));
+}
+
+// Attach event listeners to recalculate when input changes
+document.getElementById("weight").addEventListener("input", calculateCalories);
+document.getElementById("height").addEventListener("input", calculateCalories);
+document.getElementById("age").addEventListener("change", calculateCalories);
+document.getElementById("activity_level").addEventListener("change", calculateCalories);
+document.getElementById("sex").addEventListener("change", calculateCalories);
+
+// Run once on page load
+calculateCalories();
+
+
+
+
+
+    
+</script>
+</html>

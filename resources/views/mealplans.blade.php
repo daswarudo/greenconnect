@@ -16,13 +16,13 @@
  </head>
  <body>
  @include('sidebar')
-  <!--
+  <!-- testing 123a
 -->
 
 <div class="content">
     <h1>Meal Plans</h1>
     <input type="text" id="mealSearch" placeholder="Search by meal name, calories, or description" style="margin-bottom: 10px; padding: 5px; width: 100%;">
-    <div class="container" style="overflow: scroll;height: 70vh;">
+    <div class="container" style="overflow: scroll;height: 60vh;">
             
 
             <!-- Table for displaying meals -->
@@ -36,7 +36,7 @@
             <th>Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody><!--error-->
         @foreach($meals as $meal)
             <tr>
                 <td>{{ $meal->meal_name }}</td>
@@ -62,8 +62,12 @@
                     @endphp
                     {{ number_format($meal->calories, 2) }} cal ({{ $calorieLevel }})
                 </td>
-                <td>{{ $mealPurpose }}</td>
-                <td><a href="{{ route('meals.edit', $meal->meal_id) }}">Edit Meal</a></td>
+                <!--<td>{{ $mealPurpose }}</td>-->
+                <td>{{ $meal->subscriptionType->plan_name ?? 'No Plan' }}</td>
+                <td><a href="{{ route('meals.edit', $meal->meal_id) }}" style="text-decoration: none; 
+                padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; display: inline-block;
+                 font-weight: bold; text-align: center;
+                 ">View Meal</a></td>
             </tr>
         @endforeach
     </tbody>
@@ -74,6 +78,9 @@
     </div>
     <a href="/mealplansAdd" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; display: inline-block; font-weight: bold; text-align: center; margin-top:3vh;">
         Add Meals
+    </a>
+    <a href="{{route('mealsplansAllCust')}}" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; display: inline-block; font-weight: bold; text-align: center; margin-top:3vh;">
+        View Customers Meals
     </a>
 
 

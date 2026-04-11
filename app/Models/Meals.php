@@ -26,10 +26,32 @@ class Meals extends Model
         'allergy_chicken', 'allergy_beef', 'allergy_pork', 'allergy_lamb', 'allergy_gluten'
     ];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
+
+    
+
     // Optionally, you can define the relationship with the SubscriptionType model
     public function subscriptionType()
     {
         return $this->belongsTo(SubscriptionType::class, 'subscription_type_id');
     }
+
+     /**
+     * Relationship: A meal can belong to many customers through a meal plan.
+     */
+    public function customers()
+    {
+        return $this->belongsToMany(Customer::class, 'customer_meals', 'meal_id', 'customer_id');
+    }
+
+
+    public function customerMeals()
+{
+    return $this->hasMany(CustomerMeal::class, 'meal_id');
+}
+
 }
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,62 +13,94 @@
         @include('customerSidebar')
 
 <div class="content">
-   <h1>
-    WELCOME, SUBSCRIBER
-   </h1>
-   <div class="subscription-info">
-    <p>
-     Active Subscription Plan : <span> Coming soon </span>  <!--Weight Loss DRI GURO I ANG DATA SA Subscription ID= SUBSRIPTION NAME   -->      
-    </p>
-    <table>
-     <tr>
-      <th>
-       Subscription:
-      </th>
-      <th>
-       Start Date: 
-      </th>
-      <th>
-       End Date:
-      </th>
-     </tr>
-     <tr>
-      <td>
-        <!--SUBSCRIPTION NAME of PREVIOUS SUBSCRIPTION --> Coming soon 
-      </td>
-      <td>
-       <!-- START DATE-->                                  Coming soon
-      </td>
-      <td>
-       <!-- END DATE -->                                   Coming soon
-      </td>
-     </tr>
+   
+   <div class="subscription-info" style="margin-top:5vh;">
+    <h2>Welcome, {{$customer->first_name}} {{$customer->last_name}}</h2>
+    <h2>Subscriptions</h2>
+    <div class="mb-3" style="margin-bottom:2vh;">
+            <input id="searchInput" type="text" class="form-control" placeholder="Search subscriptions...">
+        </div>
+<!--
+        <div class="table-responsive" style="max-height: 60vh; height:60vh; overflow-y: auto;">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Subscription</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody id="subscriptionTable">
+                @foreach($subscriptions as $subscription)
+                    <tr>
+                        <td>{{ $subscription->plan_name }}</td>
+                        <td>{{ $subscription->sub_status }}</td>
+                        <td>{{ $subscription->start_date }}</td>
+                        <td>{{ $subscription->end_date }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        </div>
+    <a href="/customerSubscriptionAdd">
+        <button type="submit">
+            ADD
+        </button>
+    </a>
+--> 
+    <div class="table-responsive" style="max-height: 60vh; height:auto; overflow-y: auto;">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Subscription</th>
+                <th>Status</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody id="subscriptionTable">
+            @foreach($subscriptions as $subscription)
+                <tr>
+                    <td>{{ $subscription->plan_name }}</td>
+                    <td class="sub-status">{{ $subscription->sub_status }}</td>
+                    <td>{{ $subscription->start_date }}</td>
+                    <td>{{ $subscription->end_date }}</td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
-    <h2>
-     Subscription History
-    </h2>
-    <table>
-     <tr>
-      <th>
-       Subscription Name
-      </th>
-      <th>
-       Start of Subscription
-      </th>
-      <th>
-       End of Subscription
-      </th>
-     </tr>
-     <tr>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-     </tr>
-    </table>
+</div>
+<a href="/customerSubscriptionAdd">
+    <button type="submit" id="addButton">
+        ADD SUBSCRIPTION
+    </button>
+</a>
+
+
+  
    </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#subscriptionTable tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+        const addButton = document.getElementById("addButton");
+        const statusCells = document.querySelectorAll(".sub-status");
+
+        // Check if any row has "active" status
+        const hasActiveStatus = Array.from(statusCells).some(cell => cell.textContent.trim().toLowerCase() === "active");
+
+        // Toggle button based on status
+        addButton.disabled = hasActiveStatus;
+    });
+    </script>
 </body>
 </html>

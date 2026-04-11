@@ -27,22 +27,57 @@
         </button>
 
         <!-- Navbar Links -->
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <!--<div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <!-- Links -->
+                
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('welcome') }}">HOME</a>
                 </li>
+                
                 <li class="nav-item">
-                    <a class="nav-link" id="subscription-link" style="cursor: pointer;">SUBSCRIPTION</a>
+                    <a class="nav-link ghost" id="signUp" href="/signUp">SIGN UP</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link ghost" id="login" href="/login">LOGIN</a>
-                    <!--<a class="nav-link" href="{{ route('login') }}">LOGIN</a>-->
+                    
                 </li>
                 
             </ul>
-        </div>
+        </div>-->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+              <!-- Links -->
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/welcome">HOME</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link"   href="/sandbox">TESTIMONIALS</a>
+              </li>
+
+              @if(session()->has('loginId') && session()->has('userType'))
+                  @if(session('userType') === 'customer')
+                      <li class="nav-item">
+                          <a class="nav-link" href="/customerSubscription">DASHBOARD</a>
+                      </li>
+                  @elseif(session('userType') === 'rdn')
+                      <li class="nav-item">
+                          <a class="nav-link" href="/rdnDashboard">DASHBOARD</a>
+                      </li>
+                  @endif
+                  <li class="nav-item">
+                      <a class="nav-link ghost" id="logout" href="/logout">LOGOUT</a>
+                  </li>
+              @else
+                  <li class="nav-item">
+                      <a class="nav-link ghost" id="signUp" href="/signUp">SIGN UP</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link ghost" id="login" href="/login">LOGIN</a>
+                  </li>
+              @endif
+          </ul>
+      </div>
+
     </div>
 </nav>
 @if(session('message'))
@@ -65,145 +100,150 @@
     
 </div>
 <!-- 4 boxes-->
-<div class = "div-2" id="flex-container">
-    <div class = "flex-container" >
-        <div class = "flex-item">
-            <div>  <!-- temporary because krazy css-->
-                <div style = "text-align:center;">
-                    <p style = "font-size:35px;"><b>Weight-Loss Plan</b></p>
-                    <p>Low-calorie meals curated for weight loss</p>
-                    <p style = "font-size:30px;"><b>₱3000.00/2 weeks</b></p>
-                </div>
-
+<div class="container">
+    <div class="card">
+      <div class="inner">
+        <div class="front">
+          <h2>Weight Loss</h2>
+          <img src="{{ asset('images/logo.png') }}" alt="logo"  style="height: 30vh">
+          <p>Low-calorie meals for weight loss</p>
+          <h4>₱3000.00/2 weeks</h4>
+        </div>
+        <div class="back">
                 <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
                 <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
                 <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
                 <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
-            </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
-
-        </div>
-        <div class = "flex-item">
-            <div>  <!-- temporary because krazy css-->
-                <div style = "text-align:center;">
-                    <p style = "font-size:35px;"><b>Weight-Gain Plan</b></p>
-                    <p>High-calorie meals designed for healthy weight gain</p>
-                    <p style = "font-size:30px;"><b>₱3300.00/2 weeks</b></p>
+                <div class="payment">
+                  <img src="{{ asset('images/5.png') }}" alt="Maya">
+                  <img src="{{ asset('images/6.png') }}" alt="Gcash">
                 </div>
+                @if(!session()->has('loginId'))
+                    <a href="/signUp" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f; text-decoration: none; color: white;">
+                        Subscribe Now
+                    </a>
+                @else
+                    <a href="javascript:void(0)" class="btn btn-success disabled" style="width: 200px; border-radius: 0; background-color: #ccc; text-decoration: none; color: #fff; pointer-events: none;">
+                        Subscribe Now
+                    </a>
+                @endif
 
-                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
-                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
-                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
-                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
-                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
-            </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
-
+                
         </div>
+      </div>
     </div>
-</div>
-<div class="div-2">
-    <div class="flex-container">
-        <div class = "flex-item">
-            <div>  <!-- temporary because krazy css-->
-                <div style = "text-align:center;">
-                    <p style = "font-size:35px;"><b>Therapeutic Diet</b></p>
-                    <p>Customized for individuals with specific health needs</p><!-- fix align later-->
-                    <p style = "font-size:30px;"><b>₱3500.00/2 weeks</b></p>
-                </div>
-
-                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
+    
+    <div class="card">
+      <div class="inner">
+        <div class="front">
+          <h2>Weight Gain</h2>
+          <img src="{{ asset('images/logo.png') }}" alt="logo"  style="height: 30vh">
+          <p>High-calorie meals for weight gain</p>
+          <h4>₱3300.00/2 weeks</h4>
+        </div>
+        <div class="back">
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
                 <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
                 <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
                 <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
                 <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
-            </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
-
-        </div>
-        <div class = "flex-item">
-            <div>  <!-- temporary because krazy css-->
-                <div style = "text-align:center;">
-                    <p style = "font-size:35px;"><b>Gluten-Free Diet</b></p>
-                    <p>Specially curated gluten-free meals for individuals with celiac disease or gluten sensitivity</p>
-                    <p style = "font-size:30px;"><b>₱3500.00/2 weeks</b></p>
+                <div class="payment">
+                  <img src="{{ asset('images/5.png') }}" alt="Maya">
+                  <img src="{{ asset('images/6.png') }}" alt="Gcash">
                 </div>
-
-                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p>
-                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
-                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
-                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
-                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
-            </div>
-            <button type="submit" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f;">Inquire Now</button>
-
+                @if(!session()->has('loginId'))
+                    <a href="/signUp" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f; text-decoration: none; color: white;">
+                        Subscribe Now
+                    </a>
+                @else
+                    <a href="javascript:void(0)" class="btn btn-success disabled" style="width: 200px; border-radius: 0; background-color: #ccc; text-decoration: none; color: #fff; pointer-events: none;">
+                        Subscribe Now
+                    </a>
+                @endif
+              
         </div>
+      </div>
     </div>
-</div>
 
-<!--testimonial-->
+    <div class="card">
+      <div class="inner">
+        <div class="front">
+          <h2>Therapeutic Diet</h2>
+          <img src="{{ asset('images/logo.png') }}" alt="logo"  style="height: 30vh">
+          <p>Customized for specific health needs</p>
+          <h4>₱3500.00/2 weeks</h4>
+        </div>
+        <div class="back">
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
+                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
+                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
+                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
+                <div class="payment">
+                  <img src="{{ asset('images/5.png') }}" alt="Maya">
+                  <img src="{{ asset('images/6.png') }}" alt="Gcash">
+                </div>
+                @if(!session()->has('loginId'))
+                    <a href="/signUp" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f; text-decoration: none; color: white;">
+                        Subscribe Now
+                    </a>
+                @else
+                    <a href="javascript:void(0)" class="btn btn-success disabled" style="width: 200px; border-radius: 0; background-color: #ccc; text-decoration: none; color: #fff; pointer-events: none;">
+                        Subscribe Now
+                    </a>
+                @endif
+              
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="inner">
+        <div class="front">
+          <h2>Gluten-Free Diet</h2>
+          <img src="{{ asset('images/logo.png') }}" alt="logo"  style="height: 30vh">
+          <p>Specially curated gluten-free meals</p>
+          <h4>₱3500.00/2 weeks</h4>
+        </div>
+        <div class="back">
+                <p> <span>&#10003;</span>  Free consultation and close monitoring from our Registered Nutritionist Dietitian</p> <!--https://www.toptal.com/designers/htmlarrows/symbols/check-mark/-->
+                <p> <span>&#10003;</span>  Calorie-counted plant-based lunch and dinner from Mondays to Fridays</p>
+                <p> <span>&#10003;</span>  Meal plan guide for everyday breakfast</p>
+                <p> <span>&#10003;</span>  Meal plan guide for weekends</p>
+                <p> <span>&#10003;</span>  Free Delivery within Dumaguete City</p>
+                <div class="payment">
+                  <img src="{{ asset('images/5.png') }}" alt="Maya">
+                  <img src="{{ asset('images/6.png') }}" alt="Gcash">
+                </div>
+                @if(!session()->has('loginId'))
+                    <a href="/signUp" class="btn btn-success" style="width: 200px; border-radius: 0; background-color: #52634f; text-decoration: none; color: white;">
+                        Subscribe Now
+                    </a>
+                @else
+                    <a href="javascript:void(0)" class="btn btn-success disabled" style="width: 200px; border-radius: 0; background-color: #ccc; text-decoration: none; color: #fff; pointer-events: none;">
+                        Subscribe Now
+                    </a>
+                @endif
+              
+        </div>
+      </div>
+    </div>
+   
+  </div>
+
+
+
 <div style = "height: 7vh;"></div>
-<div class="container">
+<div class="container" hidden><!--hide-->
     <h1 class ="title4"><b>Testimonials</b></h1>
 </div>
 
-<div class="div-2"> <!--di ma align if lahi ang text for each testi, may use 'see more' function or change text-->
+<div class="div-2"> <!--hide-->
     <div class="flex-container2">
-        <div class="flex-item2">
-
-            <div style="height: 500px;overflow: hidden;position: relative;">
-                <div class = "picture">
-                    <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
-                </div>
-                <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-                .
-                    
-                    
-                </p>
-
-                <p style = "font-size:20px; margin-bottom:0px;">John Doe</p>
-                <p">Weight Loss Meal Plan Subscriber</p>
-            </div>
-
-        </div>
-        <div class="flex-item2">
-
-
-            <div style="height: 500px;overflow: hidden;position: relative;">
-                <div class = "picture">
-                    <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
-                </div>
-                <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-                .
-                    
-                </p>
-                <p style = "font-size:20px; margin-bottom:0px;">James Doe</p>
-                <p">Weight Gain Meal Plan Subscriber</p>
-            </div>
-
-        </div>
-        <div class="flex-item2">
-
-
-            <div style="height: 500px;overflow: hidden;position: relative;">
-                <div class = "picture">
-                    <img alt="Person1" src="{{ asset('images/freepik3.jpg') }}" class = "testi"/>
-                </div>
-                <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-                .
-                    
-                </p>
-                <p style = "font-size:20px; margin-bottom:0px;">Jane Joe</p>
-                <p">Therapeutic Diet Plan Subscriber</p>
-            </div>
-        </div>
+            
+    
+        
     </div>
 </div>
 
@@ -216,8 +256,12 @@
     
     </div>
     <div class="footer-right">
+        <a href="https://www.foodpanda.ph/restaurant/kxxh/the-green-chef-dumaguete-santa-rosa-street">
         <img src="{{ asset('images/panda.jpg') }}" alt="Image 1">
+        </a>
+        <a href="https://food.grab.com/ph/en/restaurant/the-greenchef-mango-avenue-delivery/2-C2LXNJUWVVB2RN?">
         <img src="{{ asset('images/grab.jpg') }}" alt="Image 2">
+        </a>
     </div>
 </div>
 

@@ -29,6 +29,12 @@ class Subscriptions extends Model
         'sub_status',
     ];
 
+    protected $casts =[
+
+        'start_date' => 'date',
+        'end_date' => 'date',
+    ];
+
     // Define the relationships:
 
     // Each subscription belongs to a subscription type

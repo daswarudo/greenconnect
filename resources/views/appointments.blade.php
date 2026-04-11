@@ -12,7 +12,7 @@
     <style>
 
         #calendar {
-            width:120vh;
+            width:100vw;
             max-width: 200vh;
             background-color: white;
             padding: 10px;
@@ -54,51 +54,28 @@
         
         <div id="calendar">
         </div>
-        <div style="width: 30vh; height: 10vh; padding:10vh 10vh 10vh 5vh;">
-            
-            <button class="crudButtons" onclick="window.location.href='{{ url('viewAppointmentsRdn') }}'">View All Consultations</button>
-                
 
-
-        </div>
-        <!--
-        <script>
-
-            document.addEventListener('DOMContentLoaded', function() {
-                var calendarEl = document.getElementById('calendar');
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                events: [
-                    @foreach($appointments as $consultation)
-                        {
-                            title: '{{ $consultation->first_name ?? 'Unknown' }}', // Display first name
-                            start: '{{ $consultation->start }}', // Full datetime (combined date + time)
-                            extendedProps: {
-                                customer_name: '{{ $consultation->first_name ?? 'Unknown' }}',
-                                time: '{{ $consultation->formatted_time }}' // Formatted time (HH:mm)
-                            }
-                        }@if(!$loop->last),@endif
-                    @endforeach
-                ],
-                eventContent: function(arg) {
-                    // Custom display for event content as <first_name>,<time>
-                    let customLabel = document.createElement('div');
-                    customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
-                    
-                    return { domNodes: [customLabel] };
-                }
-        });
-
-        calendar.render();
-    });
-
-    </script>-->
     <script>
+        /*
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
+            headerToolbar: {
+            left: 'prev,next today', // Include customButton beside "Today"
+            center: 'title',
+            right: 'customButton'
+        },
+        customButtons: {
+            customButton: {
+                text: 'View All Consultations',
+                click: function () {
+                    // Redirect to the consultations page
+                    window.location.href = '{{ url('viewAppointmentsRdn') }}';
+                }
+            }
+        },
             events: [
                 @foreach($appointments as $consultation)
                     {
@@ -137,7 +114,80 @@
         });
 
         calendar.render();
+    });*/
+    document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    // Check if there are any events
+    var events = [
+        @foreach($appointments as $consultation)
+            {
+                title: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}', // Display first and last name
+                start: '{{ $consultation->start }}', // Full datetime (combined date + time)
+                extendedProps: {
+                    customer_name: '{{ $consultation->first_name ?? 'Unknown' }} {{ $consultation->last_name ?? '' }}',
+                    time: '{{ $consultation->formatted_time }}', // Formatted time (HH:mm)
+                    notes: '{{ $consultation->notes ?? 'No notes provided' }}' // Notes or default message
+                }
+            }@if(!$loop->last),@endif
+        @endforeach
+    ];
+
+    if (events.length === 0) {
+        // If there are no events, display a message or keep the calendar empty
+        calendarEl.innerHTML = '<p>No events available.</p>';
+        return;
+    }
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today', // Include customButton beside "Today"
+            center: 'title',
+            right: 'customButton'
+        },
+        customButtons: {
+            customButton: {
+                text: 'View All Consultations',
+                click: function () {
+                    // Redirect to the consultations page
+                    window.location.href = '{{ url('viewAppointmentsRdn') }}';
+                }
+            }
+        },
+        events: events, // Use the events array
+        eventContent: function(arg) {
+            // Custom display for event content as <first_name> <last_name>, <time>
+            let customLabel = document.createElement('div');
+            customLabel.innerHTML = `<b>${arg.event.extendedProps.customer_name}, ${arg.event.extendedProps.time}</b>`;
+            return { domNodes: [customLabel] };
+        },
+        dateClick: function(info) {
+            // Check if there are events on the clicked date
+            var eventsOnDay = calendar.getEvents().filter(event => event.start.toISOString().split('T')[0] === info.dateStr);
+
+            if (eventsOnDay.length > 0) {
+                // If events exist on the clicked day, show the details
+                alert('Date clicked: ' + info.dateStr);
+            }
+            // If no events exist for the clicked day, do nothing
+        },
+        eventClick: function(info) {
+            // Action when an event is clicked
+            let eventDetails = `
+                Customer Name: ${info.event.extendedProps.customer_name}
+                Time: ${info.event.extendedProps.time}
+                Date: ${info.event.start.toISOString().split('T')[0]}
+                Notes:${info.event.extendedProps.notes}
+            `;
+            // Display details (can be a modal or any other UI component)
+            alert('Event Details:\n' + eventDetails);
+        }
     });
+
+    calendar.render();
+});
+
 </script>
 
 
